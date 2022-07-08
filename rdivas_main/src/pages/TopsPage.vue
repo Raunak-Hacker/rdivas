@@ -1,16 +1,18 @@
 <template>
-  <header>
-    <div class="head">
-      <p>Tops </p>
-      <h4>></h4>
-      <p>Top</p>
-    </div>
-  </header>
+  <section class="">
+    <header>
+      <div class="head">
+        <p>Tops </p>
+        <h4>></h4>
+        <p>Top</p>
+      </div>
+    </header>
 
-  <div class="flex-box">
-    <filter-tops />
-    <product-tops />
-  </div>
+    <div class="flex-box">
+      <filter-tops />
+      <product-tops />
+    </div>
+  </section>
 </template>
 
 <script>
@@ -32,9 +34,10 @@ export default {
 </script>
 
 <style scoped>
-.flex-box{
+.flex-box {
   align-items: flex-start;
 }
+
 header {
   height: 5vh;
   width: 100%;

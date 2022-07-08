@@ -27,8 +27,7 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&amp;display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Montserrat&display=swap');
 
 * {
   margin: 0;

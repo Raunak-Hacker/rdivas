@@ -2,11 +2,42 @@
     <section id="topHome">
         <section class="first">
             <div class="grid-container">
-                <div class="item item1"> </div>
-                <div class="item item2"></div>
-                <div class="item item3"></div>
-                <div class="item item4"></div>
-                <div class="item item5"></div>
+                <div class="item item1">
+                    <div class="info">
+                        <h1>Women’s fashion</h1> <br>
+                        <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore edolore magna.
+                        </p> <br>
+                        <h5 class="sel"><a href="">SHOP NOW</a></h5>
+                    </div>
+                </div>
+                <div class="item item2">
+                    <div class="info2">
+                        <h3>Men's fashion</h3> 
+                        <p>358 Items</p> <br>
+                        <h5 class="sel"><a href="">SHOP NOW</a></h5>
+                    </div>
+                </div>
+                <div class="item item3">
+                    <div class="info2">
+                        <h3>Kid's fashion</h3> 
+                        <p>124 Items</p> <br>
+                        <h5 class="sel"><a href="">SHOP NOW</a></h5>
+                    </div>
+                </div>
+                <div class="item item4">
+                    <div class="info2">
+                        <h3>Cosmetics</h3> 
+                        <p>192 Items</p> <br>
+                        <h5 class="sel"><a href="">SHOP NOW</a></h5>
+                    </div>
+                </div>
+                <div class="item item5">
+                    <div class="info2">
+                        <h3>Accessories</h3> 
+                        <p>725 Items</p> <br>
+                        <h5 class="sel"><a href="">SHOP NOW</a></h5>
+                    </div>
+                </div>
             </div>
         </section>
         <section class="second">
@@ -31,7 +62,7 @@
             <div class="flex-wrap">
                 <cloth-card disc="true" />
                 <cloth-card />
-                <cloth-card newProd="true" />
+                <cloth-card newProd="true"  />
                 <cloth-card />
                 <cloth-card disc="true" />
                 <cloth-card />
@@ -74,6 +105,51 @@ export default {
 </script>
 
 <style scoped>
+*{
+    text-align: left;
+
+}
+.info {
+    margin-top: 10%;
+    width: 50%;
+    margin-left: 10%;
+    text-align: left;
+
+}
+
+.info h1 {
+    font-family: 'Cookie', cursive;
+    font-size: 4.5rem;
+    font-weight: lighter;
+    margin: 0;
+    padding: 0;
+}
+
+.info h5 {
+    width: max-content;
+}
+.info2 {
+    position: absolute;
+    top: 32%;
+    left: 8%;
+    font-weight: 400;
+    font-family: 'Montserrat' , sans-serif;
+}
+.info2 h3{
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+    font-weight: 510;
+}
+.info2 h5 {
+    width: max-content;
+}
+.info p, .info2 p {
+    font-size: 0.8rem;
+    color: gray;
+    font-weight: 400;
+}
+
 .banner {
     width: 100%;
     margin-bottom: 5vh;
@@ -128,6 +204,7 @@ export default {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    position: relative;
 }
 
 .item2 {
