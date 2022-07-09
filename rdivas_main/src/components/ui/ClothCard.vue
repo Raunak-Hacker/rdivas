@@ -13,9 +13,9 @@
             </div>
         </transition>
         <div class="det">
-            <a href="#">
+            <router-link to="/product/1">
                 <p> Buttons Tweed Blazer</p>
-            </a>
+            </router-link>
             <h5 :class="{ red: disc }">₹ 2,000 <s v-if="disc">₹3000</s> </h5>
 
         </div>
