@@ -13,29 +13,33 @@
                 <div class="item item2">
                     <div class="info2">
                         <h3>Men's fashion</h3> 
-                        <p>358 Items</p> <br>
-                        <h5 class="sel"><a href="">SHOP NOW</a></h5>
+                        <!-- <p>358 Items</p>  -->
+                        <br>
+                        <h5 class="sel"><a href="">SOON</a></h5>
                     </div>
                 </div>
                 <div class="item item3">
                     <div class="info2">
                         <h3>Kid's fashion</h3> 
-                        <p>124 Items</p> <br>
-                        <h5 class="sel"><a href="">SHOP NOW</a></h5>
+                        <!-- <p>124 Items</p>  -->
+                        <br>
+                        <h5 class="sel"><a href="">SOON</a></h5>
                     </div>
                 </div>
                 <div class="item item4">
                     <div class="info2">
                         <h3>Cosmetics</h3> 
-                        <p>192 Items</p> <br>
-                        <h5 class="sel"><a href="">SHOP NOW</a></h5>
+                        <!-- <p>192 Items</p>  -->
+                        <br>
+                        <h5 class="sel"><a href="">SOON</a></h5>
                     </div>
                 </div>
                 <div class="item item5">
                     <div class="info2">
                         <h3>Accessories</h3> 
-                        <p>725 Items</p> <br>
-                        <h5 class="sel"><a href="">SHOP NOW</a></h5>
+                        <!-- <p>725 Items</p>  -->
+                        <br>
+                        <h5 class="sel"><a href="">SOON</a></h5>
                     </div>
                 </div>
             </div>
@@ -119,7 +123,7 @@ export default {
 
 .info h1 {
     font-family: 'Cookie', cursive;
-    font-size: 4.5rem;
+    font-size: 430.5%;
     font-weight: lighter;
     margin: 0;
     padding: 0;
@@ -136,7 +140,7 @@ export default {
     font-family: 'Montserrat' , sans-serif;
 }
 .info2 h3{
-    font-size: 1.5rem;
+    font-size: 150%;
     margin: 0;
     padding: 0;
     font-weight: 510;
@@ -152,7 +156,6 @@ export default {
 
 .banner {
     width: 100%;
-    margin-bottom: 5vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -177,22 +180,18 @@ export default {
     text-align: center;
 }
 
-.first {
-    height: 89vh;
-}
-
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
-    grid-template-columns: auto 24vw 24vw;
+    grid-template-columns: auto 24% 24%;
     gap: 0.6rem;
-    padding: 0.6% 0;
+    padding: 0.8% 0;
 }
 
 .grid-container>div {
     text-align: center;
     /* padding: 32% 0; */
-    padding: 9.8rem 0;
+    padding: 23.8% 0;
 }
 
 .item1 {
@@ -224,7 +223,7 @@ export default {
 }
 
 .second {
-    margin: 10vh 0 5vh 0;
+    margin: 5% 0 0 0;
     padding: 0 13%;
     width: 100%;
 }
@@ -241,11 +240,5 @@ header {
     font-size: x-large;
 }
 
-.flex-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 7vh;
-}
+
 </style>

@@ -8,52 +8,29 @@
                 <div class="nav-links">
                     <ul>
                         <li>
-                            <router-link to="/home" @click="home" :class="{ sel: homeActive }">HOME</router-link>
+                            <router-link to="/home" @click="home" :class="{ sel: homActive }">HOME</router-link>
                         </li>
-                        <li>
-                            <router-link to="/tops" @click="top" :class="{ sel: topActive }">TOPS</router-link>
-                            <div class="dropdown-content">
-                                <router-link @click="top" to="">Top</router-link>
-                                <router-link @click="top" to="">Sports Wear</router-link>
-                                <router-link @click="top" to="">T- Shirt</router-link>
-                                <router-link @click="top" to="">Winter Wear</router-link>
-                            </div>
-                        </li>
-                        <li>
-                            <router-link to="/dresses" @click="dress" :class="{ sel: dressActive }">DRESSES
+                        <li v-for="category in categories" :key="category.name">
+                            <router-link :to="'/' + category.name" @click="category.name" :class="{ sel: dressActive }">
+                                {{ category.name }}
                             </router-link>
                             <div class="dropdown-content">
-                                <router-link @click="dress" to="">Flared Dresses</router-link>
-                                <router-link @click="dress" to="">Bodycon Dresses</router-link>
-                                <router-link @click="dress" to="">Jumpsuits</router-link>
+                                <router-link v-for="subcategory in category.subcategories" :key="subcategory"
+                                    @click="top" :to="'/' + category.name + '/' + subcategory.subcategoryid">{{
+                                            subcategory.name
+                                    }}</router-link>
                             </div>
                         </li>
-                        <li>
-                            <router-link to="/track-suits" @click="track" :class="{ sel: trackActive }">TRACK SUITS
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link to="/kurtis" @click="kurti" :class="{ sel: kurtiActive }">KURTIS</router-link>
-                            <div class="dropdown-content">
-                                <router-link @click="kurti" to="">Kurti</router-link>
-                                <router-link @click="kurti" to="">Kurti Sets</router-link>
-                            </div>
-                        </li>
-                        <li>
-                            <router-link to="/sarees" @click="saree" :class="{ sel: sareeActive }">SAREES</router-link>
-                            <div class="dropdown-content">
-                                <router-link @click="saree" to="">Party Wear</router-link>
-                                <router-link @click="saree" to="">Casual</router-link>
-                            </div>
-                        </li>
+
                     </ul>
                 </div>
             </div>
             <div class="login">
                 <small>Login / Register</small>
-                <img src="../../assets/search.svg">
-                <img src="../../assets/heart.svg">
-                <img src="../../assets/bag.svg">
+                <input type="text" placeholder="search..." v-if="search">
+                <i class="bx bx-search" @click="search = !search"/>
+                <i class="bx bx-heart"/>
+                <i class="bx bx-cart"/>
             </div>
         </div>
     </header>
@@ -65,12 +42,19 @@ export default {
         return {
             scrolled: false,
             topActive: false,
-            dressActive: false,
-            trackActive: false,
-            kurtiActive: false,
-            sareeActive: false,
-            homeActive: true
+            categories: [],
+            search: false,
         }
+    },
+    computed: {
+        host() {
+            return this.$store.getters.host;
+        }
+    },
+    async created() {
+        const response = await fetch(`${this.host}/get/header`);
+        const data = await response.json();
+        this.categories = data.categories;
     },
     methods: {
         act() {
@@ -88,22 +72,6 @@ export default {
         top() {
             this.act();
             this.topActive = true;
-        },
-        dress() {
-            this.act();
-            this.dressActive = true;
-        },
-        track() {
-            this.act();
-            this.trackActive = true;
-        },
-        kurti() {
-            this.act();
-            this.kurtiActive = true;
-        },
-        saree() {
-            this.act();
-            this.sareeActive = true;
         },
         scroll() {
             if (window.scrollY > 0) {
@@ -134,7 +102,9 @@ export default {
 .nav-links .dropdown-content a:hover::after {
     width: 0%;
 }
-
+li{
+    text-transform: uppercase;
+}
 li:hover .dropdown-content {
     display: block;
 }
@@ -175,6 +145,18 @@ header {
     width: 1rem;
     height: 1rem;
     margin-left: 1.5rem;
+}
+i, input{
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+input{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #CA1515;
+    padding: 0.5rem;
 }
 
 small {

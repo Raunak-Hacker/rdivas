@@ -1,22 +1,22 @@
 <template>
     <div class="prod" @mouseenter="iconHover" @mouseleave="iconHover">
         <div class="img">
-            <img src="../../assets/product-1.jpg">
-            <div class="sale" v-if="disc">SALE</div>
-            <div class="new" v-if="newProd">NEW</div>
+            <img :src="imgUrl">
+            <div class="sale" v-if="sale">SALE</div>
+            <div class="new" v-if="best">BEST SELLER</div>
         </div>
         <transition>
             <div class="icons" v-if="icon">
-                <a href=""> <img src="../../assets/expand.svg" alt=""> </a>
-                <a href=""> <img src="../../assets/heart.svg" alt=""> </a>
-                <a href=""> <img src="../../assets/bag.svg" alt=""> </a>
+                <a href=""> <i class="bx bx-expand-alt" /> </a>
+                <a href=""> <i class="bx bx-heart" /> </a>
+                <a href=""> <i class="bx bx-cart" /> </a>
             </div>
         </transition>
         <div class="det">
-            <router-link to="/product/1">
-                <p> Buttons Tweed Blazer</p>
+            <router-link :to="'/product/' + id">
+                <p> {{ name }}</p>
             </router-link>
-            <h5 :class="{ red: disc }">₹ 2,000 <s v-if="disc">₹3000</s> </h5>
+            <h5 :class="{ red: sale }">₹ {{ price }} <s v-if="sale">₹3000</s> </h5>
 
         </div>
     </div>
@@ -26,7 +26,7 @@
 <script>
 
 export default {
-    props: ['disc', 'newProd'],
+    props: ['sale', 'best', 'name', 'imgUrl', 'price', 'id'],
     data() {
         return {
             icon: false,
@@ -74,7 +74,7 @@ s {
     height: 60vh;
     margin-bottom: 2%;
     display: flex;
-    margin: 0.5rem;
+    margin: 0.5%;
     flex-direction: column;
     position: relative;
 }
@@ -111,6 +111,12 @@ s {
     position: relative;
 }
 
+.img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .sale,
 .new {
     position: absolute;
@@ -131,10 +137,21 @@ s {
 
 }
 
-.icons img {
-    margin-top: 30%;
-    width: 40%;
-    height: 40%;
+.icons i {
+    margin-top: 25%;
+    font-size: 1.15rem;
+
+}
+
+.icons a:hover {
+    background-color: #ca1515;
+    transition: background-color 300ms linear;
+}
+
+.icons a:hover i {
+    transform: rotate(360deg);
+    color: white;
+    transition: all 300ms ease-in-out;
 }
 
 .det {

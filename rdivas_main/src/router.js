@@ -1,5 +1,6 @@
-import { createRouter, createWebHistory  } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
+import NotFound from "./pages/NotFound.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -10,29 +11,21 @@ const router = createRouter({
       alias: "/home",
     },
     {
-      path: "/tops",
+      path: "/:category/:id",
       component: () => import("./pages/TopsPage.vue"),
+      props: true,
     },
     {
-      path: "/kurtis",
-      component: () => import("./pages/KurtisPage.vue"),
+      path: "/product/:id",
+      component: () => import("./pages/ProductPage.vue"),
+      props: true,
     },
     {
-      path: "/track-suits",
-      component: () => import("./pages/TrackSuitsPage.vue"),
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: NotFound,
+      alias: "/not-found",
     },
-    {
-      path: "/sarees",
-      component: () => import("./pages/SareesPage.vue"),
-    },
-    {
-        path: "/dresses",
-        component: () => import("./pages/DressesPage.vue"),
-    },
-    {
-        path: "/product/:id",
-        component: () => import("./pages/ProductPage.vue"),
-    }
   ],
 });
 

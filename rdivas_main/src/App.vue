@@ -20,7 +20,10 @@ export default {
     TheHeader,
     TheFooter,
   },
-
+  created() {
+    // display current url
+    console.log(this.$route.fullPath);
+  }
 }
 </script>
 
@@ -44,10 +47,16 @@ export default {
   padding-top: 11vh;
 }
 
+
+
+i {
+  color: rgba(0, 0, 0, 0.505);
+
+}
+
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 7vh;
 }
@@ -69,6 +78,7 @@ export default {
   font-size: 15px;
   margin: 0 1rem;
   position: relative;
+
 }
 
 .nav-links ul li a::after {

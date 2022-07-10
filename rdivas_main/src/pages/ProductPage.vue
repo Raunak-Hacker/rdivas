@@ -2,39 +2,40 @@
     <section class="prod-page">
         <div class="prod-photos">
             <div class="images">
-                <div class="img">
-                    <img src="@/assets/product/img1.jpg" alt="">
+                <div class="img" v-if="data.image1">
+                    <img :src="data.image1" alt="">
                 </div>
-                <div class="img">
-                    <img src="@/assets/product/img2.jpg" alt="">
+                <div class="img" v-if="data.image2">
+                    <img :src="data.image2" alt="">
                 </div>
-                <div class="img">
-                    <img src="@/assets/product/img3.jpg" alt="">
+                <div class="img" v-if="data.image3">
+                    <img :src="data.image3" alt="">
                 </div>
-                <div class="img">
-                    <img src="@/assets/product/img4.jpg" alt="">
+                <div class="img" v-if="data.image4">
+                    <img :src="data.image4" alt="">
                 </div>
-                <div class="img">
-                    <img src="@/assets/product/img5.jpg" alt="">
+                <div class="img" v-if="data.image5">
+                    <img :src="data.image5" alt="">
                 </div>
-                <div class="img">
-                    <img src="@/assets/product/img6.jpg" alt="">
+                <div class="img" v-if="data.image6">
+                    <img :src="data.image6" alt="">
                 </div>
             </div>
             <div class="main-img">
-                <img src="@/assets/product/img6.jpg" alt="">
+                <img :src="data.image1" alt="">
             </div>
         </div>
 
         <div class="prod-info">
-            <h2>Black Salwar Top</h2>
-            <h3>₹ 2,000</h3> <br>
+            <h2>{{ data.name }}</h2>
+            <h3>₹{{ data.price }}</h3> <br>
             <i class="bx bx-star" />
             <i class="bx bx-star" />
             <i class="bx bx-star" />
             <i class="bx bx-star" />
             <i class="bx bx-star" />
-            <br> <br> <strong>Colour :</strong> <div class="colors">
+            <br> <br> <strong>Colour :</strong>
+            <div class="colors">
                 <div class="color" style="background-color: #b80606;"></div>
                 <div class="color" style="background-color: #a89606;"></div>
                 <div class="color" style="background-color: #e85287;"></div>
@@ -61,9 +62,7 @@
             </div> <br>
             <div class="description">
                 <h3>Description</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sodales consequat diam, sed pharetra dui
-                    ultrices at. In vestibulum mauris nibh, id maximus nulla volutpat non. Donec ac finibus libero.
-                    Proin consectetur nibh vel nibh posuere malesuada.</p>
+                <p>{{data.description}}</p>
             </div>
         </div>
     </section>
@@ -72,6 +71,22 @@
 
 <script>
 export default {
+    data() {
+        return {
+            data: null
+
+        }
+    },
+    async created() {
+        try {
+            const response = await fetch(`${this.$store.getters.host}/get/product/${this.$route.params.id}`);
+            const data = await response.json();
+            this.data = data;
+            this.$store.dispatch('getProdDetails', data);
+        } catch (error) {
+            this.data = error;
+        }
+    },
 
 }
 </script>
@@ -91,7 +106,7 @@ body {
 
 .prod-photos {
     display: flex;
-    justify-content: flex-start ;
+    justify-content: flex-start;
     width: 55%;
     height: 89%;
     background-color: #fff;
@@ -100,7 +115,7 @@ body {
 .images {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     width: 25%;
     height: 70%;
@@ -110,6 +125,8 @@ body {
     width: 25%;
     height: 15%;
     background-color: #fff;
+    margin: 0.5rem;
+
 }
 
 .img img {
@@ -127,6 +144,7 @@ body {
 .main-img img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .prod-info {
@@ -199,11 +217,11 @@ button {
     font-weight: 500;
     color: rgb(223, 223, 223);
 }
-.description p{
+
+.description p {
     font-size: 0.8rem;
     line-height: 1.5;
     width: 75%;
     color: rgba(0, 0, 0, 0.6);
 }
-   
 </style>

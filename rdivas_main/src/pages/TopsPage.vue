@@ -1,8 +1,8 @@
 <template>
-  <section class="">
+  <section class="" v-if="data.status === 'success'">
     <header>
       <div class="head">
-        <p>Tops </p>
+        <p>{{ data.category }} </p>
         <h4>></h4>
         <p>Top</p>
       </div>
@@ -22,14 +22,21 @@ export default {
   components: { FilterTops, ProductTops },
   data() {
     return {
-      scrolled: false
+      data: null
     }
   },
-  methods: {
-    scroll() {
-      this.scrolled = true
+  async created() {
+    console.log(this.$route.params.category);
+    try {
+      const response = await fetch(`${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`);
+      const data = await response.json();
+      this.data = data;
+      this.$store.dispatch('getProdList', data);
+    } catch (error) {
+      this.data = error;
     }
-  }
+  },
+
 }
 </script>
 

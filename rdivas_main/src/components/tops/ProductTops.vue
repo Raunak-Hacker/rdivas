@@ -12,24 +12,35 @@
             </div>
         </div>
         <div class="flex-wrap">
-            <cloth-card />
-            <cloth-card disc="true" />
-            <cloth-card />
-            <cloth-card newProd="true" />
-            <cloth-card disc="true" />
-            <cloth-card />
-            <cloth-card disc="true" />
-            <cloth-card />
+            <cloth-card v-for="product in filteredProds" :key="product.id" :id="product.id" :name="product.name"
+                :imgUrl="product.image" :price="product.price" :best="product.BestSeller" :sale="product.Sale"
+                 />
+
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            
+           
+        };
+    },
+    computed: {
+        filteredProds() {
+            return this.$store.getters.filteredProds;
+        },
+    },
+    created() {
+
+    },
     methods: {
         myFunction() {
             document.getElementById("myDropdown").classList.toggle("show");
-        }
+        },
+        
     }
 }
 
@@ -43,7 +54,7 @@ export default {
     font-size: 16px;
     border: none;
     cursor: pointer;
-    
+
 }
 
 .dropdown {
@@ -67,12 +78,14 @@ export default {
     text-decoration: none;
     display: block;
 }
+
 .sort {
     display: flex;
     width: 20%;
     justify-content: space-around;
     align-items: center;
 }
+
 .dropdown a:hover {
     background-color: #ddd;
 }
