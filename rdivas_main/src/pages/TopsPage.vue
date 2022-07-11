@@ -26,7 +26,6 @@ export default {
     }
   },
   async created() {
-    console.log(this.$route.params.category);
     try {
       const response = await fetch(`${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`);
       const data = await response.json();
@@ -35,7 +34,19 @@ export default {
     } catch (error) {
       this.data = error;
     }
+    if (this.data.status !== 'success') {
+      this.$router.replace({ name: 'NotFound' });
+    }
   },
+  watch: {
+    async $route() {
+      const response = await fetch(`${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`);
+      const data = await response.json();
+      this.data = data;
+      this.$store.dispatch('getProdList', data);
+      console.log('route Changed');
+    }
+  }
 
 }
 </script>

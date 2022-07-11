@@ -21,10 +21,14 @@ const router = createRouter({
       props: true,
     },
     {
+      path: "/login",
+      component: () => import("./pages/LoginPage.vue"),
+
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "NotFound",
       component: NotFound,
-      alias: "/not-found",
     },
   ],
 });

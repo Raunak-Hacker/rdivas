@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 
 const store = createStore({
   state: {
-    host: "https://baku.rdivas.in",
+    host: "http://localhost:6969",
     productList: null,
     productDetails: null,
     filteredProds: [],
@@ -21,6 +21,11 @@ const store = createStore({
         (product) => product.color == payload
       );
     },
+    filterByFabric(state, payload) {
+      state.filteredProds = state.productList.products.filter(
+        (product) => product.fabric == payload
+      );
+    }
   },
   actions: {
     getProdList(context, data) {

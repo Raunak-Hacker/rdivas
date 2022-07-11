@@ -36,9 +36,10 @@
             <i class="bx bx-star" />
             <br> <br> <strong>Colour :</strong>
             <div class="colors">
-                <div class="color" style="background-color: #b80606;"></div>
-                <div class="color" style="background-color: #a89606;"></div>
-                <div class="color" style="background-color: #e85287;"></div>
+                <div class="color" v-for="image in data.group" :key="image.id" @click="colorChange"
+                    @mouseover="lol = image.id">
+                    <img :src="image.image" alt="">
+                </div>
             </div> <br>
             <h2>Sizes</h2>
             <div class="sizes">
@@ -62,7 +63,7 @@
             </div> <br>
             <div class="description">
                 <h3>Description</h3>
-                <p>{{data.description}}</p>
+                <p>{{ data.description }}</p>
             </div>
         </div>
     </section>
@@ -73,7 +74,8 @@
 export default {
     data() {
         return {
-            data: null
+            data: null,
+            lol: null,
 
         }
     },
@@ -87,6 +89,20 @@ export default {
             this.data = error;
         }
     },
+    methods: {
+        colorChange() {
+            this.$router.push(`/product/${this.lol}`);
+        },
+    },
+    watch: {
+        async $route() {
+            const response = await fetch(`${this.$store.getters.host}/get/product/${this.$route.params.id}`);
+            const data = await response.json();
+            this.data = data;
+            this.$store.dispatch('getProdDetails', data);
+            console.log('route Changed');
+        }
+    }
 
 }
 </script>
@@ -165,9 +181,18 @@ body {
 .color {
     width: 25%;
     height: 100%;
-
 }
 
+.color img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.color img:hover {
+    opacity: 0.4;
+}
 i {
     font-size: 1.5rem;
 

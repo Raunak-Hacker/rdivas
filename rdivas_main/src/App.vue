@@ -32,6 +32,10 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&amp;display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cookie&family=Montserrat&display=swap');
 
+:root {
+  --left-login: #ce3cba;
+  --white: #ffffff;
+}
 * {
   margin: 0;
   padding: 0;
@@ -47,7 +51,9 @@ export default {
   padding-top: 11vh;
 }
 
-
+button, i {
+  cursor: pointer;
+}
 
 i {
   color: rgba(0, 0, 0, 0.505);

@@ -2,7 +2,7 @@
     <header :class="{ fix: scrolled }">
         <div class="flex-box">
             <div class="logo">
-                <h1>RDIVAS</h1>
+                <img src="@/assets/logo.png" alt="">
             </div>
             <div class="cats">
                 <div class="nav-links">
@@ -26,11 +26,11 @@
                 </div>
             </div>
             <div class="login">
-                <small>Login / Register</small>
+                <router-link to="/login"><small>Login / Register</small></router-link>
                 <input type="text" placeholder="search..." v-if="search">
-                <i class="bx bx-search" @click="search = !search"/>
-                <i class="bx bx-heart"/>
-                <i class="bx bx-cart"/>
+                <i class="bx bx-search" @click="search = !search" />
+                <i class="bx bx-heart" />
+                <i class="bx bx-cart" />
             </div>
         </div>
     </header>
@@ -97,25 +97,37 @@ export default {
     padding: 0.8rem 1rem;
     z-index: 1;
     line-height: 1.5rem;
+    text-transform: capitalize;
+}
+.dropdown-content a{
+    color:rgba(0, 0, 0, 0.692);
+    transition: all 0.15s ease-in-out;
 }
 
 .nav-links .dropdown-content a:hover::after {
     width: 0%;
 }
-li{
+ .dropdown-content a:hover{
+    color: #000;
+}
+li {
     text-transform: uppercase;
 }
+
 li:hover .dropdown-content {
     display: block;
 }
 
+
+.flex-box{
+    height: 100%;
+    padding-top: 0.5%;
+}
 header {
     position: fixed;
-
-    transition: 2s;
     z-index: 1;
     background-color: white;
-    padding: 1.2rem 2rem;
+    padding: 0 2rem;
     height: 11vh;
     width: 100%;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -123,8 +135,6 @@ header {
 }
 
 .fix {
-    transition: 2s;
-
     position: fixed;
 }
 
@@ -140,19 +150,30 @@ header {
 .headroom--unpinned {
     transform: translateY(-100%);
 }
+.logo {
+    width: 8%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.logo img{
+    height: 100%;
+    width: 100%;
+}
 .login img {
     width: 1rem;
     height: 1rem;
     margin-left: 1.5rem;
 }
-i, input{
+
+i,
+input {
     margin-left: 1rem;
     font-size: 1.2rem;
-    cursor: pointer;
 }
 
-input{
+input {
     border: none;
     outline: none;
     border-bottom: 1px solid #CA1515;

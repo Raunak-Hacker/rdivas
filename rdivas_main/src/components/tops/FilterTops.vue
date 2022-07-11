@@ -15,8 +15,9 @@
             </ul>
         </div>
         <div class="box ">
-            <div class="title">
-                <p>Color</p> <img src="@/assets/plus.svg" @click="colorCon = !colorCon" />
+            <div class="title ">
+                <p>Color</p> <img src="@/assets/plus.svg" v-if="!colorCon" @click="colorCon = !colorCon" />
+                <img src="@/assets/minus.svg" v-else @click="colorCon = !colorCon" />
             </div>
 
         </div>
@@ -27,52 +28,40 @@
                             <p to="" @mouseenter="color = product.name" @click="colorClick">
                                 {{ product.name }}
                             </p>
-                            <div class="color" :style="{ 'background-color': product.colorCode }"></div>
+                            <div class="color" :style="{ 'background-color': product.colorCode }"
+                                @mouseenter="color = product.name" @click="colorClick" />
                         </small></li>
                 </ul>
             </div>
         </transition>
-        <div class="box ">
-            <div class="title b2">
-                <p>Size</p> <img src="@/assets/plus.svg" @click="sizeCon = !sizeCon" />
-            </div>
-        </div>
-        <div class="content" v-if="sizeCon">
-            <ul>
-                <li v-for="product in productList.size" :key="product"><small>
-                        <router-link to="">
-                            {{ product }}
-                        </router-link>
-                    </small></li>
-            </ul>
-        </div>
         <div class="box">
-            <div class="title">
+            <div class="title b2">
                 <p>Price</p> <img src="@/assets/plus.svg" alt="" />
             </div>
         </div>
         <div class="box ">
-            <div class="title b2">
-                <p>Fabric</p> <img src="@/assets/plus.svg" @click="fabricCon = !fabricCon" />
+            <div class="title ">
+                <p>Fabric</p> <img src="@/assets/plus.svg" v-if="!fabricCon" @click="fabricCon = !fabricCon" /> 
+                <img src="@/assets/minus.svg" v-else @click="fabricCon = !fabricCon" />
             </div>
         </div>
         <transition duration="400" name="nested">
-        <div class="content outer" v-if="fabricCon">
-            <ul class="inner">
-                <li v-for="product in productList.fabrics" :key="product"><small>
-                        <router-link to="">
-                            {{ product }}
-                        </router-link>
-                    </small></li>
-            </ul>
-        </div>
+            <div class="content outer" v-if="fabricCon">
+                <ul class="inner">
+                    <li v-for="product in productList.fabrics" :key="product"><small>
+                            <p @mouseenter="fabric = product" @click="fabricClick">
+                                {{ product }}
+                            </p>
+                        </small></li>
+                </ul>
+            </div>
         </transition>
         <div class="box">
-            <div class="title">
+            <div class="title b2">
                 <p>Work</p> <img src="@/assets/plus.svg" alt="" />
             </div>
         </div>
-        <div class="box b2">
+        <div class="box">
             <div class="title">
                 <p>Design</p> <img src="@/assets/plus.svg" @click="solo" />
             </div>
@@ -90,19 +79,21 @@ export default {
     },
     data() {
         return {
-            sd: true,
-            colorCon: true,
-            sizeCon: false,
+            colorCon: false,
             priceCon: false,
             fabricCon: false,
             designCon: false,
             workCon: false,
             color: null,
+            fabric: null,
         }
     },
     methods: {
         colorClick() {
             this.$store.commit('filterByColor', this.color);
+        },
+        fabricClick() {
+            this.$store.commit('filterByFabric', this.fabric);
         },
     },
 
@@ -110,11 +101,9 @@ export default {
 </script>
 
 <style scoped>
-
-
 .color {
-    width: 7%;
-    margin-left: 1.8%;
+    width: 8%;
+    margin: 1%;
 }
 
 .filterTops {
@@ -163,11 +152,21 @@ export default {
 
 .content ul li small {
     display: flex;
+    justify-content: space-between;
+    width: 70%;
 }
 
-a {
+a,
+.inner p {
     color: rgba(128, 128, 128, 0.848);
+    transition: all 0.15s ease-in-out;
     font-weight: light;
+    cursor: pointer;
+}
+
+.content a:hover,
+.inner p:hover {
+    color: rgba(0, 0, 0);
 }
 
 .nested-enter-active,
