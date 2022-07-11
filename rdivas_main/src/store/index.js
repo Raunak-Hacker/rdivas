@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 
 const store = createStore({
   state: {
-    host: "http://localhost:6969",
+    host: "https://baku.rdivas.in",
     productList: null,
     productDetails: null,
     filteredProds: [],

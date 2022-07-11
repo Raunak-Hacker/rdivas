@@ -44,7 +44,6 @@ export default {
   text-decoration: none;
   list-style: none;
   scroll-behavior: smooth;
-  color: black;
 }
 
 .view {
@@ -55,10 +54,7 @@ button, i {
   cursor: pointer;
 }
 
-i {
-  color: rgba(0, 0, 0, 0.505);
 
-}
 
 .flex-wrap {
   display: flex;

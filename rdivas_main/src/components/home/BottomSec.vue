@@ -73,6 +73,10 @@ export default {
 </script>
 
 <style scoped>
+a {
+    color: black;
+
+}
 .features {
     padding: 0 13%;
     margin-bottom: 10vh;

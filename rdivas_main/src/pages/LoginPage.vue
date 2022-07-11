@@ -6,7 +6,7 @@
     <div class="login-card">
       <div class="sign-in">
         <div class="dets">
-          <h2 style="color:white;">New Here?</h2>
+          <h1 style="color:white;">New Here?</h1>
           <p style="color:white;">Sign up and discover many ongoing offers on best quality products!</p>
           <button class="button-37" style="background-color:white; color:black; font-weight:bolder" role="button">Sign
             Up</button>
@@ -20,20 +20,15 @@
           <div class="title">
             <h1>Login to Your Account</h1>
           </div> <br>
-          <div class="form">
-            <form action="">
-              <input type="email" placeholder="email"> <br>
-              <input type="password" placeholder="password"> <br>
-              <router-link to=""><small>Forgot Password?</small></router-link> <BR></BR>
-              <button class="button-37" role="button">LOGIN</button>
-            </form>
-          </div>
+          <form action="">
+            <input type="email" placeholder="email"> <br>
+            <input type="password" placeholder="password"> <br>
+            <router-link to=""><small>Forgot Password?</small></router-link> <BR></BR>
+            <button class="button-37" role="button">LOGIN</button>
+          </form>
         </div>
       </div>
     </div>
-    <!-- HTML !-->
-
-
 
   </section>
 
@@ -68,7 +63,7 @@ export default {
 }
 
 .dets {
-  width: 60%;
+  width: 70%;
   height: 50%;
   display: flex;
   flex-direction: column;
@@ -96,10 +91,10 @@ export default {
 
 .info {
   width: 66.8%;
-  height: 100%;
+  height: 70%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   font-family: 'Montserrat', sans-serif;
   color: var(--left-login);
 }
@@ -114,14 +109,14 @@ export default {
 
 .details {
   width: 100%;
-  height: 100%;
+  height: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
-.title h1 {
+h1 {
   font-size: 2.2rem;
   font-weight: bold;
 }
@@ -129,18 +124,18 @@ export default {
 .img {
   padding: 2.5% 5% 0 0;
   width: 100%;
-  height: 15%;
+  height: 23%;
   display: flex;
   justify-content: flex-end;
 }
 
 .img img {
-  width: 18%;
+  width: 19%;
   height: 100%;
 }
 
 input {
-  width: 150%;
+  width: 50%;
   height: 3rem;
   border: none;
   background-color: rgba(163, 163, 163, 0.11);
@@ -152,6 +147,7 @@ input {
   text-indent: 10px;
 
 }
+
 
 form {
   width: 100%;

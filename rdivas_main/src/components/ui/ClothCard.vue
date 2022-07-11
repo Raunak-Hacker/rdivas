@@ -68,7 +68,10 @@ s {
     color: gray;
 
 }
+i {
+  color: rgba(0, 0, 0, 0.505);
 
+}
 .prod {
     width: 23.5%;
     height: 60vh;

@@ -17,7 +17,10 @@ export default {
     line-height: 2.2rem;
 }
 
+a {
+    color: black;
 
+}
 
 .ig-img:hover img {
     cursor: pointer;

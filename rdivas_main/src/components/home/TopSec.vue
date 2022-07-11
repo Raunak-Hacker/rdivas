@@ -113,6 +113,10 @@ export default {
     text-align: left;
 
 }
+a {
+    color: black;
+
+}
 .info {
     margin-top: 10%;
     width: 50%;

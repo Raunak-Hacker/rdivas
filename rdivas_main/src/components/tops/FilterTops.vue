@@ -56,7 +56,7 @@
                 </ul>
             </div>
         </transition>
-        <div class="box">
+        <!-- <div class="box">
             <div class="title b2">
                 <p>Work</p> <img src="@/assets/plus.svg" alt="" />
             </div>
@@ -65,7 +65,7 @@
             <div class="title">
                 <p>Design</p> <img src="@/assets/plus.svg" @click="solo" />
             </div>
-        </div>
+        </div> -->
 
     </section>
 </template>

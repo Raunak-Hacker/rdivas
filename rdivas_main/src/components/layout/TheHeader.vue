@@ -30,7 +30,7 @@
                 <input type="text" placeholder="search..." v-if="search">
                 <i class="bx bx-search" @click="search = !search" />
                 <i class="bx bx-heart" />
-                <i class="bx bx-cart" />
+                <router-link to="/cart"> <i class="bx bx-cart" /></router-link>
             </div>
         </div>
     </header>
@@ -88,6 +88,11 @@ export default {
 </script>
 
 <style scoped>
+a {
+    color: black;
+
+}
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -99,17 +104,20 @@ export default {
     line-height: 1.5rem;
     text-transform: capitalize;
 }
-.dropdown-content a{
-    color:rgba(0, 0, 0, 0.692);
+
+.dropdown-content a {
+    color: rgba(0, 0, 0, 0.692);
     transition: all 0.15s ease-in-out;
 }
 
 .nav-links .dropdown-content a:hover::after {
     width: 0%;
 }
- .dropdown-content a:hover{
+
+.dropdown-content a:hover {
     color: #000;
 }
+
 li {
     text-transform: uppercase;
 }
@@ -118,11 +126,16 @@ li:hover .dropdown-content {
     display: block;
 }
 
+i {
+    color: rgba(0, 0, 0, 0.505);
 
-.flex-box{
+}
+
+.flex-box {
     height: 100%;
     padding-top: 0.5%;
 }
+
 header {
     position: fixed;
     z-index: 1;
@@ -150,6 +163,7 @@ header {
 .headroom--unpinned {
     transform: translateY(-100%);
 }
+
 .logo {
     width: 8%;
     display: flex;
@@ -157,10 +171,11 @@ header {
     align-items: center;
 }
 
-.logo img{
+.logo img {
     height: 100%;
     width: 100%;
 }
+
 .login img {
     width: 1rem;
     height: 1rem;
