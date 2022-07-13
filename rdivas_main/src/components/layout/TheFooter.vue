@@ -9,19 +9,35 @@
             <div class="links">
                 <h4>QUICK LINKS</h4>
                 <ul>
-                    <li> <a href=""> About </a></li>
-                    <li> <a href=""> Blogs </a></li>
-                    <li> <a href=""> FAQ </a></li>
-                    <li> <a href=""> Contact </a></li>
+                    <li>
+                        <router-link to=""> About </router-link>
+                    </li>
+                    <li>
+                        <router-link to=""> Blogs </router-link>
+                    </li>
+                    <li>
+                        <router-link to=""> FAQ </router-link>
+                    </li>
+                    <li>
+                        <router-link to=""> Contact </router-link>
+                    </li>
                 </ul>
             </div>
             <div class="account">
                 <h4>ACCOUNT</h4>
                 <ul>
-                    <li> <a href=""> My Account </a></li>
-                    <li> <a href=""> Orders Tracking </a></li>
-                    <li> <a href=""> Checkout </a></li>
-                    <li> <a href=""> Wishlist </a></li>
+                    <li>
+                        <router-link to=""> My Account </router-link>
+                    </li>
+                    <li>
+                        <router-link to=""> Orders Tracking </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/cart"> Checkout </router-link>
+                    </li>
+                    <li>
+                        <router-link to=""> Wishlist </router-link>
+                    </li>
                 </ul>
             </div>
             <div class="social">
@@ -31,11 +47,11 @@
                     <button class="bt">Subscribe</button>
                 </form>
                 <div class="soc-icons">
-                    <a href="#"> <img src="../../assets/facebook.png" alt=""> </a>
-                    <a href=""> <img src="../../assets/instagram-thin.svg" alt=""> </a>
-                    <a href=""> <img src="../../assets/twitter.png" alt=""> </a>
-                    <a href=""> <img src="../../assets/linkedin.png" alt=""> </a>
-                    <a href=""> <img src="../../assets/facebook.png" alt=""> </a>
+                    <router-link to="#"> <i class="bx bxl-facebook"/> </router-link>
+                    <router-link to=""> <i class="bx bxl-instagram"/> </router-link>
+                    <router-link to=""> <i class="bx bxl-twitter"/> </router-link>
+                    <router-link to=""><i class="bx bxl-pinterest"/> </router-link>
+                    <router-link to=""> <i class="bx bxl-youtube"/> </router-link>
                 </div>
             </div>
         </div>
@@ -155,9 +171,16 @@ input {
 }
 
 .soc-icons img {
-    margin-top: 0.6rem;
+    margin-top: 25%;
     width: 50%;
     height: 50%;
+}
+i {
+    margin-top: 9%;
+    font-size: 1.5rem;
+}
+a{
+    color: #000;
 }
 
 .soc-icons a {

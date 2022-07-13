@@ -41,9 +41,10 @@
                 </div>
             </div>
             <div class="flex-box">
-                <div class="tags">Black</div>
-                <div class="tags">Cotton</div>
-                <div class="tags">Sale</div>
+                <div class="tags">{{ data.color }}</div>
+                <div class="tags">{{ data.fabric }}</div>
+                <div class="tags" v-if="data.Sale">Sale</div>
+                <div class="tags" v-if="data.BestSeller">Best Seller</div>
             </div>
             <div class="description">
                 <p>{{ data.description }}</p>
@@ -55,21 +56,18 @@
                         <div class="box">
                             <label>Size</label>
                             <div class="in-boxes">
-                                <div class="in-box size">S</div>
-                                <div class="in-box size">M</div>
-                                <div class="in-box size">L</div>
-                                <div class="in-box size">XL</div>
+                                <div class="in-box size" :class="{ selSize: s }" @click="sClick">S</div>
+                                <div class="in-box size" :class="{ selSize: m }" @click="mClick">M</div>
+                                <div class="in-box size" :class="{ selSize: l }" @click="lClick">L</div>
+                                <div class="in-box size" :class="{ selSize: xl }" @click="xlClick">XL</div>
                             </div>
                         </div>
                         <div class="box">
                             <label>Colors</label>
                             <div class="in-boxes colors">
-                                <div style="background-color:black" class="in-box"><i class="bx bx-check" /></div>
-                                <div class="in-box col"></div>
-                                <div style="background-color:blue" class="in-box"></div>
                                 <div class="in-box" v-for="image in data.group" :key="image.id" @click="colorChange"
-                                    @mouseover="lol = image.id">L</div>
-                                <div class="in-box"><img :src="data.image2" alt=""></div>
+                                    @mouseover="lol = image.id"><img :src="image.image" alt="" />
+                                </div>
                             </div>
                         </div>
                         <div class="box">
@@ -84,17 +82,17 @@
                             </div>
                         </div>
                     </div>
-                    <label for="ds">sd</label>
+                    <div class="reviews"></div>
                 </div>
             </div>
 
             <div class="btn">
                 <div class="price">
-                    <h3 style="margin-right:8.5%">₹{{ data.price }}</h3>
-                    <small style="text-decoration:line-through">₹5000</small>
+                    <h3 style="margin-right:12.5%">₹{{ data.price }}</h3>
+                    <p style="text-decoration:line-through; color:rgba(131, 131, 131, 0.818);">₹{{ discount }}</p>
                 </div>
                 <div class="btns">
-                    <button>Add To Cart</button>
+                    <button @click="addToCart">Add To Cart</button>
                     <button>Buy Now</button>
                 </div>
 
@@ -113,7 +111,12 @@ export default {
             lol: null,
             imgId: null,
             wish: false,
-            quantity: 1
+            quantity: 1,
+            s: false,
+            m: false,
+            l: false,
+            xl: false,
+            size: null
 
         }
     },
@@ -128,7 +131,26 @@ export default {
             this.data = error;
         }
     },
+    computed: {
+        discount() {
+            return (this.data.price + 150);
+        }
+    },
     methods: {
+        addToCart() {
+            const product = {
+                // convert id to number
+                prodId: parseInt(this.$route.params.id),
+                name: this.data.name,
+                price: this.data.price,
+                image: this.data.image1,
+                quantity: this.quantity,
+                size: this.size,
+                color: this.data.color,
+                discount: this.discount * this.quantity,
+            }
+            this.$store.dispatch('addToCart', product);
+        },
         colorChange() {
             this.$router.push(`/product/${this.lol}`);
         },
@@ -152,6 +174,32 @@ export default {
         },
         img6() {
             this.imgId = this.data.image6;
+        },
+        selSize() {
+            this.s = false;
+            this.m = false;
+            this.l = false;
+            this.xl = false;
+        },
+        sClick() {
+            this.selSize();
+            this.s = true;
+            this.size = 'S';
+        },
+        mClick() {
+            this.selSize();
+            this.m = true;
+            this.size = 'M';
+        },
+        lClick() {
+            this.selSize();
+            this.l = true;
+            this.size = 'L';
+        },
+        xlClick() {
+            this.selSize();
+            this.xl = true;
+            this.size = 'XL';
         }
     },
     watch: {
@@ -159,8 +207,8 @@ export default {
             const response = await fetch(`${this.$store.getters.host}/get/product/${this.$route.params.id}`);
             const data = await response.json();
             this.data = data;
+            this.imgId = this.data.image1;
             this.$store.dispatch('getProdDetails', data);
-            console.log('route Changed');
         },
         quantity(newVal) {
             if (newVal < 1) {
@@ -224,6 +272,7 @@ body {
 .img img {
     width: 100%;
     height: 100%;
+    object-fit: contain;
     transition: all 0.2s ease-in-out;
 }
 
@@ -241,7 +290,7 @@ body {
 .main-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .prod-info {
@@ -265,8 +314,9 @@ body {
 }
 
 .prod-info h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 600;
+    width: 85%;
     margin: 0;
 }
 
@@ -277,8 +327,12 @@ body {
     align-items: center;
 }
 
+.name {
+    width: 81%;
+}
+
 .wish {
-    width: 7.4rem;
+    width: 19%;
     padding: 1.5% 3%;
     font-size: small;
     border: 1px solid #d6d6d6;
@@ -326,9 +380,6 @@ body {
     color: rgba(0, 0, 0, 0.6);
 }
 
-
-
-
 .specs label {
     width: 45%;
     color: rgba(131, 131, 131, 0.918);
@@ -371,50 +422,47 @@ body {
     cursor: pointer;
 }
 
-.colors i {
-    color: rgba(224, 224, 224, 0.753);
-    font-size: x-large;
+.in-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
+
+.in-box img:hover {
+    opacity: 0.4;
+}
+
+
 
 .count i {
     color: rgba(0, 0, 0, 0.505);
     font-size: large;
 }
 
-.in-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 
-.col {
-    background-color: #CA1515;
-}
-.size{
+
+
+.size {
     transition: all 0.25s ease-in-out;
 }
+
 .size:hover {
     background-color: #000;
     color: #fff;
 }
 
-.color img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.color img:hover {
-    opacity: 0.4;
+.selSize {
+    background-color: #000;
+    color: #fff;
 }
 
 .btn {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
+    width: 75%;
 }
 
 .price {
@@ -422,6 +470,10 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 15%;
+}
+
+.price h3 {
+    font-size: 1.8rem;
 }
 
 .btns {

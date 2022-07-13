@@ -26,10 +26,12 @@
                 </div>
             </div>
             <div class="login">
-                <router-link to="/login"><small>Login / Register</small></router-link>
+                <i class="bx bx-user-circle" v-if="auth"  @click="logout"/>
+                <router-link to="/login" v-else><small>Login / Register</small></router-link>
+                <!-- <a @click="logout" v-else><small>Logout</small ></a> -->
                 <input type="text" placeholder="search..." v-if="search">
-                <i class="bx bx-search" @click="search = !search" />
-                <i class="bx bx-heart" />
+                <!-- <i class="bx bx-search" @click="search = !search" /> -->
+                <router-link to="/wish-list"> <i class="bx bx-heart" /></router-link>
                 <router-link to="/cart"> <i class="bx bx-cart" /></router-link>
             </div>
         </div>
@@ -49,7 +51,10 @@ export default {
     computed: {
         host() {
             return this.$store.getters.host;
-        }
+        },
+        auth() {
+            return this.$store.getters.auth;
+        },
     },
     async created() {
         const response = await fetch(`${this.host}/get/header`);
@@ -72,6 +77,9 @@ export default {
         top() {
             this.act();
             this.topActive = true;
+        },
+        logout() {
+            this.$store.dispatch('logout');
         },
         scroll() {
             if (window.scrollY > 0) {

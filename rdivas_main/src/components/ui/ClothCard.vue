@@ -1,6 +1,6 @@
 <template>
     <div class="prod" @mouseenter="iconHover" @mouseleave="iconHover">
-        <div class="img">
+        <div class="img" @click="$router.push('/product/' + id)">
             <img :src="imgUrl">
             <div class="sale" v-if="sale">SALE</div>
             <div class="new" v-if="best">BEST SELLER</div>
@@ -16,7 +16,7 @@
             <router-link :to="'/product/' + id">
                 <p> {{ name }}</p>
             </router-link>
-            <h5 :class="{ red: sale }">₹ {{ price }} <s v-if="sale">₹3000</s> </h5>
+            <h5 :class="{ red: sale }">₹ {{ price }} <s v-if="sale">₹{{ discount }}</s> </h5>
 
         </div>
     </div>
@@ -30,6 +30,11 @@ export default {
     data() {
         return {
             icon: false,
+        }
+    },
+    computed: {
+        discount() {
+            return (this.price + 150);
         }
     },
     methods: {
@@ -60,26 +65,33 @@ export default {
     color: #ca1515;
 }
 
+a {
+    text-decoration: none;
+    color: #000;
+}
+
 s {
     text-decoration: line-through;
-    /* font-weight: 200; */
     font-family: 'Roboto', sans-serif;
     margin-left: 0.5vw;
     color: gray;
 
 }
+
 i {
-  color: rgba(0, 0, 0, 0.505);
+    color: rgba(0, 0, 0, 0.505);
 
 }
+
 .prod {
     width: 23.5%;
-    height: 60vh;
+    height: 10%;
     margin-bottom: 2%;
     display: flex;
     margin: 0.5%;
     flex-direction: column;
     position: relative;
+    border: 1px solid #e0e0e0;
 }
 
 .icons {
@@ -88,7 +100,7 @@ i {
     margin-top: 1.5rem;
     width: 75%;
     position: absolute;
-    top: 57%;
+    top: 55%;
     margin-left: 15%;
     /* transition: 3s ease-in-out; */
 }
@@ -101,23 +113,23 @@ i {
     color: #111111;
     text-align: center;
     /* transition: 3s ease-in-out; */
-
     border-radius: 50%;
 }
 
 .img {
     width: 100%;
-    height: 80%;
+    height: 50vh;
     background-size: cover;
     background-position: right;
     background-repeat: no-repeat;
     position: relative;
+    cursor: pointer;
 }
 
 .img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .sale,

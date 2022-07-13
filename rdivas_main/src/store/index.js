@@ -1,4 +1,7 @@
 import { createStore } from "vuex";
+import getters from "./getters.js";
+import mutations from "./mutations.js";
+import actions from "./actions.js";
 
 const store = createStore({
   state: {
@@ -6,41 +9,15 @@ const store = createStore({
     productList: null,
     productDetails: null,
     filteredProds: [],
+    cart: [],
+    authError: false,
+    authMessage: null,
+    token: null,
+    auth: false,
   },
-  mutations: {
-    setProdList(state, payload) {
-      state.productList = payload;
-      state.filteredProds = payload.products;
-
-    },
-    setProdDetails(state, payload) {
-      state.productDetails = payload;
-    },
-    filterByColor(state, payload) {
-      state.filteredProds = state.productList.products.filter(
-        (product) => product.color == payload
-      );
-    },
-    filterByFabric(state, payload) {
-      state.filteredProds = state.productList.products.filter(
-        (product) => product.fabric == payload
-      );
-    }
-  },
-  actions: {
-    getProdList(context, data) {
-      context.commit("setProdList", data);
-    },
-    async getProdDetails(context, data) {
-      context.commit("setProdDetails", data);
-    },
-  },
-  getters: {
-    host: (state) => state.host,
-    productList: (state) => state.productList,
-    productDetails: (state) => state.productDetails,
-    filteredProds: (state) => state.filteredProds,
-  },
+  mutations: mutations,
+  actions: actions,
+  getters: getters,
 });
 
 export default store;

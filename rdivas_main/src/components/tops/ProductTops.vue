@@ -13,8 +13,7 @@
         </div>
         <div class="flex-wrap">
             <cloth-card v-for="product in filteredProds" :key="product.id" :id="product.id" :name="product.name"
-                :imgUrl="product.image" :price="product.price" :best="product.BestSeller" :sale="product.Sale"
-                 />
+                :imgUrl="product.image" :price="product.price" :best="product.BestSeller" :sale="product.Sale" />
 
         </div>
     </div>
@@ -24,8 +23,8 @@
 export default {
     data() {
         return {
-            
-           
+
+
         };
     },
     computed: {
@@ -40,7 +39,7 @@ export default {
         myFunction() {
             document.getElementById("myDropdown").classList.toggle("show");
         },
-        
+
     }
 }
 

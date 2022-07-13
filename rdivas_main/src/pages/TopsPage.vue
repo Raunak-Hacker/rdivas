@@ -26,17 +26,21 @@ export default {
     }
   },
   async created() {
-    try {
-      const response = await fetch(`${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`);
-      const data = await response.json();
-      this.data = data;
-      this.$store.dispatch('getProdList', data);
-    } catch (error) {
-      this.data = error;
+
+    const response = await fetch(`${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`);
+    const data = await response.json();
+    this.data = data;
+    if (this.data.status === 'success' && response.ok) {
+      await this.$store.dispatch('getProdList', this.data);
     }
-    if (this.data.status !== 'success') {
-      this.$router.replace({ name: 'NotFound' });
-    }
+    // else if (!response.ok) {
+    //   const error = new Error(
+    //     "Failed to fetch services"
+    //   );
+    //   throw error;
+    // }
+    // else
+    //   console.log("error");
   },
   watch: {
     async $route() {

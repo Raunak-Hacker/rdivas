@@ -1,25 +1,15 @@
 <template>
-  <!-- <section style="height: 100vh;" v-if="auth">
-    <div class="card">
-      <h2>Logged in successfully</h2>
-      <p>
-        You'll be redirected to our
-        <router-link to="/home">Home</router-link> in {{ countDown }} seconds.
-      </p>
-    </div>
-  </section> -->
-
   <section class="login pink">
     <div class="pink">
     </div>
     <div class="login-card">
       <div class="sign-in">
         <div class="dets">
-          <h1 style="color:white;">New Here?</h1>
-          <p style="color:white;">Sign up and discover many ongoing offers on best quality products!</p>
-          <router-link to="/register"><button class="button-37"
+          <h1 style="color:white;">Already have <br><br> an account?</h1>
+          <!-- <p style="color:white;">Sign up and discover many ongoing offers on best quality products!</p> -->
+          <router-link to="/login"><button class="button-37"
               style="background-color:white; color:black; font-weight:bolder">Sign
-              Up</button></router-link>
+              In</button></router-link>
         </div>
       </div>
       <div class="info">
@@ -28,21 +18,21 @@
         </div>
         <div class="details">
           <div class="title">
-            <h1>Login to Your Account</h1>
+            <h1>Register Your Account</h1>
           </div> <br>
           <form action="POST" @submit.prevent="subForm">
-            <input type="email" placeholder="email" v-model.trim="email"> <br>
-            <input type="password" placeholder="password" v-model.trim="password"> <br>
-            <p v-if="authError">{{ authMessage }}</p>
-            <router-link to=""><small>Forgot Password?</small></router-link> <br>
-            <button class="button-37" role="button">LOGIN</button>
+            <input type="text" placeholder="Name" v-model.trim="name" required> <br>
+            <input type="number" placeholder="phone" v-model.trim="phone" required> <br>
+            <input type="email" placeholder="email" v-model.trim="email" required> <br>
+            <input type="password" placeholder="password" v-model.trim="password" required> <br>
+            <p v-if="invalid">User already exists</p>
+            <button class="button-37" type="submit">REGISTER</button>
           </form>
         </div>
       </div>
     </div>
+
   </section>
-
-
 
 </template>
 
@@ -50,41 +40,35 @@
 export default {
   data() {
     return {
+      name: null,
+      phone: null,
       email: null,
-      password: null,
-    }
-  },
-  computed: {
-    authMessage() {
-      return this.$store.getters.authMessage;
-    },
-    authError() {
-      return this.$store.getters.authError;
-
+      invalid: false,
     }
   },
   methods: {
-    async subForm() {
-        const user = {
-          email: this.email,
-          password: this.password,
-        }
-        await this.$store.dispatch('login', user);
-        if (this.authError) {
-          return;
-        }
-        this.$router.replace('/home');
-      },
-    // countDownTimer() {
-    //   if (this.countDown > 0) {
-    //     setTimeout(() => {
-    //       this.countDown -= 1
-    //       this.countDownTimer()
-    //     }, 1000)
-    //   }
-    // }
-  },
+    subForm() {
+      const user = {
+        name: this.name,
+        phone: this.phone,
+        email: this.email,
+        password: this.password,
+      }
+      fetch(`${this.$store.getters.host}/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+      }).then(res => res.json())
+        .then(data => {
+          if (data.status === 'error') {
+            this.invalid = true;
+          }
+        })
 
+    }
+  }
 }
 </script>
 
@@ -180,7 +164,6 @@ h1 {
 .img img {
   width: 19%;
   height: 100%;
-  object-fit: contain;
 }
 
 input {
@@ -240,18 +223,5 @@ form {
   .button-37 {
     padding: 10px 30px;
   }
-}
-
-.card {
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  padding: 1rem;
-  margin: 2rem auto;
-  max-width: 40rem;
-}
-
-.card a {
-  color: #0070f3;
-  text-decoration: underline;
 }
 </style>

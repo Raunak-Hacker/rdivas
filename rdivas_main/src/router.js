@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
 import NotFound from "./pages/NotFound.vue";
+import store from "./store/index.js";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -23,11 +24,30 @@ const router = createRouter({
     {
       path: "/login",
       component: () => import("./pages/LoginPage.vue"),
-
+      meta: {
+        requiresUnauth: true,
+      },
+    },
+    {
+      path: "/register",
+      component: () => import("./pages/RegisterPage.vue"),
+      meta: {
+        requiresUnauth: true,
+      },
+    },
+    {
+      path: "/wish-list",
+      component: () => import("./pages/WishListPage.vue"),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/cart",
       component: () => import("./pages/CartPage.vue"),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/:pathMatch(.*)*",
@@ -35,6 +55,16 @@ const router = createRouter({
       component: NotFound,
     },
   ],
+});
+
+router.beforeEach((to, _, next) => {
+  if (to.meta.requiresAuth && !store.getters.isAuth) {
+    next("/login");
+  } else if (to.meta.requiresUnauth && store.getters.isAuth) {
+    next("/");
+  } else {
+    next();
+  }
 });
 
 export default router;

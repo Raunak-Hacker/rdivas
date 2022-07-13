@@ -21,8 +21,7 @@ export default {
     TheFooter,
   },
   created() {
-    // display current url
-    console.log(this.$route.fullPath);
+    this.$store.dispatch('auth');
   }
 }
 </script>
