@@ -22,6 +22,7 @@ const router = createRouter({
       props: true,
     },
     {
+      name: "login",
       path: "/login",
       component: () => import("./pages/LoginPage.vue"),
       meta: {
@@ -29,6 +30,7 @@ const router = createRouter({
       },
     },
     {
+      name: "register",
       path: "/register",
       component: () => import("./pages/RegisterPage.vue"),
       meta: {
@@ -50,6 +52,13 @@ const router = createRouter({
       },
     },
     {
+      path: "/user",
+      component: () => import("./pages/UserPage.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "NotFound",
       component: NotFound,
@@ -58,10 +67,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _, next) => {
-  if (to.meta.requiresAuth && !store.getters.isAuth) {
+  if (to.meta.requiresUnauth && store.getters.isAuth) {
+    next("/home");
+  } else if (to.meta.requiresAuth && !store.getters.isAuth) {
     next("/login");
-  } else if (to.meta.requiresUnauth && store.getters.isAuth) {
-    next("/");
   } else {
     next();
   }

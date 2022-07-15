@@ -11,9 +11,10 @@
                             <router-link to="/home" @click="home" :class="{ sel: homActive }">HOME</router-link>
                         </li>
                         <li v-for="category in categories" :key="category.name">
-                            <router-link :to="'/' + category.name" @click="category.name" :class="{ sel: dressActive }">
+                            <!-- <router-link :to="'/' + category.name" @click="category.name" :class="{ sel: dressActive }"> -->
+                            <a  @click="category.name" :class="{ sel: dressActive }">
                                 {{ category.name }}
-                            </router-link>
+                            </a>
                             <div class="dropdown-content">
                                 <router-link v-for="subcategory in category.subcategories" :key="subcategory"
                                     @click="top" :to="'/' + category.name + '/' + subcategory.subcategoryid">{{
@@ -26,8 +27,9 @@
                 </div>
             </div>
             <div class="login">
-                <i class="bx bx-user-circle" v-if="auth"  @click="logout"/>
-                <router-link to="/login" v-else><small>Login / Register</small></router-link>
+                <router-link to="/user" v-if="auth && $route.path !== '/user'"><i class="bx bx-user-circle" /></router-link>
+                <i class="bx bx-log-out" v-else-if="auth && $route.path === '/user'" @click="logout" />
+                <router-link to="/login" v-else><i class="bx bx-log-in" /></router-link>
                 <!-- <a @click="logout" v-else><small>Logout</small ></a> -->
                 <input type="text" placeholder="search..." v-if="search">
                 <!-- <i class="bx bx-search" @click="search = !search" /> -->
@@ -46,20 +48,23 @@ export default {
             topActive: false,
             categories: [],
             search: false,
+            auth: false,
         }
     },
     computed: {
         host() {
             return this.$store.getters.host;
         },
-        auth() {
-            return this.$store.getters.auth;
-        },
     },
     async created() {
         const response = await fetch(`${this.host}/get/header`);
         const data = await response.json();
         this.categories = data.categories;
+        // await this.$store.dispatch('auth');
+        this.auth = await this.$store.getters.isAuth;
+    },
+    mounted() {
+        window.addEventListener('scroll', this.scroll)
     },
     methods: {
         act() {
@@ -89,9 +94,7 @@ export default {
             }
         }
     },
-    mounted() {
-        window.addEventListener('scroll', this.scroll)
-    }
+    watch: {}
 }
 </script>
 

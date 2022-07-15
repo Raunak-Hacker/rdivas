@@ -11,10 +11,16 @@
 </template>
 
 <script>
-export default{
-  created(){
+export default {
+  created() {
     this.$router.replace({ name: 'NotFound' });
-  }
+  },
+  mounted() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  },
 }
 </script>
 
@@ -26,6 +32,7 @@ export default{
   margin: 2rem auto;
   max-width: 40rem;
 }
+
 .card a {
   color: #0070f3;
   text-decoration: underline;

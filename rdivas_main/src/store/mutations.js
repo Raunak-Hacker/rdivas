@@ -32,16 +32,18 @@ export default {
     let item = state.cart.find((item) => item.prodId == payload);
     state.cart.splice(state.cart.indexOf(item), 1);
   },
+  addToWishList(state, payload) {
+    let item = state.wishlist.find((item) => item.id == payload.id);
+    if (!item) {
+      state.wishlist.push(payload);
+    } 
+  },
 
   // login/register
 
   setAuthError(state, payload) {
     state.authError = payload.error;
     state.authMessage = payload.message;
-  },
-  setToken(state, payload) {
-    state.token = payload;
-    console.log(state.token);
   },
   setAuth(state, payload) {
     state.auth = payload;

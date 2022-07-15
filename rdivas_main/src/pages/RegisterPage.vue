@@ -40,11 +40,14 @@
 export default {
   data() {
     return {
-      name: null,
-      phone: null,
-      email: null,
-      invalid: false,
+      // invalid: false,
     }
+  },
+  mounted() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   },
   methods: {
     subForm() {
@@ -62,11 +65,10 @@ export default {
         body: JSON.stringify(user)
       }).then(res => res.json())
         .then(data => {
-          if (data.status === 'error') {
-            this.invalid = true;
+          if (data.status === 'success') {
+            this.$router.replace('/home');
           }
         })
-
     }
   }
 }

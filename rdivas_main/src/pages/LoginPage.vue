@@ -16,7 +16,8 @@
       <div class="sign-in">
         <div class="dets">
           <h1 style="color:white;">New Here?</h1>
-          <p style="color:white;">Sign up and discover many ongoing offers on best quality products!</p>
+          <p style="color:white;">Sign up and discover many ongoing offers on best quality products! <br> <br> Register now to access
+            features like wishlist, cart, etc.</p>
           <router-link to="/register"><button class="button-37"
               style="background-color:white; color:black; font-weight:bolder">Sign
               Up</button></router-link>
@@ -48,6 +49,12 @@
 
 <script>
 export default {
+  mounted() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  },
   data() {
     return {
       email: null,
@@ -63,18 +70,20 @@ export default {
 
     }
   },
+
   methods: {
     async subForm() {
-        const user = {
-          email: this.email,
-          password: this.password,
-        }
-        await this.$store.dispatch('login', user);
-        if (this.authError) {
-          return;
-        }
-        this.$router.replace('/home');
-      },
+      const user = {
+        email: this.email,
+        password: this.password,
+      }
+      await this.$store.dispatch('login', user);
+      if (this.authError) {
+        return;
+      }
+      window.location.reload();
+      this.$router.replace('/home');
+    },
     // countDownTimer() {
     //   if (this.countDown > 0) {
     //     setTimeout(() => {

@@ -1,5 +1,6 @@
 <template>
     <section class="prod-page">
+        <div class="tags add" v-if="added">Added to Cart</div>
         <div class="prod-photos">
             <div class="images">
                 <div class="img" v-if="data.image1" @click="img1">
@@ -27,7 +28,7 @@
         </div>
 
         <div class="prod-info">
-            <small>
+            <small @click="$router.go(-1)">
                 <i class="bx bx-chevron-left" /> &nbsp;&nbsp; Back to shop
             </small>
             <div class="prod-name">
@@ -56,10 +57,13 @@
                         <div class="box">
                             <label>Size</label>
                             <div class="in-boxes">
-                                <div class="in-box size" :class="{ selSize: s }" @click="sClick">S</div>
-                                <div class="in-box size" :class="{ selSize: m }" @click="mClick">M</div>
-                                <div class="in-box size" :class="{ selSize: l }" @click="lClick">L</div>
-                                <div class="in-box size" :class="{ selSize: xl }" @click="xlClick">XL</div>
+                                <div class="in-box size" v-if="data.S" :class="{ selSize: s }" @click="sClick">S</div>
+                                <div class="in-box size" v-if="data.M" :class="{ selSize: m }" @click="mClick">M</div>
+                                <div class="in-box size" v-if="data.L" :class="{ selSize: l }" @click="lClick">L</div>
+                                <div class="in-box size" v-if="data.XL" :class="{ selSize: xl }" @click="xlClick">XL
+                                </div>
+                                <div class="in-box size" v-if="data.XXL" :class="{ selSize: xxl }" @click="xxlClick">XXL
+                                </div>
                             </div>
                         </div>
                         <div class="box">
@@ -88,16 +92,14 @@
 
             <div class="btn">
                 <div class="price">
-                    <h3 style="margin-right:12.5%">₹{{ data.price }}</h3>
-                    <p style="text-decoration:line-through; color:rgba(131, 131, 131, 0.818);">₹{{ discount }}</p>
+                    <h3 style="margin-right:12.5%">₹{{ data.sellingPrice }}</h3>
+                    <p style="text-decoration:line-through; color:rgba(131, 131, 131, 0.818);">₹{{ data.price }}</p>
                 </div>
                 <div class="btns">
                     <button @click="addToCart">Add To Cart</button>
                     <button>Buy Now</button>
                 </div>
-
             </div> <br>
-
         </div>
     </section>
 
@@ -116,9 +118,15 @@ export default {
             m: false,
             l: false,
             xl: false,
-            size: null
-
+            size: null,
+            added: false,
         }
+    },
+    mounted() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
     },
     async created() {
         try {
@@ -132,30 +140,51 @@ export default {
         }
     },
     computed: {
-        discount() {
-            return (this.data.price + 150);
+        auth() {
+            return this.$store.getters.isAuth;
         }
     },
     methods: {
         addToCart() {
+            if (!this.auth) {
+                this.$router.push('/login');
+                return;
+            }
+            console.log('sd');
             const product = {
-                // convert id to number
-                prodId: parseInt(this.$route.params.id),
+                prodId: this.data.id,
                 name: this.data.name,
-                price: this.data.price,
+                price: this.data.sellingPrice,
                 image: this.data.image1,
                 quantity: this.quantity,
                 size: this.size,
                 color: this.data.color,
-                discount: this.discount * this.quantity,
+                discount: this.data.price,
             }
             this.$store.dispatch('addToCart', product);
+            this.added = true;
+            setTimeout(() => {
+                this.added = false;
+            }, 2000);
         },
         colorChange() {
             this.$router.push(`/product/${this.lol}`);
         },
         toggleWish() {
-            this.wish = !this.wish;
+            if (this.auth) {
+                this.wish = !this.wish;
+                if (this.wish == true) {
+                    const product = {
+                        id: this.data.id,
+                        name: this.data.name,
+                        price: this.data.sellingPrice,
+                        image: this.data.image1,
+                    }
+                    this.$store.commit('addToWishList', product);
+                }
+            } else {
+                this.$router.push('/login');
+            }
         },
         img1() {
             this.imgId = this.data.image1;
@@ -204,11 +233,17 @@ export default {
     },
     watch: {
         async $route() {
-            const response = await fetch(`${this.$store.getters.host}/get/product/${this.$route.params.id}`);
-            const data = await response.json();
-            this.data = data;
-            this.imgId = this.data.image1;
-            this.$store.dispatch('getProdDetails', data);
+            if (this.$route.path === ('/product/' + this.$route.params.id)) {
+                try {
+                    const response = await fetch(`${this.$store.getters.host}/get/product/${this.$route.params.id}`);
+                    const data = await response.json();
+                    this.data = data;
+                    this.imgId = data.image1;
+                    this.$store.dispatch('getProdDetails', data);
+                } catch (error) {
+                    console.log('sdsd');
+                }
+            }
         },
         quantity(newVal) {
             if (newVal < 1) {
@@ -353,6 +388,20 @@ body {
     font-size: small;
     background-color: #d6d6d63d;
     margin-right: 2%;
+}
+
+.add {
+    top: 7%;
+    width: fit-content;
+    padding: 0.7% 2%;
+    font-size: small;
+    background-color: #d6d6d63d;
+    margin-right: 2%;
+    height: fit-content;
+    position: absolute;
+    right: 0;
+    border: 1px solid #d6d6d6;
+
 }
 
 .wish i {

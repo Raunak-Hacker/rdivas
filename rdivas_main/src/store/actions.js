@@ -36,47 +36,46 @@ export default {
       context.commit("setAuthError", authErr);
       return;
     } else if (token.token) {
-      context.commit("setToken", token.token);
       localStorage.setItem("token", token.token);
-      console.log(localStorage.getItem("token"));
       context.commit("setAuthError", { message: null, error: false });
+      return;
     }
-    context.dispatch("auth");
+    context.dispatch("auth", token.token);
+    console.log(token);
   },
-  async auth(context) {
-    let auth = await fetch(`${context.getters.host}/user/`, {
+  async auth(context, token) {
+    const auth = await fetch(`${context.getters.host}/user/`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${context.getters.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
-    if (localStorage.getItem("token")) {
-      auth = await fetch(`${context.getters.host}/user/`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-    }
     const authResponse = await auth.json();
-    if (!authResponse.status === "success") {
-      localStorage.removeItem("token");
+    if (authResponse.status === "success") {
+      context.commit("setAuth", true);
+      context.commit("setAuthError", { message: null, error: false });
+      return;
+    } else if (authResponse.message === "Unauthorized") {
       const authErr = {
         message: "Unauthorized",
         error: true,
       };
       context.commit("setAuthError", authErr);
-      return;
-    } else if (authResponse.status === "success") {
-      context.commit("setAuth", true);
-      context.commit("setAuthError", { message: null, error: false });
+      return context.dispatch("logout");
     }
+  },
+
+  async autoLogin(context) {
+    const token = localStorage.getItem("token");
+    if (token) {
+      context.dispatch("auth", token);
+    } else return;
   },
 
   //   logout
   async logout(context) {
     localStorage.removeItem("token");
     context.commit("setAuth", false);
-    context.commit("setToken", null);
+    window.location.reload();
   },
 };

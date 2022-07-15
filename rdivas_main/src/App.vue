@@ -21,8 +21,13 @@ export default {
     TheFooter,
   },
   created() {
-    this.$store.dispatch('auth');
-  }
+    if (localStorage.getItem("token")) {
+      this.$store.commit('setAuth', true);
+      this.$store.dispatch('autoLogin');
+    }
+  },
+
+
 }
 </script>
 
@@ -35,6 +40,7 @@ export default {
   --left-login: #ce3cba;
   --white: #ffffff;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -49,7 +55,8 @@ export default {
   padding-top: 11vh;
 }
 
-button, i {
+button,
+i, a {
   cursor: pointer;
 }
 

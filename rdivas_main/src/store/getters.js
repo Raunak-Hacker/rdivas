@@ -6,6 +6,6 @@ export default {
   cart: (state) => state.cart,
   authError: (state) => state.authError,
   authMessage: (state) => state.authMessage,
-  token: (state) => state.token,
-  auth: (state) => state.auth,
+  isAuth: (state) => state.auth,
+  wishlist: (state) => state.wishlist,
 };

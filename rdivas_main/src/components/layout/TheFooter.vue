@@ -56,8 +56,7 @@
             </div>
         </div>
         <div class="copyright">
-            <small> RDivas &copy; 2022 All Rights Reserved | This is made by Raunak</small>
-
+            <small> RDivas &copy; 2022 All Rights Reserved</small>
         </div>
     </footer>
 </template>

@@ -1,15 +1,16 @@
 <template>
     <div class="prod" @mouseenter="iconHover" @mouseleave="iconHover">
         <div class="img" @click="$router.push('/product/' + id)">
-            <img :src="imgUrl">
+            <img :src="imgUrl" :style="{ 'object-fit': fit }">
+            <!-- style=" object-fit: cover " -->
             <div class="sale" v-if="sale">SALE</div>
             <div class="new" v-if="best">BEST SELLER</div>
         </div>
         <transition>
             <div class="icons" v-if="icon">
                 <a href=""> <i class="bx bx-expand-alt" /> </a>
-                <a href=""> <i class="bx bx-heart" /> </a>
-                <a href=""> <i class="bx bx-cart" /> </a>
+                <a @click="addWish"> <i class="bx bx-heart" /> </a>
+                <a @click="addCart"> <i class="bx bx-cart" /> </a>
             </div>
         </transition>
         <div class="det">
@@ -17,7 +18,6 @@
                 <p> {{ name }}</p>
             </router-link>
             <h5 :class="{ red: sale }">₹ {{ price }} <s v-if="sale">₹{{ discount }}</s> </h5>
-
         </div>
     </div>
 </template>
@@ -26,21 +26,89 @@
 <script>
 
 export default {
-    props: ['sale', 'best', 'name', 'imgUrl', 'price', 'id'],
+    props: {
+        id: {
+            type: Number,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        imgUrl: {
+            type: String,
+            required: true
+        },
+        price: {
+            type: Number,
+            required: true
+        },
+        best: {
+            type: Boolean,
+            required: true
+        },
+        sale: {
+            type: Boolean,
+            required: true
+        },
+        discount: {
+            type: Number,
+            required: true
+        },
+        color: {
+            type: String,
+            required: true
+        },
+        fit: {
+            type: String,
+            required: true,
+        }
+    },
     data() {
         return {
             icon: false,
         }
     },
     computed: {
-        discount() {
-            return (this.price + 150);
+        auth() {
+            return this.$store.getters.isAuth;
         }
     },
     methods: {
         iconHover() {
             this.icon = !this.icon;
-        }
+        },
+        addWish() {
+            if (this.auth) {
+                const product = {
+                    id: this.id,
+                    name: this.name,
+                    price: this.price,
+                    image: this.imgUrl,
+                }
+                this.$store.commit('addToWishList', product);
+            } else {
+                this.$router.push('/login');
+            }
+        },
+        addCart() {
+            if (this.auth) {
+                const product = {
+                    prodId: this.id,
+                    name: this.name,
+                    price: this.price,
+                    image: this.imgUrl,
+                    quantity: 1,
+                    size: 'S',
+                    color: this.color,
+                    discount: this.discount,
+                }
+                this.$store.dispatch('addToCart', product);
+            } else {
+                this.$router.push('/login');
+            }
+        },
+
     }
 }
 </script>

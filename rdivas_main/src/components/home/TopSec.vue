@@ -12,7 +12,7 @@
                 </div>
                 <div class="item item2">
                     <div class="info2">
-                        <h3>Men's fashion</h3> 
+                        <h3>Men's fashion</h3>
                         <!-- <p>358 Items</p>  -->
                         <br>
                         <h5 class="sel"><a href="">SOON</a></h5>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="item item3">
                     <div class="info2">
-                        <h3>Kid's fashion</h3> 
+                        <h3>Kid's fashion</h3>
                         <!-- <p>124 Items</p>  -->
                         <br>
                         <h5 class="sel"><a href="">SOON</a></h5>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="item item4">
                     <div class="info2">
-                        <h3>Cosmetics</h3> 
+                        <h3>Cosmetics</h3>
                         <!-- <p>192 Items</p>  -->
                         <br>
                         <h5 class="sel"><a href="">SOON</a></h5>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="item item5">
                     <div class="info2">
-                        <h3>Accessories</h3> 
+                        <h3>Accessories</h3>
                         <!-- <p>725 Items</p>  -->
                         <br>
                         <h5 class="sel"><a href="">SOON</a></h5>
@@ -64,14 +64,9 @@
                 </div>
             </header>
             <div class="flex-wrap">
-                <cloth-card disc="true" />
-                <cloth-card />
-                <cloth-card newProd="true"  />
-                <cloth-card />
-                <cloth-card disc="true" />
-                <cloth-card />
-                <cloth-card disc="true" />
-                <cloth-card />
+                <cloth-card v-for="product in clothes" :key="product.id" :id="product.id" :name="product.name"
+                    :imgUrl="product.image" :price="product.price" :best="product.BestSeller" :sale="product.Sale"
+                    :discount="product.Dprice" :color="product.color" :fit="product.fit"/>
             </div>
         </section>
         <div class="banner">
@@ -87,14 +82,9 @@
                 </div>
             </header>
             <div class="flex-wrap">
-                <cloth-card />
-                <cloth-card disc="true" />
-                <cloth-card />
-                <cloth-card newProd="true" />
-                <cloth-card disc="true" />
-                <cloth-card />
-                <cloth-card disc="true" />
-                <cloth-card />
+                <cloth-card v-for="product in clothes" :key="product.id" :id="product.id" :name="product.name"
+                    :imgUrl="product.image" :price="product.price" :best="product.BestSeller" :sale="product.Sale"
+                    :discount="product.Dprice" :color="product.color" :fit="product.fit" />
             </div>
         </section>
     </section>
@@ -103,20 +93,93 @@
 <script>
 
 export default {
+    data() {
+        return {
+            clothes: [
+                {
+                    id: 1,
+                    name: 'Printed Women Track Suit',
+                    price: 600,
+                    image: 'https://rukminim1.flixcart.com/image/832/832/kr83ukw0/track-suit/b/k/2/s-nr-tsuit08-singnature-r-divas-original-imag528zf7f6zyzc.jpeg?q=70',
+                    Sale: true,
+                    Dprice: 1000,
+                    newProd: true
+                },
+                {
+                    id: 2,
+                    name: 'Printed Women Track Suit',
+                    price: 320,
+                    image: 'https://rukminim1.flixcart.com/image/580/696/kulk9zk0/track-suit/s/v/g/m-track-suit-grey-r-divas-original-imag7zpuy8x6c9yt.jpeg?q=50',
+                    disc: true,
+                    newProd: false
+                },
+                {
+                    id: 3,
+                    name: 'Printed Women Track Suit',
+                    price: 300,
+                    image: 'https://rukminim1.flixcart.com/image/580/696/kpwybgw0/track-suit/k/8/g/s-tracksuit-01-r-divas-original-imag4fnrwg2txhgh.jpeg?q=70',
+                    disc: false,
+                    BestSeller: true
+                },
+                {
+                    id: 4,
+                    name: 'Solid Women Black Tights',
+                    price: 600,
+                    image: 'https://rukminim1.flixcart.com/image/832/832/kv1a4cw0/tight/e/v/d/m-pants-for-women-girls-black-7-m-size-r-divas-original-imag8yqh6jgqszer.jpeg?q=70',
+                    fit: "cover"
+                },
+                {
+                    id: 1,
+                    name: 'Printed Women Track Suit',
+                    price: 400,
+                    image: 'https://rukminim1.flixcart.com/image/580/696/l01blow0/t-shirt/u/8/g/xl-tshirt-pink-r-divas-original-imagbwyfqhk5bd2f.jpeg?q=50',
+                    disc: true,
+                    newProd: true
+                },
+                {
+                    id: 2,
+                    name: 'Printed Women Track Suit',
+                    price: 500,
+                    Sale: true,
+                    image: 'https://rukminim1.flixcart.com/image/580/696/l01blow0/t-shirt/o/7/b/s-tshirt-pink-r-divas-original-imagbwyfzcg5vbfy.jpeg?q=50',
+                    disc: true,
+                    Dprice: 1200,
+                    newProd: false
+                },
+                {
+                    id: 3,
+                    name: 'Printed Women Track Suit',
+                    price: 720,
+                    image: 'https://rukminim1.flixcart.com/image/580/696/l01blow0/t-shirt/a/2/1/l-tshirt-pink-r-divas-original-imagbwyfztqyxtpj.jpeg?q=50',
+                    disc: false,
+                    newProd: true
+                },
+                {
+                    id: 4,
+                    name: 'Solid Women Black Tights',
+                    price: 850,
+                    image: 'https://rukminim1.flixcart.com/image/832/832/kuzuoi80/tight/q/g/e/xl-pants-for-women-girls-black-2-xl-size-r-divas-original-imag7zmv96fekpc5.jpeg?q=70',
+                    fit: 'cover'
+                },
+            ]
+        }
+    }
 
 
 }
 </script>
 
 <style scoped>
-*{
+* {
     text-align: left;
 
 }
+
 a {
     color: black;
 
 }
+
 .info {
     margin-top: 10%;
     width: 50%;
@@ -136,23 +199,28 @@ a {
 .info h5 {
     width: max-content;
 }
+
 .info2 {
     position: absolute;
     top: 32%;
     left: 8%;
     font-weight: 400;
-    font-family: 'Montserrat' , sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
-.info2 h3{
+
+.info2 h3 {
     font-size: 150%;
     margin: 0;
     padding: 0;
     font-weight: 510;
 }
+
 .info2 h5 {
     width: max-content;
 }
-.info p, .info2 p {
+
+.info p,
+.info2 p {
     font-size: 0.8rem;
     color: gray;
     font-weight: 400;
@@ -243,6 +311,4 @@ header {
     font-weight: 600;
     font-size: x-large;
 }
-
-
 </style>

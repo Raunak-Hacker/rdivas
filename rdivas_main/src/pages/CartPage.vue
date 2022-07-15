@@ -73,6 +73,12 @@ export default {
     components: {
         CartItem
     },
+    mounted() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    },
     data() {
         return {
             quantity: null,
