@@ -152,11 +152,10 @@ i {
 }
 
 .prod {
-    width: 23.5%;
+    width: 22.7%;
     height: 10%;
     margin-bottom: 2%;
     display: flex;
-    margin: 0.5%;
     flex-direction: column;
     position: relative;
     border: 1px solid #e0e0e0;

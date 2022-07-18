@@ -63,7 +63,7 @@ export default {
 header {
   height: 5vh;
   width: 100%;
-  background-color: rgba(119, 119, 119, 0.079);
+  background-color: #f9f9f9;
   padding: 0.5rem 1rem;
   margin-bottom: 7vh;
 

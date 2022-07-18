@@ -35,6 +35,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&amp;display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cookie&family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Montserrat&display=swap');
 
 :root {
   --left-login: #ce3cba;
@@ -51,12 +52,13 @@ export default {
   scroll-behavior: smooth;
 }
 
-.view {
-  padding-top: 11vh;
+/*.view {
+  padding-top: 11vh; 
 }
-
+*/
 button,
-i, a {
+i,
+a {
   cursor: pointer;
 }
 
@@ -72,39 +74,11 @@ i, a {
 .flex-box {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
-.nav-links ul {
-  display: flex;
-}
-
-
-.nav-links ul li {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  margin: 0 1rem;
-  position: relative;
-
-}
-
-.nav-links ul li a::after {
-  content: "";
-  width: 0%;
-  height: 2px;
-  background: #CA1515;
-  display: block;
-  margin: auto;
-  transition: 0.5s;
-}
-
-.nav-links ul li a:hover::after {
-  width: 100%;
-}
 
 .sel {
-  border-bottom: 3px solid #CA1515;
+  color: red;
 }
 
 .hidden {

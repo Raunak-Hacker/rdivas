@@ -11,11 +11,13 @@
                 </div>
             </div>
         </div>
-        <div class="flex-wrap">
+        <div class="flex-wrap clothes">
             <cloth-card v-for="product in filteredProds" :key="product.id" :id="product.id" :name="product.name"
                 :imgUrl="product.image" :price="product.sellingPrice" :best="product.BestSeller" :sale="product.Sale"
                 :discount="product.price" :color="product.color" />
+
         </div>
+
     </div>
 </template>
 
@@ -97,5 +99,10 @@ export default {
     width: 75%;
     padding: 1%;
     /* border: 1px solid black; */
+}
+
+.clothes {
+    margin-top: 2.5%;
+    gap: 2.5%;
 }
 </style>
