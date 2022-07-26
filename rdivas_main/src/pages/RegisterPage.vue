@@ -57,18 +57,7 @@ export default {
         email: this.email,
         password: this.password,
       }
-      fetch(`${this.$store.getters.host}/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-      }).then(res => res.json())
-        .then(data => {
-          if (data.status === 'success') {
-            this.$router.replace('/home');
-          }
-        })
+      this.$store.dispatch("register", user);
     }
   }
 }

@@ -1,3 +1,5 @@
+// import { nullableTypeAnnotation } from "@babel/types";
+
 export default {
   setProdList(state, payload) {
     state.productList = payload;
@@ -17,16 +19,43 @@ export default {
     );
   },
   addToCart(state, payload) {
-    let item = state.cart.find((item) => item.prodId == payload.prodId);
-    if (item) {
-      if (item.size != payload.size) {
-        item.size = payload.size;
-      }
-      item.quantity += payload.quantity;
-    } else {
-      state.cart.push(payload);
+    console.log("addToCart", payload);
+    // let item = state.cart.find((item) => item.prodId == payload.prodId);
+    // if (item) {
+    //   if (item.size != payload.size) {
+    //     item.size = payload.size;
+    //   }
+    //   item.quantity += payload.quantity;
+    // } else {
+    //   state.cart.push(payload);
+    // }
+    // console.log(state.cart);
+    let item = {
+        "productId": payload.prodId,
+        "quantity": payload.quantity,
+        "productSize": payload.size,
+        "productColor": payload.color
     }
-    console.log(state.cart);
+    console.log(localStorage.getItem("token"));
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+
+    },
+      body: JSON.stringify(item)
+      // body: item
+    };
+    fetch(`http://localhost:6969/user/editroduct`, requestOptions)
+      .then(response => response.json())
+      .then(data =>{
+        console.log(data);
+        if(data.status == "success"){
+          // reload window
+          window.location.reload();
+        }
+      });
+
   },
   removeFromCart(state, payload) {
     let item = state.cart.find((item) => item.prodId == payload);

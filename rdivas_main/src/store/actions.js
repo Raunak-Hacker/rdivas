@@ -1,6 +1,11 @@
+// import router from "../main.js";
+// import router from './router'
+import router from "../router.js";
+
 export default {
   getProdList(context, data) {
     context.commit("setProdList", data);
+    console.log("getProdList");
     // const list = context.getters.productList;
     // console.log(list);
   },
@@ -15,7 +20,29 @@ export default {
     });
   },
 
-  // login/register
+  //register
+
+  async register(context, data) {
+    const user = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const register = await fetch(`${context.getters.host}/signup`, user);
+    const reponse = await register.json();
+    console.log(reponse);
+    if (reponse.status === "success") {
+      const newUser = {
+        email: data.email,
+        password: data.password,
+      };
+      await context.dispatch("login", newUser);
+      router.push("/home");
+      window.location.reload();
+    }
+  },
+
+  // login
 
   async login(context, data) {
     const user = {

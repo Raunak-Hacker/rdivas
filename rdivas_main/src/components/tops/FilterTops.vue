@@ -107,7 +107,7 @@ export default {
 }
 
 .filterTops {
-    width: 25%;
+    width: 100%;
     padding: 1%;
     /* border: 1px solid black; */
 }

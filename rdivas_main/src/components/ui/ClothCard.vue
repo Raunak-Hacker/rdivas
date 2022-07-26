@@ -6,11 +6,25 @@
             <div class="sale" v-if="sale">SALE</div>
             <div class="new" v-if="best">BEST SELLER</div>
         </div>
-        <transition>
+        
+        <transition v-if="upHere"  @mouseleave="upHere = false" >
+            <div class="icons" style="top: 45%;" v-if="icon">
+            <a @click="addCart('S')">S</a>
+            <a @click="addCart('M')">M</a>
+            <a @click="addCart('Lllll')">L</a>
+            <a @click="addCart('XL')">XL</a>
+
+            </div>
+        </transition>
+        <transition v-if="true">
             <div class="icons" v-if="icon">
+
                 <a href=""> <i class="bx bx-expand-alt" /> </a>
                 <a @click="addWish"> <i class="bx bx-heart" /> </a>
-                <a @click="addCart"> <i class="bx bx-cart" /> </a>
+
+                <a @mouseover="upHere = true" > <i class="bx bx-cart" /> </a>
+                <!-- <a @click="addCart" > <i class="bx bx-cart" /> </a> -->
+
             </div>
         </transition>
         <div class="det">
@@ -67,6 +81,7 @@ export default {
     data() {
         return {
             icon: false,
+            upHere: false,
         }
     },
     computed: {
@@ -91,7 +106,8 @@ export default {
                 this.$router.push('/login');
             }
         },
-        addCart() {
+        addCart(size) {
+            console.log(size);
             if (this.auth) {
                 const product = {
                     prodId: this.id,
@@ -99,7 +115,7 @@ export default {
                     price: this.price,
                     image: this.imgUrl,
                     quantity: 1,
-                    size: 'S',
+                    size: size,
                     color: this.color,
                     discount: this.discount,
                 }
@@ -152,10 +168,11 @@ i {
 }
 
 .prod {
-    width: 22.7%;
+    width: 98%;
     height: 10%;
     margin-bottom: 2%;
     display: flex;
+    margin: 0.5%;
     flex-direction: column;
     position: relative;
     border: 1px solid #e0e0e0;
@@ -176,7 +193,7 @@ i {
     display: block;
     height: 2.5rem;
     width: 2.5rem;
-    background: white;
+    background: #b5d7ff;
     color: #111111;
     text-align: center;
     /* transition: 3s ease-in-out; */
@@ -185,7 +202,7 @@ i {
 
 .img {
     width: 100%;
-    height: 50vh;
+    height: 40vh;
     background-size: cover;
     background-position: right;
     background-repeat: no-repeat;
@@ -251,5 +268,69 @@ i {
     font-weight: 200;
     font-size: small;
     margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .prod {
+        width: 100%;
+        height: 20%;
+        margin-bottom: 2%;
+        display: flex;
+        margin: 0.5%;
+        flex-direction: column;
+        position: relative;
+        border: 1px solid #e0e0e0;
+    }
+    .img {
+        width: 100%;
+        height: 20vh;
+        background-size: cover;
+        background-position: right;
+        background-repeat: no-repeat;
+        position: relative;
+        cursor: pointer;
+    }
+    .img img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .icons {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 1.5rem;
+        width: 75%;
+        position: absolute;
+        top: 55%;
+        margin-left: 15%;
+        /* transition: 3s ease-in-out; */
+    }
+    .icons a {
+        display: block;
+        height: 2.5rem;
+        width: 2.5rem;
+        background: #b5d7ff;
+        color: #111111;
+        text-align: center;
+        /* transition: 3s ease-in-out; */
+        border-radius: 50%;
+    }
+    .det {
+        width: 100%;
+        /* height: 30%; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5rem;
+    }
+    .det p {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 200;
+        font-size: small;
+        margin-bottom: 1rem;
+    }
+
+    
 }
 </style>
