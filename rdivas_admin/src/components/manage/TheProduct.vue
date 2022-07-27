@@ -17,6 +17,14 @@
 
 export default {
     props: ['name', 'id', 'sel-manage', 'colorCode'],
+    computed: {
+        host() {
+            return this.$store.getters.host + 'delete/';
+        },
+        token() {
+            return this.$store.getters.token;
+        }
+    },
     methods: {
         editClicked() {
             const det = {
@@ -26,14 +34,13 @@ export default {
             this.$emit('editClicked', det);
         },
         async delClicked() {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDk2QGFiYyIsImlkIjoxOCwicm9sZSI6ImFkbWluIn0sImlhdCI6MTY1ODgzMzM0OCwiZXhwIjoxNjU4OTE5NzQ4fQ.KZgoBbsDKNtNLG-VjllZtFU4vTI3lMbdz8QsXWnCqfE'
             if (confirm('Are you sure you want to delete')) {
                 let url = null
                 let details = {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${this.token}`
                     },
                 }
                 if (this.selManage == 'categories') {
@@ -41,20 +48,18 @@ export default {
                 }
                 else if (this.selManage == 'sub categories') {
                     url = 'category/';
-                    details = {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`
-                        },
-                    }
+                }
+                else if (this.selManage == 'products') {
+                    url = 'product/';
                 }
                 else if (this.selManage == 'groups') {
                     url = 'group/';
+                } else if (this.selManage == 'fabrics') {
+                    url = 'fabric/';
+                } else if (this.selManage == 'colors') {
+                    url = 'color/';
                 }
-                // name: this.newColour,
-                //colorCode: this.colorCode
-                const response = await fetch("http://localhost:6969/admin/delete/" + url + this.id, details);
+                const response = await fetch(this.host + url + this.id, details);
                 const data = await response.json();
                 console.log(data);
                 console.log('Thing was deleted.');

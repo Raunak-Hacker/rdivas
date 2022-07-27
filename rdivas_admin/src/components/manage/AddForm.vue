@@ -4,17 +4,17 @@
         <form class="form" @submit.prevent="submitForm" v-if="selManage === 'products'">
 
             <div class="field">
-
                 <div class="label">Category</div>
                 <div class="input">
                     <select name="category" id="category" v-model="category" @change="categoryChange">
                         <option value="">Select a category</option>
-                        <option v-for="category in categories" :key="category.id" :value="category.name">
+                        <option v-for="category in categories" :key="category.id" :value="category.id">
                             {{ category.name }}
                         </option>
                     </select>
                 </div>
             </div>
+
             <div class="field">
                 <div class="label">Sub Category</div>
                 <div class="input">
@@ -26,6 +26,7 @@
                     </select>
                 </div>
             </div>
+
             <div class="field">
                 <div class="label">Group</div>
                 <div class="input">
@@ -37,24 +38,28 @@
                     </select>
                 </div>
             </div>
+
             <div class="field">
                 <div class="label">Name</div>
                 <div class="input">
                     <input type="text" placeholder="Product Name" v-model="productName" />
                 </div>
             </div>
+
             <div class="field">
                 <div class="label">Price</div>
                 <div class="input">
                     <input type="number" placeholder="Product Price" v-model="productPrice" />
                 </div>
             </div>
+
             <div class="field">
                 <div class="label">Description</div>
                 <div class="input">
                     <textarea placeholder="Product Description" v-model="productDescription" />
                 </div>
             </div>
+
             <div class="field">
                 <div class="label">Colour</div>
                 <div class="input">
@@ -66,6 +71,7 @@
                     </select>
                 </div>
             </div>
+
             <div class="field">
                 <div class="label">Fabric</div>
                 <div class="input">
@@ -83,25 +89,25 @@
             <div class="cfield">
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" value="S" v-model="size" />
+                        <input type="checkbox" name="size" value="S" v-model="s" />
                     </div>
                     <div>Small (S)</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="L" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="L" v-model="l" />
                     </div>
                     <div>Large (L)</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="26/28" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="26/28" v-model="s28" />
                     </div>
                     <div>26/28</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="30/32" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="30/32" v-model="s30" />
                     </div>
                     <div>30/32</div>
                 </div>
@@ -109,39 +115,39 @@
             <div class="cfield">
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="M" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="M" v-model="m" />
                     </div>
                     <div>Medium (M)</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="XL" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="XL" v-model="xl" />
                     </div>
                     <div>Extra Large (XL)</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="28/30" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="28/30" v-model="s29" />
                     </div>
                     <div>28/30</div>
                 </div>
                 <div class="cbox ">
                     <div>
-                        <input type="checkbox" name="size" id="" value="32/34" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="32/34" v-model="xxl" />
                     </div>
-                    <div>32/34</div>
+                    <div>XXL</div>
                 </div>
             </div>
             <div class="cfield">
                 <div class="cbox">
                     <div>
-                        <input type="radio" @click="unCheck" name="tag" id="" value="bestselling" v-model="tag" />
+                        <input type="radio" @click="unCheck" name="tag" id="" value="bestSeller" v-model="tag" />
                     </div>
                     <div>Best Selling</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="radio" @click="unCheck" name="tag" id="" value="sale" v-model="tag" />
+                        <input type="radio" @click="unCheck" name="tag" id="" value="Sale" v-model="tag" />
                     </div>
                     <div>Sale</div>
                 </div>
@@ -163,19 +169,19 @@
                     <div class="files">
                         <div class="label">Image 1</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img1')" />
                         </div>
                     </div>
                     <div class="files ">
                         <div class="label">Image 2</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img2')" />
                         </div>
                     </div>
                     <div class="files ">
                         <div class="label">Image 3</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img3')" />
                         </div>
                     </div>
                 </div>
@@ -184,19 +190,19 @@
                     <div class="files ">
                         <div class="label">Image 4</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img4')" />
                         </div>
                     </div>
                     <div class="files ">
                         <div class="label">Image 5</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img5')" />
                         </div>
                     </div>
                     <div class="files ">
                         <div class="label">Image 6</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img6')" />
                         </div>
                     </div>
                 </div>
@@ -211,7 +217,34 @@
             </div>
         </form>
 
-        <div class="manage">
+        <div class="man-imgs" v-if="selManage == 'products'">
+            <div v-if="img1">
+                <img :src="src + img1" height="200">
+                <h4>Image 1</h4>
+            </div>
+            <div v-if="img2">
+                <img :src="src + img2" height="200">
+                <h4>Image 2</h4>
+            </div>
+            <div v-if="img3">
+                <img :src="src + img3" height="200">
+                <h4>Image 3</h4>
+            </div>
+            <div v-if="img4">
+                <img :src="src + img4" height="200">
+                <h4>Image 4</h4>
+            </div>
+            <div v-if="img5">
+                <img :src="src + img5" height="200">
+                <h4>Image 5</h4>
+            </div>
+            <div v-if="img6">
+                <img :src="src + img6" height="200">
+                <h4>Image 6</h4>
+            </div>
+        </div>
+
+        <div class="manage" v-if="selManage != 'products'">
 
             <div class="add">
 
@@ -283,23 +316,104 @@ export default {
             size: [],
             tag: null,
             image: null,
+            img1: '',
+            img2: '',
+            img3: '',
+            img4: '',
+            img5: '',
+            img6: '',
+            s: false,
+            m: false,
+            l: false,
+            xl: false,
+            xxl: false,
+            s28: false,
+            s29: false,
+            s30: false,
             fileName: null,
-            host: 'http://localhost:6969/admin/',
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDk2QGFiYyIsImlkIjoxOCwicm9sZSI6ImFkbWluIn0sImlhdCI6MTY1ODgzMzM0OCwiZXhwIjoxNjU4OTE5NzQ4fQ.KZgoBbsDKNtNLG-VjllZtFU4vTI3lMbdz8QsXWnCqfE'
+            src: 'https://files.rdivas.in/',
         };
     },
+    computed: {
+        host() {
+            return this.$store.getters.host;
+        },
+        token() {
+            return this.$store.getters.token;
+        }
+    },
     async created() {
-        await fetch(this.host + 'get/types', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.token
+        if (this.selManage == 'sub categories' || this.selManage == 'products') {
+            const fet = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
             }
-        }).then((response) => response.json())
-            .then((data) => (this.categories = data));
+            fetch(this.host + 'get/types/', fet).then((response) => response.json())
+                .then((data) => (this.categories = data));
+            if (this.selManage == 'products') {
+                await fetch(this.host + 'get/product/' + this.id, fet).then((response) => response.json())
+                    .then((data) => (this.product = data.productobj));
+                console.log(this.product);
+                fetch(this.host + 'get/groups/', fet).then((response) => response.json())
+                    .then((data) => (this.groups = data));
+                fetch(this.host + 'get/colors/', fet).then((response) => response.json())
+                    .then((data) => (this.colours = data));
+                fetch(this.host + 'get/fabrics/', fet).then((response) => response.json())
+                    .then((data) => (this.fabrics = data));
+            }
+            else if (this.selManage == 'sub categories') {
+                await fetch(this.host + 'get/category/' + this.id, fet).then((response) => response.json())
+                    .then((data) => (this.cat = data));
+                this.newCat = this.cat.mainCategory.name;
+            }
+        }
     },
     methods: {
-        handleFileUpload(e) {
+        async handleFileUpload(e, d) {
+            if (d) {
+                let formData = new FormData()
+                const lol = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: 'Bearer ' + this.token,
+                        ContentType: 'multipart/form-data',
+                    },
+                    body: formData,
+                }
+                let img = e.target.files[0];
+                formData.append('file', img)
+                await fetch(this.host + 'upload', lol)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (d == 'img1') {
+                            this.img1 = data.fileName
+                            return
+                        }
+                        if (d == 'img2') {
+                            this.img2 = data.fileName
+                            return
+                        }
+                        if (d == 'img3') {
+                            this.img3 = data.fileName
+                            return
+                        }
+                        if (d == 'img4') {
+                            this.img4 = data.fileName
+                            return
+                        }
+                        if (d == 'img5') {
+                            this.img5 = data.fileName
+                            return
+                        }
+                        if (d == 'img6') {
+                            this.img6 = data.fileName
+                            return
+                        }
+                    })
+            }
             this.image = e.target.files[0];
         },
         async submitSubCat() {
@@ -313,7 +427,7 @@ export default {
                 },
                 body: formData,
             }
-            await fetch('http://localhost:6969/admin/upload', lol)
+            await fetch(this.host + 'upload', lol)
                 .then(response => response.json())
                 .then(data => {
                     this.fileName = data.fileName;
@@ -332,7 +446,14 @@ export default {
             })
         },
         categoryChange() {
-            fetch(`http://localhost:6969/admin/get/categories/${this.category}`)
+            const fet = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
+            }
+            fetch(`https://baku.rdivas.in/admin/get/category/bytype/${this.category}`, fet)
                 .then((response) => response.json())
                 .then((data) => (this.subCategories = data));
         },
@@ -341,19 +462,54 @@ export default {
                 this.tag = null;
             }
         },
-        submitForm() {
-            const product = {
-                category: this.category,
-                subCategory: this.subCategory,
+        async submitForm() {
+            let product = {
+                method: 'POST',
+                headers: {
+                    Authorization: 'Bearer ' + this.token,
+                    ContentType: 'multipart/form-data',
+                },
+                name: this.productName,
+                category: this.subCategory,
+                description: this.productDescription,
+                price: this.productPrice,
                 group: this.group,
-                productName: this.productName,
-                productPrice: this.productPrice,
-                productDescription: this.productDescription,
-                productColour: this.productColour,
-                productFabric: this.productFabric,
-                size: this.size,
+                color: this.productColour,
+                fabric: this.productFabric,
+                image1: this.img1,
+                image2: this.img2,
+                image3: this.img3,
+                image4: this.img4,
+                image5: this.img5,
+                image6: this.img6,
+                sale: false,
+                bestSeller: false,
+                s: this.s,
+                m: this.m,
+                l: this.l,
+                xl: this.xl,
+                xxl: this.xxl,
+                28: this.s28,
+                29: this.s29,
+                30: this.s30,
             }
-            console.log(product);
+            if (this.tag === 'bestSeller') {
+                product.bestSeller = true;
+            }
+            else if (this.tag === 'Sale') {
+                product.sale = true;
+            }
+            await fetch(this.host + 'add/product', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                },
+                body: JSON.stringify(product)
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
         }
     },
 };
@@ -425,6 +581,22 @@ body.dark input[type="file"] {
 
 }
 
+.man-imgs {
+    width: 30%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.man-imgs div {
+    margin-right: 4%;
+    width: 25%;
+}
+.man-imgs div img{
+    width: 100%;
+}
+.man-imgs h4 {
+    text-align: center;
+}
 
 .manage {
     width: 40%;

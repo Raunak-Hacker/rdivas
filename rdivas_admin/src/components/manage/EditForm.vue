@@ -1,17 +1,17 @@
 <template>
     <div class="flex-box">
         <form class="form" @submit.prevent="submitForm" v-if="selManage == 'products'">
-            <!-- <div class="field">
+            <div class="field">
                 <div class="label">Category</div>
                 <div class="input">
                     <select name="category" id="category" v-model="category" @change="categoryChange">
-                        <option :value="product.type" disabled>{{ product.category }}</option>
-                        <option v-for="category in categories" :key="category.id" :value="category.name">
+                        <option :value="prodType" disabled>{{ prodType }}</option>
+                        <option v-for="category in categories" :key="category.id" :value="category.id">
                             {{ category.name }}
                         </option>
                     </select>
                 </div>
-            </div> -->
+            </div>
             <div class="field">
                 <div class="label">Sub Category</div>
                 <div class="input">
@@ -37,7 +37,7 @@
             <div class="field">
                 <div class="label">Name</div>
                 <div class="input">
-                    <input type="text"  :placeholder="product.name" v-model="productName">
+                    <input type="text" :placeholder="product.name" v-model="productName">
                 </div>
             </div>
             <div class="field">
@@ -56,7 +56,7 @@
                 <div class="label">Colour</div>
                 <div class="input">
                     <select name="colour" id="colour" v-model="productColour">
-                        <option :value="product.color.name">{{ product.color.name }}</option>
+                        <option :value="product.color.name" disabled>{{ product.color.name }}</option>
                         <option v-for="colour in colours" :key="colour.id" :value="colour.name">
                             {{ colour.name }}
                         </option>
@@ -67,7 +67,7 @@
                 <div class="label">Fabric</div>
                 <div class="input">
                     <select name="fabric" id="fabric" v-model="productFabric">
-                        <option :value="product.fabric.name">{{ product.fabric.name }}</option>
+                        <option :value="product.fabric.name" disabled>{{ product.fabric.name }}</option>
                         <option v-for="fabric in fabrics" :key="fabric.id" :value="fabric.name">
                             {{ fabric.name }}
                         </option>
@@ -80,25 +80,25 @@
             <div class="cfield">
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" value="S" v-model="size" />
+                        <input type="checkbox" name="size" value="S" v-model="s" />
                     </div>
                     <div>Small (S)</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="L" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="L" v-model="l" />
                     </div>
                     <div>Large (L)</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="26/28" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="26/28" v-model="s28" />
                     </div>
                     <div>26/28</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="30/32" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="30/32" v-model="s30" />
                     </div>
                     <div>30/32</div>
                 </div>
@@ -106,45 +106,45 @@
             <div class="cfield">
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="M" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="M" v-model="m" />
                     </div>
                     <div>Medium (M)</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="XL" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="XL" v-model="xl" />
                     </div>
                     <div>Extra Large (XL)</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="checkbox" name="size" id="" value="28/30" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="28/30" v-model="s29" />
                     </div>
                     <div>28/30</div>
                 </div>
                 <div class="cbox ">
                     <div>
-                        <input type="checkbox" name="size" id="" value="32/34" v-model="size" />
+                        <input type="checkbox" name="size" id="" value="32/34" v-model="xxl" />
                     </div>
-                    <div>32/34</div>
+                    <div>XXL</div>
                 </div>
             </div>
             <div class="cfield">
                 <div class="cbox">
                     <div>
-                        <input type="radio" @click="unCheck" name="tag" id="" value="bestselling" v-model="tag" />
+                        <input type="radio" @click="unCheck" name="tag" id="" value="bestSeller" v-model="tag" />
                     </div>
                     <div>Best Selling</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="radio" @click="unCheck" name="tag" id="" value="sale" v-model="tag" />
+                        <input type="radio" @click="unCheck" name="tag" id="" value="Sale" v-model="tag" />
                     </div>
                     <div>Sale</div>
                 </div>
                 <div class="cbox">
                     <div>
-                        <input type="radio" @click="unCheck" name="tag" id="" value="" v-model="tag" />
+                        <input type="radio" @click="unCheck" name="tag" id="" value="new" v-model="tag" />
                     </div>
                     <div>New</div>
                 </div>
@@ -157,22 +157,22 @@
             </div>
             <div class="imggs">
                 <div class=" imgs">
-                    <div class="files ">
+                    <div class="files">
                         <div class="label">Image 1</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img1')" />
                         </div>
                     </div>
                     <div class="files ">
                         <div class="label">Image 2</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img2')" />
                         </div>
                     </div>
                     <div class="files ">
                         <div class="label">Image 3</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img3')" />
                         </div>
                     </div>
                 </div>
@@ -181,43 +181,68 @@
                     <div class="files ">
                         <div class="label">Image 4</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img4')" />
                         </div>
                     </div>
                     <div class="files ">
                         <div class="label">Image 5</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img5')" />
                         </div>
                     </div>
                     <div class="files ">
                         <div class="label">Image 6</div>
                         <div class="input">
-                            <input type="file" />
+                            <input type="file" @change="handleFileUpload($event, 'img6')" />
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="field btn">
                 <div class="input">
-                    <button type="submit" class="sub-btn" role="button">
-                        ADD PRODUCT
+                    <button type="submit" class="sub-btn">
+                        EDIT PRODUCT
                     </button>
                 </div>
             </div>
         </form>
-        
-        <div class="manage"  v-if="selManage != 'products'">
+
+        <div class="man-imgs" v-if="selManage == 'products'">
+            <div v-if="img1">
+                <img :src="src + img1" height="200">
+                <h4>Image 1</h4>
+            </div>
+            <div v-if="img2">
+                <img :src="src + img2" height="200">
+                <h4>Image 2</h4>
+            </div>
+            <div v-if="img3">
+                <img :src="src + img3" height="200">
+                <h4>Image 3</h4>
+            </div>
+            <div v-if="img4">
+                <img :src="src + img4" height="200">
+                <h4>Image 4</h4>
+            </div>
+            <div v-if="img5">
+                <img :src="src + img5" height="200">
+                <h4>Image 5</h4>
+            </div>
+            <div v-if="img6">
+                <img :src="src + img6" height="200">
+                <h4>Image 6</h4>
+            </div>
+        </div>
+
+        <div class="manage" v-if="selManage != 'products'">
 
             <div class="add">
-
-                <div class="addStuff" v-if="selManage === 'categories'">
+                <div class="editStuff" v-if="selManage === 'categories'">
                     <input type="text" v-model="newCat" :placeholder="name" />
-                    <button @click="addStuff" class="button-42">EDIT</button>
+                    <button @click="editStuff" class="button-42">EDIT</button>
                 </div>
 
-                <form action="" @submit.prevent="addStuff">
+                <form action="" @submit.prevent="editStuff">
 
                     <div class="addCat" v-if="selManage === 'sub categories'">
                         <select v-model="newCat" required>
@@ -232,9 +257,8 @@
                         <input type="file" name="file" @change="handleFileUpload($event)" required />
                     </div> <br>
 
-
                     <img :src="src + cat.image" alt="sdsd" height="350" v-if="selManage === 'sub categories'"> <br>
-                    <h1>{{ oldInf }}</h1> <br> <br>
+                    <h1 v-if="selManage === 'sub categories'">{{ oldInf }}</h1> <br> <br>
                     <div class="addCat" v-if="selManage === 'sub categories'">
                         <input type="text" v-model="newSubCat" placeholder="New sub category" />
                         <button class="button-42" type="submit">EDIT</button>
@@ -242,20 +266,20 @@
 
                 </form>
 
-                <div class="addStuff" v-if="selManage === 'groups'">
+                <div class="editStuff" v-if="selManage === 'groups'">
                     <input type="text" v-model="newCat" :placeholder="name" />
-                    <button @click="addStuff" class="button-42" role="button">EDIT</button>
+                    <button @click="editStuff" class="button-42" role="button">EDIT</button>
                 </div>
 
-                <div class="addStuff" v-if="selManage === 'products'">
-                    <input type="text" v-model="newColour" placeholder="Edit colour" /> &nbsp;
-                    <input type="color" v-model="colorCode" placeholder="Edit colour" style="width:15%;" /> &nbsp;
-                    <button @click="addColour" class="button-42" role="button">EDIT</button>
+                <div class="editStuff" v-if="selManage === 'colors'">
+                    <input type="text" v-model="newCat" placeholder="Edit colour" /> &nbsp;
+                    <input type="color" v-model="colorCode" style="width:15%;" /> &nbsp;
+                    <button @click="editStuff" class="button-42" role="button">EDIT</button>
                 </div>
 
-                <div class="addStuff" v-if="selManage === 'products'">
-                    <input type="text" v-model="newFabric" placeholder="Edit fabric" />
-                    <button @click="addFabric" class="button-42" role="button">EDIT</button>
+                <div class="editStuff" v-if="selManage === 'fabrics'">
+                    <input type="text" v-model="newCat" placeholder="Edit fabric" />
+                    <button @click="editStuff" class="button-42" role="button">EDIT</button>
                 </div>
             </div>
 
@@ -281,7 +305,7 @@ export default {
             productPrice: null,
             productDescription: null,
             productColour: "",
-            colorCode: "#000000",
+            colorCode: "",
             productFabric: "",
             newCat: null,
             newSubCat: null,
@@ -294,14 +318,28 @@ export default {
             url: null,
             fileName: null,
             image: null,
+            prodType: null,
             oldInf: 'Old Image',
             src: 'https://files.rdivas.in/',
-            host: 'http://localhost:6969/admin/',
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDk2QGFiYyIsImlkIjoxOCwicm9sZSI6ImFkbWluIn0sImlhdCI6MTY1ODgzMzM0OCwiZXhwIjoxNjU4OTE5NzQ4fQ.KZgoBbsDKNtNLG-VjllZtFU4vTI3lMbdz8QsXWnCqfE'
+
+            img1: '',
+            img2: '',
+            img3: '',
+            img4: '',
+            img5: '',
+            img6: '',
+            s: false,
+            m: false,
+            l: false,
+            xl: false,
+            xxl: false,
+            s28: false,
+            s29: false,
+            s30: false,
         };
     },
     async created() {
-        if (this.selManage == 'sub categories' || this.selManage == 'products') {
+        if (this.selManage) {
             const fet = {
                 method: 'GET',
                 headers: {
@@ -309,17 +347,57 @@ export default {
                     'Authorization': 'Bearer ' + this.token
                 }
             }
+            if (this.selManage == 'colors') {
+                await fetch(this.host + 'get/color/' + this.id, fet).then((response) => response.json())
+                    .then((data) => (this.colorCode = data.colorCode));
+                this.newCat = this.name;
+                return;
+            }
             fetch(this.host + 'get/types/', fet).then((response) => response.json())
                 .then((data) => (this.categories = data));
+            this.newCat = this.name;
             if (this.selManage == 'products') {
+                console.log(this.subCategory);
                 await fetch(this.host + 'get/product/' + this.id, fet).then((response) => response.json())
-                    .then((data) => (this.product = data.productobj));
-                console.log(this.product);
+                    .then((data) => { this.product = data.productobj, this.category = data.type, this.prodType = data.type });
+                this.group = this.product.group.name;
+                this.subCategory = this.product.catagory.name;
+                this.productDescription = this.product.description;
+                this.productPrice = this.product.price;
+                this.productName = this.product.name;
+                this.productColour = this.product.color.name;
+                this.productFabric = this.product.fabric.name;
+                this.img1 = this.product.image1;
+                this.img2 = this.product.image2;
+                this.img3 = this.product.image3;
+                this.img4 = this.product.image4;
+                this.img5 = this.product.image5;
+                this.img6 = this.product.image6;
+                this.s = this.product.S;
+                this.m = this.product.M;
+                this.l = this.product.L;
+                this.xl = this.product.XL;
+                this.xxl = this.product.XXL;
+                this.s28 = this.product[28];
+                this.s29 = this.product[29];
+                this.s30 = this.product[30];
+                if (this.product.BestSeller == true) {
+                    this.tag = 'bestSeller';
+                }
+                if (this.product.New == true) {
+                    this.tag = 'New';
+                }
+                if (this.product.Sale == true) {
+                    this.tag = 'Sale';
+                }
+                // fetch(this.host + 'get/category/bytype/' + this.id, fet).then((response) => response.json())
+                //     .then((data) => (this.product = data.productobj));
+                // get/category/bytype/:type
                 fetch(this.host + 'get/categories/', fet).then((response) => response.json())
                     .then((data) => (this.subCategories = data));
                 fetch(this.host + 'get/groups/', fet).then((response) => response.json())
                     .then((data) => (this.groups = data));
-                fetch(this.host + 'get/colours/', fet).then((response) => response.json())
+                fetch(this.host + 'get/colors/', fet).then((response) => response.json())
                     .then((data) => (this.colours = data));
                 fetch(this.host + 'get/fabrics/', fet).then((response) => response.json())
                     .then((data) => (this.fabrics = data));
@@ -328,47 +406,99 @@ export default {
                 await fetch(this.host + 'get/category/' + this.id, fet).then((response) => response.json())
                     .then((data) => (this.cat = data));
                 this.newCat = this.cat.mainCategory.name;
+                this.newSubCat = this.name;
             }
         }
     },
     computed: {
-        header() {
-            return this.$store.getters.header;
+        host() {
+            return this.$store.getters.host;
+        },
+        token() {
+            return this.$store.getters.token;
         }
     },
     methods: {
-        categoryChange() {
-            fetch(`http://localhost:6969/admin/get/categories/${this.category}`)
-                .then((response) => response.json())
-                .then((data) => (this.subCategories = data));
-        },
-        async handleFileUpload(e) {
+        // categoryChange() {
+        //     fetch(`http://localhost:6969/admin/get/categories/${this.category}`)
+        //         .then((response) => response.json())
+        //         .then((data) => (this.subCategories = data));
+        // },
+        // fetch(this.host + 'get/category/bytype/' + this.id, fet).then((response) => response.json())
+        //     .then((data) => (this.product = data.productobj));
+        // get/category/bytype/:type
+
+        async handleFileUpload(e, d) {
             this.image = e.target.files[0];
-            let formData = new FormData()
-            formData.append('file', this.image)
-            const lol = {
-                method: 'POST',
-                headers: {
-                    Authorization: 'Bearer ' + this.token,
-                    ContentType: 'multipart/form-data',
-                },
-                body: formData,
+            if (this.selManage == 'sub categories') {
+                let formData = new FormData()
+                formData.append('file', this.image)
+                const lol = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: 'Bearer ' + this.token,
+                        ContentType: 'multipart/form-data',
+                    },
+                    body: formData,
+                }
+                await fetch('http://localhost:6969/admin/upload', lol)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.cat.image = data.fileName
+                    })
+                this.oldInf = 'New Image'
             }
-            await fetch('http://localhost:6969/admin/upload', lol)
-                .then(response => response.json())
-                .then(data => {
-                    this.cat.image = data.fileName
-                })
-            this.oldInf = 'New Image'
+
+            if (d) {
+                let formData = new FormData()
+                const lol = {
+                    method: 'POST',
+                    headers: {
+                        Authorization: 'Bearer ' + this.token,
+                        ContentType: 'multipart/form-data',
+                    },
+                    body: formData,
+                }
+                let img = e.target.files[0];
+                formData.append('file', img)
+                await fetch(this.host + 'upload', lol)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (d == 'img1') {
+                            this.img1 = data.fileName
+                            return
+                        }
+                        if (d == 'img2') {
+                            this.img2 = data.fileName
+                            return
+                        }
+                        if (d == 'img3') {
+                            this.img3 = data.fileName
+                            return
+                        }
+                        if (d == 'img4') {
+                            this.img4 = data.fileName
+                            return
+                        }
+                        if (d == 'img5') {
+                            this.img5 = data.fileName
+                            return
+                        }
+                        if (d == 'img6') {
+                            this.img6 = data.fileName
+                            return
+                        }
+                    })
+            }
         },
-        async addStuff() {
+        async editStuff() {
             let details = {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${this.token}`
                 },
-                body: JSON.stringify({ "id": this.id, name: this.newCat })
+                body: JSON.stringify({ id: this.id, name: this.newCat })
             }
             if (this.selManage == 'categories') {
                 this.url = 'type';
@@ -381,57 +511,102 @@ export default {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${this.token}`
                     },
-                    body: JSON.stringify({ "id": this.id, name: this.newSubCat, type: this.newCat, image: this.cat.image })
+                    body: JSON.stringify({ id: this.id, name: this.newSubCat, type: this.newCat, image: this.cat.image })
                 }
             }
             else if (this.selManage == 'groups') {
                 this.url = 'group';
+            } else if (this.selManage == 'fabrics') {
+                this.url = 'fabric';
+            } else if (this.selManage == 'colors') {
+                this.url = 'color';
+                details = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${this.token}`
+                    },
+                    body: JSON.stringify({ id: this.id, name: this.newCat, colorCode: this.colorCode })
+                }
             }
-            // name: this.newColour,
-            //colorCode: this.colorCode
-            await fetch("http://localhost:6969/admin/edit/" + this.url, details);
-            // const response = 
-            // const data = await response.json();
-            // console.log(data);
+            // else if (this.selManage == 'products') {
+            //     this.url = 'product';
+            // }
+            console.log(details);
+
+            await fetch(this.host + "edit/" + this.url, details).then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                })
         },
-        addColour() {
-            const newColour = {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: this.newColour,
-                    colorCode: this.colorCode
-                }),
-            };
-            fetch("http://localhost:6969/admin/add/color", newColour)
+        categoryChange() {
+            const fet = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
+            }
+            fetch(`https://baku.rdivas.in/admin/get/category/bytype/${this.category}`, fet)
+                .then((response) => response.json())
+                .then((data) => (this.subCategories = data));
+            console.log(this.subCategories);
         },
         unCheck() {
             if (this.tag != null) {
                 this.tag = null;
             }
         },
-        submitForm() {
-            const product = {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    category: this.category,
-                    subCategory: this.subCategory,
-                    group: this.group,
-                    productName: this.productName,
-                    productPrice: this.productPrice,
-                    productDescription: this.productDescription,
-                    productColour: this.productColour,
-                    productFabric: this.productFabric,
-                    size: this.size,
-                }),
-            };
-            fetch("http://localhost:6969/admin/add/product", product)
-                .then((response) => response.json())
-            // .then((data) => {
-            //     window.location.reload();
-            //     console.log(data);
-            // });
+        async submitForm() {
+            let product = {
+                method: 'POST',
+                headers: {
+                    Authorization: 'Bearer ' + this.token,
+                    ContentType: 'multipart/form-data',
+                },
+                name: this.productName,
+                category: this.subCategory,
+                description: this.productDescription,
+                price: this.productPrice,
+                group: this.group,
+                color: this.productColour,
+                fabric: this.productFabric,
+                image1: this.img1,
+                image2: this.img2,
+                image3: this.img3,
+                image4: this.img4,
+                image5: this.img5,
+                image6: this.img6,
+                sale: false,
+                bestSeller: false,
+                s: this.s,
+                m: this.m,
+                l: this.l,
+                xl: this.xl,
+                xxl: this.xxl,
+                28: this.s28,
+                29: this.s29,
+                30: this.s30,
+                id: this.id,
+            }
+            if (this.tag === 'bestSeller') {
+                product.bestSeller = true;
+            }
+            else if (this.tag === 'Sale') {
+                product.sale = true;
+            }
+            // console.log(JSON.stringify(product));
+            await fetch(this.host + 'edit/product', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                },
+                body: JSON.stringify(product)
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
         }
     },
 };
@@ -503,6 +678,25 @@ body.dark input[type="file"] {
 
 }
 
+.man-imgs {
+    width: 30%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.man-imgs div {
+    margin-right: 4%;
+    width: 25%;
+}
+
+.man-imgs div img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.man-imgs h4 {
+    text-align: center;
+}
 
 .manage {
     width: 40%;
@@ -510,7 +704,6 @@ body.dark input[type="file"] {
     flex-direction: column;
     justify-content: space-between;
     padding: 0 10%;
-
 }
 
 .current {
@@ -635,13 +828,13 @@ body.dark .form {
 
 
 
-.addStuff {
+.editStuff {
     display: flex;
     justify-content: space-between;
     margin-bottom: 8%;
 }
 
-.addStuff input {
+.editStuff input {
     width: 75%;
     padding: 0.1rem;
     border: none;
@@ -653,7 +846,7 @@ input[type='file'] {
     outline: none;
 }
 
-.addStuff button {
+.editStuff button {
     width: 20%;
     padding: 0.1rem;
 }

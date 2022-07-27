@@ -18,8 +18,7 @@
                     <input
                         v-if="selManage === 'categories' || selManage === 'groups' || selManage === 'colors' || selManage === 'fabrics'"
                         type="text" v-model="newStuff" :placeholder="'New ' + selManage">
-                    <input type="color" v-model="colorCode" placeholder="Edit colour" style="width:15%;"
-                        v-if="selManage === 'colors'" /> &nbsp;
+                    <input type="color" v-model="colorCode" style="width:15%;" v-if="selManage === 'colors'" /> &nbsp;
 
                     <div class="addProd">
                         <button class="button-42" @click="addClick" style="text-transform:uppercase ">ADD {{ selManage
@@ -53,6 +52,7 @@ export default {
             filter: '',
             filteredProducts: [],
             newStuff: null,
+            colorCode: "",
         }
     },
     methods: {
@@ -78,6 +78,7 @@ export default {
                         stuff = 'color';
                         newStuff = {
                             name: this.newStuff,
+                            colorCode: this.colorCode,
                             sel: stuff
                         }
                     }

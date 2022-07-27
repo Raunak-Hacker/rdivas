@@ -41,8 +41,14 @@ export default {
       selMan: null,
       name: null,
       url: null,
-      host: 'http://localhost:6969/admin/get/',
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDk2QGFiYyIsImlkIjoxOCwicm9sZSI6ImFkbWluIn0sImlhdCI6MTY1ODgzMzM0OCwiZXhwIjoxNjU4OTE5NzQ4fQ.KZgoBbsDKNtNLG-VjllZtFU4vTI3lMbdz8QsXWnCqfE'
+    }
+  },
+  computed: {
+    host() {
+      return this.$store.getters.host + 'get/';
+    },
+    token() {
+      return this.$store.getters.token;
     }
   },
   watch: {
@@ -85,16 +91,23 @@ export default {
       this.sel = true;
     },
     async addCat(cat) {
+      let add = {
+        name: cat.name
+      }
+      if (cat.colorCode) {
+        add = {
+          name: cat.name,
+          colorCode: cat.colorCode
+        }
+      }
       await fetch('http://localhost:6969/admin/add/' + cat.sel, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + this.token
         },
-        body: JSON.stringify({ name: cat.name })
+        body: JSON.stringify(add)
       });
-      // const data = await response.json();
-      // console.log(data);
     },
     addProdClicked() {
       this.selectedComponent = 'add-form';
