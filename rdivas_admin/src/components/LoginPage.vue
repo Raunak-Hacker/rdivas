@@ -1,41 +1,20 @@
 <template>
-  <!-- <section style="height: 100vh;" v-if="auth">
-    <div class="card">
-      <h2>Logged in successfully</h2>
-      <p>
-        You'll be redirected to our
-        <router-link to="/home">Home</router-link> in {{ countDown }} seconds.
-      </p>
-    </div>
-  </section> -->
-
   <section class="login pink">
     <div class="pink">
     </div>
     <div class="login-card">
-      <div class="sign-in">
-        <div class="dets">
-          <h1 style="color:white;">New Here?</h1>
-          <p style="color:white;">Sign up and discover many ongoing offers on best quality products! <br> <br> Register now to access
-            features like wishlist, cart, etc.</p>
-          <router-link to="/register"><button class="button-37"
-              style="background-color:white; color:black; font-weight:bolder">Sign
-              Up</button></router-link>
-        </div>
-      </div>
       <div class="info">
         <div class="img">
           <img src="@/assets/logo.png" alt="">
         </div>
         <div class="details">
           <div class="title">
-            <h1>Login to Your Account</h1>
+            <h1>Login to Admin Panel</h1>
           </div> <br>
           <form action="POST" @submit.prevent="subForm">
             <input type="email" placeholder="email" v-model.trim="email"> <br>
             <input type="password" placeholder="password" v-model.trim="password"> <br>
-            <p v-if="authError">{{ authMessage }}</p>
-            <router-link to=""><small>Forgot Password?</small></router-link> <br>
+            <p v-if="authError">{{ authMessage }}</p> <br>
             <button class="button-37" role="button">LOGIN</button>
           </form>
         </div>
@@ -62,6 +41,12 @@ export default {
     }
   },
   computed: {
+    host() {
+      return this.$store.getters.logHost;
+    },
+    token() {
+      return this.$store.getters.token;
+    },
     authMessage() {
       return this.$store.getters.authMessage;
     },
@@ -73,26 +58,51 @@ export default {
   methods: {
     async subForm() {
       const user = {
-        email: this.email,
-        password: this.password,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.email,
+          password: this.password,
+        }),
       }
-      await this.$store.dispatch('login', user);
-      if (this.authError) {
+      const tokenResponse = await fetch(`${this.host}login`, user);
+      const token = await tokenResponse.json();
+      if (!tokenResponse.ok) {
+        const authErr = {
+          message: "Invalid email or password",
+          error: true,
+        };
+        this.$store.commit("setAuthError", authErr);
         return;
+      } else if (token.token) {
+        localStorage.setItem("token", token.token);
+        this.$store.commit("setAuthError", { message: null, error: false });
+        this.$store.dispatch("auth", token.token);
+        console.log('token');
       }
-      window.location.reload();
-      this.$router.replace('/home');
+      console.log(token);
+      console.log('token');
     },
-    // countDownTimer() {
-    //   if (this.countDown > 0) {
-    //     setTimeout(() => {
-    //       this.countDown -= 1
-    //       this.countDownTimer()
-    //     }, 1000)
+    // async auth(token) {
+    //   const auth = await fetch(`${this.host}/user/`, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   });
+    //   const authResponse = await auth.json();
+    //   if (authResponse.status === "success") {
+    //     // context.commit("setAuth", true);
+    //     this.authMessage = null
+    //     this.authError = false
+    //     return;
+    //   } else if (authResponse.message === "Unauthorized") {
+    //     this.authMessage = "Invalid email or password"
+    //     this.authError = true
+    //     return this.logout();
     //   }
-    // }
+    // },
   },
-
 }
 </script>
 
@@ -107,15 +117,6 @@ export default {
 .pink {
   width: 35%;
   background-color: var(--left-login);
-}
-
-.sign-in {
-  width: 33.2%;
-  height: 100%;
-  background-color: var(--left-login);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .dets {
@@ -146,7 +147,7 @@ export default {
 }
 
 .info {
-  width: 66.8%;
+  width: 100%;
   height: 70%;
   display: flex;
   flex-direction: column;
@@ -222,7 +223,6 @@ form {
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
   box-sizing: border-box;
-  color: #fff;
   cursor: pointer;
   font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;

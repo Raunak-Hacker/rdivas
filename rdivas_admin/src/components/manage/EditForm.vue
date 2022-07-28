@@ -40,12 +40,21 @@
                     <input type="text" :placeholder="product.name" v-model="productName">
                 </div>
             </div>
-            <div class="field">
+            
+             <div class="field">
                 <div class="label">Price</div>
                 <div class="input">
                     <input type="number" :placeholder="product.price" v-model="productPrice" />
                 </div>
             </div>
+
+            <div class="field">
+                <div class="label">Quantity</div>
+                <div class="input">
+                    <input type="number" :placeholder="product.quantity" v-model="productQuantity" />
+                </div>
+            </div>
+
             <div class="field">
                 <div class="label">Description</div>
                 <div class="input">
@@ -301,6 +310,7 @@ export default {
             cat: null,
             subCategory: "",
             group: "",
+            productQuantity: null,
             productName: "",
             productPrice: null,
             productDescription: null,
@@ -357,13 +367,13 @@ export default {
                 .then((data) => (this.categories = data));
             this.newCat = this.name;
             if (this.selManage == 'products') {
-                console.log(this.subCategory);
                 await fetch(this.host + 'get/product/' + this.id, fet).then((response) => response.json())
                     .then((data) => { this.product = data.productobj, this.category = data.type, this.prodType = data.type });
                 this.group = this.product.group.name;
                 this.subCategory = this.product.catagory.name;
                 this.productDescription = this.product.description;
                 this.productPrice = this.product.price;
+                this.productQuantity = this.product.quantity;
                 this.productName = this.product.name;
                 this.productColour = this.product.color.name;
                 this.productFabric = this.product.fabric.name;
@@ -532,12 +542,9 @@ export default {
             // else if (this.selManage == 'products') {
             //     this.url = 'product';
             // }
-            console.log(details);
 
-            await fetch(this.host + "edit/" + this.url, details).then((response) => response.json())
-                .then((data) => {
-                    console.log(data);
-                })
+            await fetch(this.host + "edit/" + this.url, details)
+            
         },
         categoryChange() {
             const fet = {
@@ -550,7 +557,6 @@ export default {
             fetch(`https://baku.rdivas.in/admin/get/category/bytype/${this.category}`, fet)
                 .then((response) => response.json())
                 .then((data) => (this.subCategories = data));
-            console.log(this.subCategories);
         },
         unCheck() {
             if (this.tag != null) {
@@ -568,6 +574,7 @@ export default {
                 category: this.subCategory,
                 description: this.productDescription,
                 price: this.productPrice,
+                quantity: this.productQuantity,
                 group: this.group,
                 color: this.productColour,
                 fabric: this.productFabric,
@@ -595,7 +602,6 @@ export default {
             else if (this.tag === 'Sale') {
                 product.sale = true;
             }
-            // console.log(JSON.stringify(product));
             await fetch(this.host + 'edit/product', {
                 method: 'POST',
                 headers: {
@@ -603,10 +609,7 @@ export default {
                     'Authorization': 'Bearer ' + this.token
                 },
                 body: JSON.stringify(product)
-            }).then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                })
+            })
         }
     },
 };
@@ -722,7 +725,7 @@ body.dark input[type="file"] {
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    margin: 0.2rem;
+    margin: 0.2%;
 }
 
 .label {

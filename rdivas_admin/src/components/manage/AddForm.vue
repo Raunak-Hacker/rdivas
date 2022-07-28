@@ -54,6 +54,13 @@
             </div>
 
             <div class="field">
+                <div class="label">Quantity</div>
+                <div class="input">
+                    <input type="number" placeholder="Product Quantity" v-model="productQuantity" />
+                </div>
+            </div>
+
+            <div class="field">
                 <div class="label">Description</div>
                 <div class="input">
                     <textarea placeholder="Product Description" v-model="productDescription" />
@@ -307,6 +314,7 @@ export default {
             group: "",
             productName: null,
             productPrice: null,
+            productQuantity: null,
             productDescription: null,
             productColour: "",
             colorCode: "#000000",
@@ -354,9 +362,6 @@ export default {
             fetch(this.host + 'get/types/', fet).then((response) => response.json())
                 .then((data) => (this.categories = data));
             if (this.selManage == 'products') {
-                await fetch(this.host + 'get/product/' + this.id, fet).then((response) => response.json())
-                    .then((data) => (this.product = data.productobj));
-                console.log(this.product);
                 fetch(this.host + 'get/groups/', fet).then((response) => response.json())
                     .then((data) => (this.groups = data));
                 fetch(this.host + 'get/colors/', fet).then((response) => response.json())
@@ -473,6 +478,7 @@ export default {
                 category: this.subCategory,
                 description: this.productDescription,
                 price: this.productPrice,
+                quantity: this.productQuantity,
                 group: this.group,
                 color: this.productColour,
                 fabric: this.productFabric,
@@ -506,10 +512,7 @@ export default {
                     'Authorization': 'Bearer ' + this.token
                 },
                 body: JSON.stringify(product)
-            }).then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                })
+            })
         }
     },
 };
@@ -543,7 +546,6 @@ export default {
     width: 90%;
     display: flex;
     margin: auto;
-    /* justify-content: center; */
     align-items: center;
 }
 
@@ -591,9 +593,11 @@ body.dark input[type="file"] {
     margin-right: 4%;
     width: 25%;
 }
-.man-imgs div img{
+
+.man-imgs div img {
     width: 100%;
 }
+
 .man-imgs h4 {
     text-align: center;
 }
@@ -623,7 +627,7 @@ body.dark input[type="file"] {
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    margin: 0.2rem;
+    margin: 0.2%;
 }
 
 .label {

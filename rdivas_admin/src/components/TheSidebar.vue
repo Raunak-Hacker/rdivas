@@ -78,7 +78,7 @@
         </div>
 
         <div class="bottom-content">
-          <li class="">
+          <li class="" @click="logout">
             <a>
               <i class='bx bx-log-out icon'></i>
               <span class="text nav-text">Logout</span>
@@ -133,6 +133,9 @@ export default {
     }
   },
   methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    },
     toggle() {
       this.close = !this.close
     },

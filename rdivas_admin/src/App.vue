@@ -1,9 +1,10 @@
 <template>
-  <the-sidebar @dashboard="setSelectedComponent('dashboard-page')" @analytics="setSelectedComponent('analytics-page')"
-    @manage="setSelectedComponent('manage-page')" @comments="setSelectedComponent('comments-page')"
-    @orders="setSelectedComponent('orders-page')">
+  <login-page v-if="!auth" />
+  <the-sidebar v-else @dashboard="setSelectedComponent('dashboard-page')"
+    @analytics="setSelectedComponent('analytics-page')" @manage="setSelectedComponent('manage-page')"
+    @comments="setSelectedComponent('comments-page')" @orders="setSelectedComponent('orders-page')">
     <!-- <keep-alive> -->
-      <component :is="selectedComponent" />
+    <component :is="selectedComponent" />
     <!-- </keep-alive> -->
   </the-sidebar>
 </template>
@@ -16,8 +17,19 @@
 export default {
   data() {
     return {
-      selectedComponent: 'manage-page'
+      selectedComponent: 'manage-page',
     }
+  },
+  created() {
+    if (localStorage.getItem("token")) {
+      this.$store.commit('setAuth', true);
+      this.$store.dispatch('autoLogin');
+    }
+  },
+  computed: {
+    auth() {
+      return this.$store.getters.auth;
+    },
   },
   methods: {
     setSelectedComponent(cmp) {
@@ -34,7 +46,8 @@ export default {
   box-sizing: border-box;
   color: var(--text-color);
 }
-a{
+
+a {
   cursor: pointer;
 }
 
