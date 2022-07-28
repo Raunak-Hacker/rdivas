@@ -67,6 +67,7 @@ export default {
       }
       const tokenResponse = await fetch(`${this.host}login`, user);
       const token = await tokenResponse.json();
+      console.log(token);
       if (!tokenResponse.ok) {
         const authErr = {
           message: "Invalid email or password",

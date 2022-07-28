@@ -32,7 +32,7 @@ const store = createStore({
   },
   actions: {
     async auth(context, token) {
-      const auth = await fetch(`${context.getters.logHost}user/`, {
+      const auth = await fetch(`${context.getters.host}user/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -44,7 +44,7 @@ const store = createStore({
         context.commit("setAuthError", { message: null, error: false });
         context.commit("setToken", token);
         return;
-      } else if (authResponse.message === "Unauthorized") {
+      } else if (authResponse.status !== "success") {
         const authErr = {
           message: "Unauthorized",
           error: true,
@@ -65,7 +65,6 @@ const store = createStore({
     async logout(context) {
       localStorage.removeItem("token");
       context.commit("setAuth", false);
-      window.location.reload();
     },
   },
   getters: {

@@ -99,6 +99,12 @@ header {
   height: 100%;
   padding-left: 1rem;
 }
+
+.product {
+  width: 90%;
+  height: 100%;
+  padding-right: 1rem;
+}
 @media screen and (max-width: 768px) {
   .desktop {
     display: none;

@@ -13,7 +13,7 @@ const router = createRouter({
     },
     {
       path: "/:category/:id",
-      component: () => import("./pages/TopsPage.vue"),
+      component: () => import("./pages/AllProducts.vue"),
       props: true,
     },
     {
