@@ -5,7 +5,6 @@ const store = createStore({
     authError: false,
     authMessage: null,
     auth: false,
-    // host: "https://baku.rdivas.in",
     host: "https://baku.rdivas.in/admin/",
     logHost: "https://baku.rdivas.in/",
     token: null,

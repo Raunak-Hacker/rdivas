@@ -12,15 +12,8 @@
     </div>
     <div class="flex-prod">
       <div class="qty">
-        <div
-          class="in-boxes count"
-          style="border: 1px solid rgba(0, 0, 0, 0.212)"
-        >
-          <div
-            class="in-box"
-            @click="setQuantity(-1)"
-            style="border: none; margin: 0"
-          >
+        <div class="in-boxes count" style="border: 1px solid rgba(0, 0, 0, 0.212)">
+          <div class="in-box" @click="setQuantity(-1)" style="border: none; margin: 0">
             <i class="bx bx-minus" />
           </div>
           <div class="in-box" style="border: none; cursor: default">
@@ -35,9 +28,7 @@
         <label for="price">₹{{ price }}</label>
       </div>
       <div class="offer">
-        <label for="offer" style="color: red"
-          >-₹{{ (price - selprice) * qty }}</label
-        >
+        <label for="offer" style="color: red">-₹{{ offer }}</label>
       </div>
       <div class="total">
         <div class="del" @click="removeItem"><i class="bx bx-x" /></div>
@@ -64,7 +55,7 @@ export default {
     "items",
   ],
   created() {
-    this.quantity = this.qty;
+    // this.quantity = this.qty;
     // this.$emit("update-quantity", this.quantity);
   },
   data() {
@@ -72,42 +63,33 @@ export default {
       quantity: null,
     };
   },
+  computed: {
+    offer() {
+      
+      return ((this.price - this.selprice) * this.qty).toFixed(2);
+    },
+  },
   methods: {
-    removeItem() {
-        console.log("remove item", this.id, this.qty, this.size, this.color);
-        const product = {
+    async removeItem() {
+      const product = {
         prodId: this.id,
         quantity: -this.qty,
         size: this.size,
         color: this.color
       };
-      this.$store.dispatch("addToCart", product);
-         this.$emit("update-quantity");
-
+      await this.$store.dispatch("addToCart", product);
     },
     async setQuantity(quantity) {
-        const product = {
-            prodId: this.id,
+      const product = {
+        prodId: this.id,
         quantity: quantity,
         size: this.size,
         color: this.color,
       };
-      await this.$store.dispatch("addToCart", product).sleep(100);
-      this.$emit("update-quantity");
-          
+      await this.$store.dispatch("addToCart", product);
     },
   },
-  watch: {
-    quantity(val) {
-      if (val < 1) {
-        this.quantity = 1;
-        this.$store.commit("removeFromCart", this.id);
-      } else if (val > 10) {
-        this.quantity = 10;
-      }
-      this.$emit("update-quantity", this.quantity);
-    },
-  },
+  watch: {},
 };
 </script>
 
@@ -115,6 +97,7 @@ export default {
 .product {
   height: 33.33%;
   padding: 1% 0;
+  margin-right: 1rem;
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(128, 128, 128, 0.56);

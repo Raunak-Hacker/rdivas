@@ -59,6 +59,11 @@ const router = createRouter({
       },
     },
     {
+      path: "/verify/:id",
+      component: () => import("./pages/VerifyPage.vue"),
+      props: true,
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "NotFound",
       component: NotFound,

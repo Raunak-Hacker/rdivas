@@ -25,7 +25,8 @@
             <input type="number" placeholder="phone" v-model.trim="phone" required> <br>
             <input type="email" placeholder="email" v-model.trim="email" required> <br>
             <input type="password" placeholder="password" v-model.trim="password" required> <br>
-            <p v-if="invalid">User already exists</p>
+            <!-- <p v-if="invalid">User already exists</p> -->
+            <p v-if="authError">{{ authMessage }}</p>
             <button class="button-37" type="submit">REGISTER</button>
           </form>
         </div>
@@ -40,7 +41,6 @@
 export default {
   data() {
     return {
-      // invalid: false,
     }
   },
   mounted() {
@@ -49,6 +49,15 @@ export default {
       behavior: "smooth",
     });
   },
+  computed: {
+    authMessage() {
+      return this.$store.getters.authMessage;
+    },
+    authError() {
+      return this.$store.getters.authError;
+    }
+  },
+
   methods: {
     subForm() {
       const user = {

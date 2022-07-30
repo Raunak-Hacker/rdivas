@@ -1,16 +1,16 @@
 <template>
   <!-- <keep-alive> -->
   <component v-if="sel" :is="selectedComponent" @add-click="addProdClicked" @edit-click="editProdClicked" :id="id"
-    :name="name" :sel-manage="selMan" :filteredProds="filteredProducts" :prods="products" @add-cat="addCat" />
+    :name="name" :sel-manage="selManage" :filteredProds="filteredProducts" :prods="products" @add-cat="addCat" />
   <transition appear v-else>
     <section class="man-page">
       <div class="boxes">
-        <div class="box button-42" @click="selMan = 'categories'">Categories</div>
-        <div class="box button-42" @click="selMan = 'sub categories'">Sub Categories</div>
-        <div class="box button-42" @click="selMan = 'groups'">Groups</div>
-        <div class="box button-42" @click="selMan = 'products'">Products</div>
-        <div class="box button-42" @click="selMan = 'colors'">Colors</div>
-        <div class="box button-42" @click="selMan = 'fabrics'">Fabrics</div>
+        <div class="box button-42" @click="selMan('categories')">Categories</div>
+        <div class="box button-42" @click="selMan('sub categories')">Sub Categories</div>
+        <div class="box button-42" @click="selMan('groups')">Groups</div>
+        <div class="box button-42" @click="selMan('products')">Products</div>
+        <div class="box button-42" @click="selMan('colors')">Colors</div>
+        <div class="box button-42" @click="selMan('fabrics')">Fabrics</div>
       </div>
     </section>
   </transition>
@@ -19,15 +19,15 @@
 </template>
 
 <script>
-import AddForm from '@/components/manage/AddForm.vue'
-import MainPage from '@/components/manage/MainPage.vue'
-import EditForm from '@/components/manage/EditForm.vue'
+import AddForm from "@/components/manage/AddForm.vue";
+import MainPage from "@/components/manage/MainPage.vue";
+import EditForm from "@/components/manage/EditForm.vue";
 
 export default {
   components: {
     AddForm,
     EditForm,
-    MainPage
+    MainPage,
   },
   data() {
     return {
@@ -36,54 +36,44 @@ export default {
       addClick: false,
       editClick: false,
       sel: false,
-      selectedComponent: 'main-page',
+      selectedComponent: "main-page",
       id: null,
-      selMan: null,
+      selManage: null,
       name: null,
       url: null,
-    }
+    };
   },
   computed: {
     host() {
-      return this.$store.getters.host + 'get/';
+      return this.$store.getters.host + "get/";
+    },
+    ogHost() {
+      return this.$store.getters.host;
     },
     token() {
       return this.$store.getters.token;
-    }
-  },
-  watch: {
-    selMan(val) {
-      if (val === 'categories') {
-        const selMan = 'types'
-        this.url = this.host + selMan
-        this.fetchStuff();
-      } else if (val === 'sub categories') {
-        const selMan = 'categories'
-        this.url = this.host + selMan
-        this.fetchStuff();
-      } else if (val === 'groups') {
-        this.url = this.host + val
-        this.fetchStuff();
-      } else if (val === 'products') {
-        this.url = this.host + val
-        this.fetchStuff();
-      } else if (val === 'colors') {
-        this.url = this.host + val
-        this.fetchStuff();
-      } else if (val === 'fabrics') {
-        this.url = this.host + val
-        this.fetchStuff();
-      }
-    }
+    },
   },
   methods: {
+    selMan(val) {
+      this.url = this.host + val;
+      if (val === "categories") {
+        const selMan = "types";
+        this.url = this.host + selMan;
+      } else if (val === "sub categories") {
+        const selMan = "categories";
+        this.url = this.host + selMan;
+      }
+      this.selManage = val;
+      this.fetchStuff();
+    },
     async fetchStuff() {
       const response = await fetch(this.url, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + this.token
-        }
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        },
       });
       const data = await response.json();
       this.products = data;
@@ -92,38 +82,38 @@ export default {
     },
     async addCat(cat) {
       let add = {
-        name: cat.name
-      }
+        name: cat.name,
+      };
       if (cat.colorCode) {
         add = {
           name: cat.name,
-          colorCode: cat.colorCode
-        }
+          colorCode: cat.colorCode,
+        };
       }
-      await fetch('http://localhost:6969/admin/add/' + cat.sel, {
-        method: 'POST',
+      await fetch(this.ogHost + "add/" + cat.sel, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + this.token
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
         },
-        body: JSON.stringify(add)
+        body: JSON.stringify(add),
       });
+      await this.fetchStuff();
+      console.log("added");
     },
     addProdClicked() {
-      this.selectedComponent = 'add-form';
+      this.selectedComponent = "add-form";
     },
     editProdClicked(deta) {
-      this.selectedComponent = 'edit-form';
+      this.selectedComponent = "edit-form";
       this.id = deta.id;
       this.name = deta.name;
-      console.log(this.name);
-      console.log(this.id);
     },
     setSelectedComponent(cmp) {
       this.selectedComponent = cmp;
-    }
+    },
   },
-}
+};
 </script>
 <style scoped>
 .v-enter-from,
@@ -133,7 +123,7 @@ export default {
 
 .v-enter-active,
 .v-leave-active {
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .v-enter-to,

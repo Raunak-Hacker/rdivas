@@ -17,8 +17,10 @@
                   {{ category.name }}
                 </a>
                 <div class="dropdown-content">
-                  <router-link v-for="subcategory in category.subcategories" :key="subcategory"
-                    :to="'/' + category.name + '/' + subcategory.subcategoryid">{{ subcategory.name }}</router-link>
+                  <router-link @click="subCatId(subcategory.subcategoryid)"
+                    v-for="subcategory in category.subcategories" :key="subcategory"
+                    :to="'/' + category.name + '/' + subcategory.subcategoryid">{{ subcategory.name
+                    }}</router-link>
                 </div>
               </li>
             </ul>
@@ -150,10 +152,13 @@ export default {
     window.addEventListener("scroll", this.scroll);
   },
   methods: {
+    subCatId(id) {
+      this.$store.state.id = id;
+      // console.log(this.$store.state.id);
+    },
     togglemenu() {
       //   this.$refs.menu.classList.toggle("active");
       this.showmenu = !this.showmenu;
-      console.log("togglemenu");
     },
     logout() {
       this.$store.dispatch("logout");
@@ -216,8 +221,8 @@ li:hover .dropdown-content {
 }
 
 i {
-  color: rgba(0, 0, 0, 0.505);
-  font-size: large;
+  color: rgba(102, 102, 102, 0.645);
+  font-size: 1.3rem;
 }
 
 .flex-box {
@@ -276,7 +281,6 @@ header {
 i,
 input {
   margin-left: 1rem;
-  font-size: 1.6rem;
 }
 
 input {

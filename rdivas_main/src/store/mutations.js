@@ -18,44 +18,58 @@ export default {
       (product) => product.fabric == payload
     );
   },
-  addToCart(state, payload) {
-    console.log("addToCart", payload);
-    // let item = state.cart.find((item) => item.prodId == payload.prodId);
-    // if (item) {
-    //   if (item.size != payload.size) {
-    //     item.size = payload.size;
-    //   }
-    //   item.quantity += payload.quantity;
-    // } else {
-    //   state.cart.push(payload);
-    // }
-    // console.log(state.cart);
-    let item = {
-        "productId": payload.prodId,
-        "quantity": payload.quantity,
-        "productSize": payload.size,
-        "productColor": payload.color
+  setSize(state, payload) {
+    if (payload == "s") {
+      state.s = true;
+    } else if (payload == "m") {
+      state.m = true;
+    } else if (payload == "l") {
+      state.l = true;
+    } else if (payload == "xl") {
+      state.xl = true;
+    } else if (payload == "xxl") {
+      state.xxl = true;
     }
-    console.log(localStorage.getItem("token"));
+  },
+  addToCart(state, payload) {
+    let item = {
+      productId: payload.prodId,
+      quantity: payload.quantity,
+      productSize: payload.size,
+      productColor: payload.color,
+    };
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-
-    },
-      body: JSON.stringify(item)
-      // body: item
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(item),
     };
-    fetch(`http://localhost:6969/user/editroduct`, requestOptions)
-      .then(response => response.json())
-      .then(data =>{
-        console.log(data);
-        if(data.status == "success"){
-          // reload window
-          window.location.reload();
+    fetch(`${state.host}/user/editroduct`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status == "success") {
+          this.commit("getCart");
         }
       });
-
+  },
+  getCart(state) {
+    fetch(`${state.host}/user/getcart`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        state.items = data.cartProducts;
+        state.cart = data;
+        console.log(data);
+      });
+  },
+  setUpdate(state, payload) {
+    state.update = payload;
   },
   removeFromCart(state, payload) {
     let item = state.cart.find((item) => item.prodId == payload);
@@ -65,7 +79,7 @@ export default {
     let item = state.wishlist.find((item) => item.id == payload.id);
     if (!item) {
       state.wishlist.push(payload);
-    } 
+    }
   },
 
   // login/register

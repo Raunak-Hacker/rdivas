@@ -2,8 +2,8 @@
   <div class="productTops">
     <div class="sort" @click="myFunction">
       <small>Sort By</small>
-      <div class="dropdown" >
-        <button  class="dropbtn">Relevance</button>
+      <div class="dropdown">
+        <button class="dropbtn">Relevance</button>
         <div id="myDropdown" class="dropdown-content" v-if="dropdown">
           <a href="">Price: Low to High</a>
           <a href="">Price: High to Low</a>
@@ -12,19 +12,10 @@
       </div>
     </div>
     <div class="flex-wrap">
-      <div class="card"  v-for="product in filteredProds"
-          :key="product.id">
-        <cloth-card
-         
-          :id="product.id"
-          :name="product.name"
-          :imgUrl="product.image"
-          :price="product.sellingPrice"
-          :best="product.BestSeller"
-          :sale="product.Sale"
-          :discount="product.price"
-          :color="product.color"
-        />
+      <div class="card" v-for="product in filteredProds" :key="product.id">
+        <cloth-card :id="product.id" :name="product.name" :imgUrl="imgHost + product.image"
+          :price="product.sellingPrice" :best="product.BestSeller" :sale="product.Sale" :discount="product.price"
+          :color="product.color" />
       </div>
     </div>
   </div>
@@ -34,21 +25,24 @@
 export default {
   data() {
     return {
-        dropdown: false,
-        upHere: false,
-        };
-    },
-  
+      dropdown: false,
+      upHere: false,
+    };
+  },
+
   computed: {
     filteredProds() {
       return this.$store.getters.filteredProds;
     },
+    imgHost() {
+      return this.$store.getters.imgHost;
+    }
   },
-  created() {},
+  created() { },
   methods: {
     myFunction() {
-    //   document.getElementById("myDropdown").classList.toggle("show");
-        this.dropdown = !this.dropdown;
+      //   document.getElementById("myDropdown").classList.toggle("show");
+      this.dropdown = !this.dropdown;
     },
   },
 };
@@ -106,6 +100,7 @@ export default {
   padding: 1%;
   /* border: 1px solid black; */
 }
+
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -113,10 +108,10 @@ export default {
   align-items: center;
 }
 
-.card{
-    width: 23%;
-    height: 35%;
-    margin: 1%;
+.card {
+  width: 23%;
+  height: 35%;
+  margin: 1%;
 }
 
 @media screen and (max-width: 600px) {
@@ -125,20 +120,23 @@ export default {
     height: 25%;
     margin: 0.5%;
   }
-  .sort{
+
+  .sort {
     width: 100%;
     justify-content: flex-end;
   }
-  .dropdown{
-    width: 60%;
-    margin-left:1rem ;
-    margin-bottom:.5rem ;
-    margin-top:.5rem ;
-  }
-    .dropdown-content{
-        width: 100%;
-    }
 
-    
+  .dropdown {
+    width: 60%;
+    margin-left: 1rem;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+  }
+
+  .dropdown-content {
+    width: 100%;
+  }
+
+
 }
 </style>

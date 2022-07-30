@@ -1,97 +1,119 @@
 <template>
     <div class="prod" @mouseenter="iconHover" @mouseleave="iconHover">
         <div class="img" @click="$router.push('/product/' + id)">
-            <img :src="imgUrl" :style="{ 'object-fit': fit }">
+            <img :src="imgUrl" :style="{ 'object-fit': fit }" />
             <!-- style=" object-fit: cover " -->
             <div class="sale" v-if="sale">SALE</div>
             <div class="new" v-if="best">BEST SELLER</div>
         </div>
-        
-        <transition v-if="upHere"  @mouseleave="upHere = false" >
-            <div class="icons" style="top: 45%;" v-if="icon">
-            <a @click="addCart('S')">S</a>
-            <a @click="addCart('M')">M</a>
-            <a @click="addCart('Lllll')">L</a>
-            <a @click="addCart('XL')">XL</a>
 
+        <transition v-if="upHere">
+            <div class="icons siz" style="top: 12rem" v-if="icon">
+                <a @click="addCart('S')">
+                    <p>S</p>
+                </a>
+                <a @click="addCart('M')">
+                    <p>M</p>
+                </a>
+                <a @click="addCart('L')">
+                    <p>L</p>
+                </a>
+                <a @click="addCart('XL')">
+                    <p>XL</p>
+                </a>
+                <a @click="addCart('XXL')" v-if="l">
+                    <p>XXL</p>
+                </a>
             </div>
         </transition>
         <transition v-if="true">
             <div class="icons" v-if="icon">
-
-                <a href=""> <i class="bx bx-expand-alt" /> </a>
-                <a @click="addWish"> <i class="bx bx-heart" /> </a>
-
-                <a @mouseover="upHere = true" > <i class="bx bx-cart" /> </a>
+                <a @mouseenter="upHere = false"> <i class="bx bx-expand-alt" /> </a>
+                <a @click="addWish" @mouseenter="upHere = false"> <i class="bx bx-heart" /> </a>
+                <a @mouseenter="upHere = true"> <i class="bx bx-cart" /> </a>
                 <!-- <a @click="addCart" > <i class="bx bx-cart" /> </a> -->
-
             </div>
         </transition>
-        <div class="det">
+        <div class="det" @mouseenter="upHere = false">
             <router-link :to="'/product/' + id">
-                <p> {{ name }}</p>
+                <p>{{ name }}</p>
             </router-link>
-            <h5 :class="{ red: sale }">₹ {{ price }} <s v-if="sale">₹{{ discount }}</s> </h5>
+            <h5 :class="{ red: sale }">
+                ₹ {{ price.toFixed(2) }} <s v-if="sale">₹{{ discount }}</s>
+            </h5>
         </div>
     </div>
 </template>
 
-
 <script>
-
 export default {
     props: {
         id: {
             type: Number,
-            required: true
+            required: true,
         },
         name: {
             type: String,
-            required: true
+            required: true,
         },
         imgUrl: {
             type: String,
-            required: true
+            required: true,
         },
         price: {
             type: Number,
-            required: true
+            required: true,
         },
         best: {
             type: Boolean,
-            required: true
+            required: true,
         },
         sale: {
             type: Boolean,
-            required: true
+            required: true,
         },
         discount: {
             type: Number,
-            required: true
+            required: true,
         },
         color: {
             type: String,
-            required: true
+            required: true,
         },
         fit: {
             type: String,
-            required: true,
-        }
+        },
     },
     data() {
         return {
             icon: false,
             upHere: false,
-        }
+        };
     },
     computed: {
         auth() {
             return this.$store.getters.isAuth;
-        }
+        },
+        s() {
+            return this.$store.state.s;
+        },
+        m() {
+            return this.$store.state.m;
+        },
+        l() {
+            return this.$store.state.l;
+        },
+        xl() {
+            return this.$store.state.xl;
+        },
+        xxl() {
+            return this.$store.state.xxl;
+        },
     },
     methods: {
         iconHover() {
             this.icon = !this.icon;
+            this.upHere = false;
         },
         addWish() {
             if (this.auth) {
@@ -100,14 +122,13 @@ export default {
                     name: this.name,
                     price: this.price,
                     image: this.imgUrl,
-                }
-                this.$store.commit('addToWishList', product);
+                };
+                this.$store.commit("addToWishList", product);
             } else {
-                this.$router.push('/login');
+                this.$router.push("/login");
             }
         },
         addCart(size) {
-            console.log(size);
             if (this.auth) {
                 const product = {
                     prodId: this.id,
@@ -118,15 +139,14 @@ export default {
                     size: size,
                     color: this.color,
                     discount: this.discount,
-                }
-                this.$store.dispatch('addToCart', product);
+                };
+                this.$store.dispatch("addToCart", product);
             } else {
-                this.$router.push('/login');
+                this.$router.push("/login");
             }
         },
-
-    }
-}
+    },
+};
 </script>
 <style scoped>
 .v-enter-active,
@@ -156,15 +176,13 @@ a {
 
 s {
     text-decoration: line-through;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     margin-left: 0.5vw;
     color: gray;
-
 }
 
 i {
     color: rgba(0, 0, 0, 0.505);
-
 }
 
 .prod {
@@ -181,11 +199,11 @@ i {
 .icons {
     display: flex;
     justify-content: space-evenly;
-    margin-top: 1.5rem;
+    align-items: center;
     width: 75%;
     position: absolute;
-    top: 55%;
-    margin-left: 15%;
+    top: 15.5rem;
+    left: 15%;
     /* transition: 3s ease-in-out; */
 }
 
@@ -193,11 +211,15 @@ i {
     display: block;
     height: 2.5rem;
     width: 2.5rem;
-    background: #b5d7ff;
+    background: #dddddd90;
     color: #111111;
     text-align: center;
     /* transition: 3s ease-in-out; */
     border-radius: 50%;
+}
+
+.siz p {
+    margin-top: 20%;
 }
 
 .img {
@@ -226,20 +248,18 @@ i {
     padding: 0.22rem 0.5rem;
     font-size: 12px;
     font-weight: 450;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
 }
 
 .new {
-    background: #36A300;
+    background: #36a300;
     color: white;
-    font-family: 'Montserrat', sans-serif;
-
+    font-family: "Montserrat", sans-serif;
 }
 
 .icons i {
     margin-top: 25%;
     font-size: 1.15rem;
-
 }
 
 .icons a:hover {
@@ -264,7 +284,7 @@ i {
 }
 
 .det p {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 200;
     font-size: small;
     margin-bottom: 1rem;
@@ -281,6 +301,7 @@ i {
         position: relative;
         border: 1px solid #e0e0e0;
     }
+
     .img {
         width: 100%;
         height: 20vh;
@@ -290,31 +311,36 @@ i {
         position: relative;
         cursor: pointer;
     }
+
     .img img {
         width: 100%;
         height: 100%;
         object-fit: contain;
     }
+
     .icons {
-        display: flex;
+        display: none;
+        /* display: flex; */
         justify-content: space-evenly;
-        margin-top: 1.5rem;
+        /* margin-top: 1.5rem; */
         width: 75%;
         position: absolute;
         top: 55%;
-        margin-left: 15%;
+        left: 15%;
         /* transition: 3s ease-in-out; */
     }
+
     .icons a {
         display: block;
         height: 2.5rem;
         width: 2.5rem;
-        background: #b5d7ff;
+        background: #dddddd90;
         color: #111111;
         text-align: center;
         /* transition: 3s ease-in-out; */
         border-radius: 50%;
     }
+
     .det {
         width: 100%;
         /* height: 30%; */
@@ -324,13 +350,12 @@ i {
         align-items: center;
         padding: 1.5rem;
     }
+
     .det p {
-        font-family: 'Montserrat', sans-serif;
+        font-family: "Montserrat", sans-serif;
         font-weight: 200;
         font-size: small;
         margin-bottom: 1rem;
     }
-
-    
 }
 </style>

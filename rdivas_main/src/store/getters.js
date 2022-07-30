@@ -8,4 +8,7 @@ export default {
   authMessage: (state) => state.authMessage,
   isAuth: (state) => state.auth,
   wishlist: (state) => state.wishlist,
+  imgHost: (state) => state.imgHost,
+  items: (state) => state.items,
+  subId: (state) => state.subId,
 };

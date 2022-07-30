@@ -1,21 +1,16 @@
 // import router from "../main.js";
 // import router from './router'
-import router from "../router.js";
+// import router from "../router.js";
 
 export default {
   getProdList(context, data) {
     context.commit("setProdList", data);
-    console.log("getProdList");
-    // const list = context.getters.productList;
-    // console.log(list);
   },
   getProdDetails(context, data) {
     context.commit("setProdDetails", data);
   },
-  addToCart(context, data) {
-    // everytime this action is called, the itemId will be incremented
-    // so that the next item will be added to the cart
-    context.commit("addToCart", {
+  async addToCart(context, data) {
+    await context.commit("addToCart", {
       ...data,
     });
   },
@@ -30,15 +25,26 @@ export default {
     };
     const register = await fetch(`${context.getters.host}/signup`, user);
     const reponse = await register.json();
-    console.log(reponse);
-    if (reponse.status === "success") {
-      const newUser = {
-        email: data.email,
-        password: data.password,
+    if (reponse.status == 555) {
+      const authErr = {
+        message: "User already exists",
+        error: true,
       };
-      await context.dispatch("login", newUser);
-      router.push("/home");
-      window.location.reload();
+      context.commit("setAuthError", authErr);
+      return;
+    } else if (reponse.status === "success") {
+      const authTrue = {
+        message: null,
+        error: false,
+      };
+      alert("Please verify your mail (check your spam too)");
+      context.commit("setAuthError", authTrue);
+    } else {
+      const authErr = {
+        message: "Something went wrong, please try again later",
+        error: true,
+      };
+      context.commit("setAuthError", authErr);
     }
   },
 
@@ -65,10 +71,9 @@ export default {
     } else if (token.token) {
       localStorage.setItem("token", token.token);
       context.commit("setAuthError", { message: null, error: false });
+      context.dispatch("auth", token.token);
       return;
     }
-    context.dispatch("auth", token.token);
-    console.log(token);
   },
   async auth(context, token) {
     const auth = await fetch(`${context.getters.host}/user/`, {
@@ -103,6 +108,6 @@ export default {
   async logout(context) {
     localStorage.removeItem("token");
     context.commit("setAuth", false);
-    window.location.reload();
+    window.location = "/login";
   },
 };

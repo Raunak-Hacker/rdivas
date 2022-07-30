@@ -16,7 +16,8 @@
       <div class="sign-in">
         <div class="dets">
           <h1 style="color:white;">New Here?</h1>
-          <p style="color:white;">Sign up and discover many ongoing offers on best quality products! <br> <br> Register now to access
+          <p style="color:white;">Sign up and discover many ongoing offers on best quality products! <br> <br> Register
+            now to access
             features like wishlist, cart, etc.</p>
           <router-link to="/register"><button class="button-37"
               style="background-color:white; color:black; font-weight:bolder">Sign
@@ -42,9 +43,6 @@
       </div>
     </div>
   </section>
-
-
-
 </template>
 
 <script>
@@ -80,17 +78,9 @@ export default {
       if (this.authError) {
         return;
       }
-      window.location.reload();
-      this.$router.replace('/home');
+      window.location = "/home";
+
     },
-    // countDownTimer() {
-    //   if (this.countDown > 0) {
-    //     setTimeout(() => {
-    //       this.countDown -= 1
-    //       this.countDownTimer()
-    //     }, 1000)
-    //   }
-    // }
   },
 
 }

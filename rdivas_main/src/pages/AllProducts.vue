@@ -3,9 +3,7 @@
     <div class="desktop">
       <header>
         <div class="head">
-          <p>{{ data.category }}</p>
-          <h4>></h4>
-          <p>Top</p>
+          {{ data.category }}
         </div>
       </header>
 
@@ -42,17 +40,9 @@ export default {
     );
     const data = await response.json();
     this.data = data;
-    if (this.data.status === "success" && response.ok) {
+    if (data.status === "success" && response.ok) {
       await this.$store.dispatch("getProdList", this.data);
     }
-    // else if (!response.ok) {
-    //   const error = new Error(
-    //     "Failed to fetch services"
-    //   );
-    //   throw error;
-    // }
-    // else
-    //   console.log("error");
   },
   watch: {
     async $route() {
@@ -62,7 +52,6 @@ export default {
       const data = await response.json();
       this.data = data;
       this.$store.dispatch("getProdList", data);
-      console.log("route Changed");
     },
   },
 };
@@ -80,9 +69,11 @@ header {
   padding: 0.5rem 1rem;
   margin-bottom: 7vh;
 }
+
 .mobile {
   display: none;
 }
+
 .desktop {
   display: block;
 }
@@ -94,6 +85,7 @@ header {
   justify-content: space-around;
   align-items: center;
 }
+
 .filter {
   width: 25%;
   height: 100%;
@@ -105,10 +97,12 @@ header {
   height: 100%;
   padding-right: 1rem;
 }
+
 @media screen and (max-width: 768px) {
   .desktop {
     display: none;
   }
+
   .mobile {
     display: block;
   }

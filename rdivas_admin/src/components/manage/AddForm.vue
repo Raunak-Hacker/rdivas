@@ -1,8 +1,6 @@
 <template>
     <div class="flex-box">
-
         <form class="form" @submit.prevent="submitForm" v-if="selManage === 'products'">
-
             <div class="field">
                 <div class="label">Category</div>
                 <div class="input">
@@ -138,7 +136,7 @@
                     </div>
                     <div>28/30</div>
                 </div>
-                <div class="cbox ">
+                <div class="cbox">
                     <div>
                         <input type="checkbox" name="size" id="" value="32/34" v-model="xxl" />
                     </div>
@@ -164,7 +162,7 @@
                     </div>
                     <div>New</div>
                 </div>
-                <div class="cbox ">
+                <div class="cbox">
                     <div>
                         <input type="radio" @click="unCheck" name="tag" id="" value="out" v-model="tag" />
                     </div>
@@ -172,20 +170,20 @@
                 </div>
             </div>
             <div class="imggs">
-                <div class=" imgs">
+                <div class="imgs">
                     <div class="files">
                         <div class="label">Image 1</div>
                         <div class="input">
                             <input type="file" @change="handleFileUpload($event, 'img1')" />
                         </div>
                     </div>
-                    <div class="files ">
+                    <div class="files">
                         <div class="label">Image 2</div>
                         <div class="input">
                             <input type="file" @change="handleFileUpload($event, 'img2')" />
                         </div>
                     </div>
-                    <div class="files ">
+                    <div class="files">
                         <div class="label">Image 3</div>
                         <div class="input">
                             <input type="file" @change="handleFileUpload($event, 'img3')" />
@@ -193,20 +191,20 @@
                     </div>
                 </div>
 
-                <div class=" imgs">
-                    <div class="files ">
+                <div class="imgs">
+                    <div class="files">
                         <div class="label">Image 4</div>
                         <div class="input">
                             <input type="file" @change="handleFileUpload($event, 'img4')" />
                         </div>
                     </div>
-                    <div class="files ">
+                    <div class="files">
                         <div class="label">Image 5</div>
                         <div class="input">
                             <input type="file" @change="handleFileUpload($event, 'img5')" />
                         </div>
                     </div>
-                    <div class="files ">
+                    <div class="files">
                         <div class="label">Image 6</div>
                         <div class="input">
                             <input type="file" @change="handleFileUpload($event, 'img6')" />
@@ -217,48 +215,40 @@
 
             <div class="field btn">
                 <div class="input">
-                    <button type="submit" class="sub-btn" role="button">
-                        ADD PRODUCT
-                    </button>
+                    <button type="submit" class="sub-btn" role="button">ADD PRODUCT</button>
                 </div>
             </div>
         </form>
 
         <div class="man-imgs" v-if="selManage == 'products'">
             <div v-if="img1">
-                <img :src="src + img1" height="200">
+                <img :src="src + img1" height="200" />
                 <h4>Image 1</h4>
             </div>
             <div v-if="img2">
-                <img :src="src + img2" height="200">
+                <img :src="src + img2" height="200" />
                 <h4>Image 2</h4>
             </div>
             <div v-if="img3">
-                <img :src="src + img3" height="200">
+                <img :src="src + img3" height="200" />
                 <h4>Image 3</h4>
             </div>
             <div v-if="img4">
-                <img :src="src + img4" height="200">
+                <img :src="src + img4" height="200" />
                 <h4>Image 4</h4>
             </div>
             <div v-if="img5">
-                <img :src="src + img5" height="200">
+                <img :src="src + img5" height="200" />
                 <h4>Image 5</h4>
             </div>
             <div v-if="img6">
-                <img :src="src + img6" height="200">
+                <img :src="src + img6" height="200" />
                 <h4>Image 6</h4>
             </div>
         </div>
 
         <div class="manage" v-if="selManage != 'products'">
-
             <div class="add">
-
-                <div class="addCat" v-if="selManage === 'categories'">
-                    <input type="text" v-model="newCat" placeholder="New category" />
-                    <button @click="addCat" class="button-42">ADD</button>
-                </div>
                 <form action="" @submit.prevent="submitSubCat">
                     <div class="addCat" v-if="selManage === 'sub categories'">
                         <input type="text" v-model="newSubCat" placeholder="New sub category" />
@@ -277,31 +267,14 @@
                         </select>
                     </div>
                 </form>
-                <div class="addCat" v-if="selManage === 'groups'">
-                    <input type="text" v-model="newGroup" placeholder="New group" />
-                    <button @click="addGroup" class="button-42" role="button">ADD</button>
-                </div>
-
-                <div class="addCat" v-if="selManage === 'colors'">
-                    <input type="text" v-model="newColour" placeholder="New colour" /> &nbsp;
-                    <input type="color" v-model="colorCode" placeholder="New colour" style="width:15%;" /> &nbsp;
-                    <button @click="addColour" class="button-42" role="button">ADD</button>
-                </div>
-
-                <div class="addCat" v-if="selManage === 'fabrics'">
-                    <input type="text" v-model="newFabric" placeholder="New fabric" />
-                    <button @click="addFabric" class="button-42" role="button">ADD</button>
-                </div>
-
             </div>
-
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['sel-manage'],
+    props: ["sel-manage"],
     data() {
         return {
             categories: [],
@@ -324,12 +297,12 @@ export default {
             size: [],
             tag: null,
             image: null,
-            img1: '',
-            img2: '',
-            img3: '',
-            img4: '',
-            img5: '',
-            img6: '',
+            img1: "",
+            img2: "",
+            img3: "",
+            img4: "",
+            img5: "",
+            img6: "",
             s: false,
             m: false,
             l: false,
@@ -339,7 +312,7 @@ export default {
             s29: false,
             s30: false,
             fileName: null,
-            src: 'https://files.rdivas.in/',
+            src: "https://files.rdivas.in/",
         };
     },
     computed: {
@@ -348,29 +321,33 @@ export default {
         },
         token() {
             return this.$store.getters.token;
-        }
+        },
     },
     async created() {
-        if (this.selManage == 'sub categories' || this.selManage == 'products') {
+        if (this.selManage == "sub categories" || this.selManage == "products") {
             const fet = {
-                method: 'GET',
+                method: "GET",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + this.token
-                }
-            }
-            fetch(this.host + 'get/types/', fet).then((response) => response.json())
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + this.token,
+                },
+            };
+            fetch(this.host + "get/types/", fet)
+                .then((response) => response.json())
                 .then((data) => (this.categories = data));
-            if (this.selManage == 'products') {
-                fetch(this.host + 'get/groups/', fet).then((response) => response.json())
+            if (this.selManage == "products") {
+                fetch(this.host + "get/groups/", fet)
+                    .then((response) => response.json())
                     .then((data) => (this.groups = data));
-                fetch(this.host + 'get/colors/', fet).then((response) => response.json())
+                fetch(this.host + "get/colors/", fet)
+                    .then((response) => response.json())
                     .then((data) => (this.colours = data));
-                fetch(this.host + 'get/fabrics/', fet).then((response) => response.json())
+                fetch(this.host + "get/fabrics/", fet)
+                    .then((response) => response.json())
                     .then((data) => (this.fabrics = data));
-            }
-            else if (this.selManage == 'sub categories') {
-                await fetch(this.host + 'get/category/' + this.id, fet).then((response) => response.json())
+            } else if (this.selManage == "sub categories") {
+                await fetch(this.host + "get/category/" + this.id, fet)
+                    .then((response) => response.json())
                     .then((data) => (this.cat = data));
                 this.newCat = this.cat.mainCategory.name;
             }
@@ -379,85 +356,85 @@ export default {
     methods: {
         async handleFileUpload(e, d) {
             if (d) {
-                let formData = new FormData()
+                let formData = new FormData();
                 const lol = {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        Authorization: 'Bearer ' + this.token,
-                        ContentType: 'multipart/form-data',
+                        Authorization: "Bearer " + this.token,
+                        ContentType: "multipart/form-data",
                     },
                     body: formData,
-                }
+                };
                 let img = e.target.files[0];
-                formData.append('file', img)
-                await fetch(this.host + 'upload', lol)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (d == 'img1') {
-                            this.img1 = data.fileName
-                            return
+                formData.append("file", img);
+                await fetch(this.host + "upload", lol)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (d == "img1") {
+                            this.img1 = data.fileName;
+                            return;
                         }
-                        if (d == 'img2') {
-                            this.img2 = data.fileName
-                            return
+                        if (d == "img2") {
+                            this.img2 = data.fileName;
+                            return;
                         }
-                        if (d == 'img3') {
-                            this.img3 = data.fileName
-                            return
+                        if (d == "img3") {
+                            this.img3 = data.fileName;
+                            return;
                         }
-                        if (d == 'img4') {
-                            this.img4 = data.fileName
-                            return
+                        if (d == "img4") {
+                            this.img4 = data.fileName;
+                            return;
                         }
-                        if (d == 'img5') {
-                            this.img5 = data.fileName
-                            return
+                        if (d == "img5") {
+                            this.img5 = data.fileName;
+                            return;
                         }
-                        if (d == 'img6') {
-                            this.img6 = data.fileName
-                            return
+                        if (d == "img6") {
+                            this.img6 = data.fileName;
+                            return;
                         }
-                    })
+                    });
             }
             this.image = e.target.files[0];
         },
         async submitSubCat() {
-            let formData = new FormData()
-            formData.append('file', this.image)
+            let formData = new FormData();
+            formData.append("file", this.image);
             const lol = {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    Authorization: 'Bearer ' + this.token,
-                    ContentType: 'multipart/form-data',
+                    Authorization: "Bearer " + this.token,
+                    ContentType: "multipart/form-data",
                 },
                 body: formData,
-            }
-            await fetch(this.host + 'upload', lol)
-                .then(response => response.json())
-                .then(data => {
+            };
+            await fetch(this.host + "upload", lol)
+                .then((response) => response.json())
+                .then((data) => {
                     this.fileName = data.fileName;
-                })
-            fetch(this.host + 'add/category', {
-                method: 'POST',
+                });
+            fetch(this.host + "add/category", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + this.token
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + this.token,
                 },
                 body: JSON.stringify({
                     name: this.newSubCat,
                     type: this.subCategory,
-                    image: this.fileName
-                })
-            })
+                    image: this.fileName,
+                }),
+            });
         },
         categoryChange() {
             const fet = {
-                method: 'GET',
+                method: "GET",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + this.token
-                }
-            }
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + this.token,
+                },
+            };
             fetch(`https://baku.rdivas.in/admin/get/category/bytype/${this.category}`, fet)
                 .then((response) => response.json())
                 .then((data) => (this.subCategories = data));
@@ -469,10 +446,10 @@ export default {
         },
         async submitForm() {
             let product = {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    Authorization: 'Bearer ' + this.token,
-                    ContentType: 'multipart/form-data',
+                    Authorization: "Bearer " + this.token,
+                    ContentType: "multipart/form-data",
                 },
                 name: this.productName,
                 category: this.subCategory,
@@ -498,22 +475,27 @@ export default {
                 28: this.s28,
                 29: this.s29,
                 30: this.s30,
-            }
-            if (this.tag === 'bestSeller') {
+            };
+            if (this.tag === "bestSeller") {
                 product.bestSeller = true;
-            }
-            else if (this.tag === 'Sale') {
+            } else if (this.tag === "Sale") {
                 product.sale = true;
             }
-            await fetch(this.host + 'add/product', {
-                method: 'POST',
+            console.log(product);
+            await fetch(this.host + "add/product", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + this.token
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + this.token,
                 },
-                body: JSON.stringify(product)
+                body: JSON.stringify(product),
             })
-        }
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                })
+            console.log("done");
+        },
     },
 };
 </script>
@@ -522,7 +504,6 @@ export default {
 * {
     outline: none;
     border: none;
-
 }
 
 .flex-box {
@@ -535,8 +516,6 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
 }
-
-
 
 .hid {
     visibility: hidden;
@@ -560,7 +539,6 @@ body.dark textarea::placeholder {
 body.dark input::placeholder,
 body.dark textarea::placeholder {
     color: rgb(195, 195, 195);
-
 }
 
 body.dark input,
@@ -580,7 +558,6 @@ body.dark select option {
 
 body.dark input[type="file"] {
     background-color: var(--body-color);
-
 }
 
 .man-imgs {
@@ -608,7 +585,6 @@ body.dark input[type="file"] {
     flex-direction: column;
     justify-content: space-between;
     padding: 0 10%;
-
 }
 
 .current {
@@ -698,7 +674,6 @@ body.dark .form {
     margin-top: 5vh;
 }
 
-
 .sub-btn {
     display: flex;
     align-items: center;
@@ -708,9 +683,7 @@ body.dark .form {
     padding: 0.7em 1.4em 0.7em 1.1em;
     color: whitesmoke;
     background: #ad5389;
-    background: linear-gradient(0deg,
-            rgba(20, 167, 62, 1) 0%,
-            rgba(102, 247, 113, 1) 100%);
+    background: linear-gradient(0deg, rgba(20, 167, 62, 1) 0%, rgba(102, 247, 113, 1) 100%);
     border: none;
     box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
     letter-spacing: 0.05em;
@@ -729,10 +702,6 @@ body.dark .form {
     box-shadow: 0 0.3em 1em -0.5em #14a73e98;
 }
 
-
-
-
-
 .addCat {
     display: flex;
     justify-content: space-between;
@@ -745,7 +714,7 @@ body.dark .form {
     border: none;
 }
 
-input[type='file'] {
+input[type="file"] {
     width: min-content;
     border: none;
     outline: none;
@@ -761,18 +730,18 @@ input[type="number"],
 input[type="email"],
 input[type="password"],
 textarea {
-    transition: all 0.30s ease-in-out;
-    -webkit-transition: all 0.30s ease-in-out;
-    -moz-transition: all 0.30s ease-in-out;
-    -ms-transition: all 0.30s ease-in-out;
-    -o-transition: all 0.30s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
     outline: none;
 }
 
-input[type=text]:focus,
-input[type=number]:focus,
-input[type=email]:focus,
-input[type=password]:focus,
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
 textarea:focus {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     padding: 3px 0px 3px 3px;
