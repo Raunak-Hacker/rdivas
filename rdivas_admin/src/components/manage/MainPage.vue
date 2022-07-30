@@ -42,12 +42,12 @@ export default {
         TheProduct
     },
     created() {
-        this.products = this.prods
-        this.filteredProducts = this.filteredProds
+        // this.products = this.prods
+        this.filteredProducts = this.products
     },
     data() {
         return {
-            products: [],
+            // products: [],
             search: true,
             filter: '',
             filteredProducts: [],
@@ -55,8 +55,13 @@ export default {
             colorCode: "",
         }
     },
+    computed: {
+        products() {
+            return this.$store.getters.products;
+        },
+    },
     methods: {
-        addClick() {
+        async addClick() {
             if (this.selManage === 'categories' || this.selManage === 'groups' || this.selManage === 'colors' || this.selManage === 'fabrics') {
                 if (this.newStuff) {
                     let stuff = null;
@@ -82,8 +87,14 @@ export default {
                             sel: stuff
                         }
                     }
-                    this.$emit('addCat', newStuff)
-                    this.newStuff = null
+                    // this.$emit('addCat', newStuff)
+                    console.log(this.$store.state.url);
+                    await this.$store.commit('addCat', {
+                        cat: newStuff,
+                        url: this.$store.state.url
+                    });
+                    this.newStuff = null;
+                    this.filteredProducts = this.products
                 } else {
                     alert('Please enter a name')
                 }

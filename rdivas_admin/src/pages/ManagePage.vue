@@ -35,12 +35,10 @@ export default {
       filteredProds: [],
       addClick: false,
       editClick: false,
-      sel: false,
       selectedComponent: "main-page",
       id: null,
-      selManage: null,
       name: null,
-      url: null,
+
     };
   },
   computed: {
@@ -53,53 +51,66 @@ export default {
     token() {
       return this.$store.getters.token;
     },
+    sel() {
+      return this.$store.getters.sel;
+    },
+    selManage() {
+      return this.$store.state.selManage;
+    },
+    // url() {
+    //   return this.$store.state.url;
+    // }
   },
   methods: {
     selMan(val) {
-      this.url = this.host + val;
+      this.$store.state.url = this.host + val;
       if (val === "categories") {
         const selMan = "types";
-        this.url = this.host + selMan;
+        this.$store.state.url = this.host + selMan;
       } else if (val === "sub categories") {
         const selMan = "categories";
-        this.url = this.host + selMan;
+        this.$store.state.url = this.host + selMan;
       }
-      this.selManage = val;
-      this.fetchStuff();
+      this.$store.state.selManage = val;
+      this.$store.commit('fetchStuff', this.$store.state.url);
     },
-    async fetchStuff() {
-      const response = await fetch(this.url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
-        },
+    // async fetchStuff() {
+    //   const response = await fetch(this.url, {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + this.token,
+    //     },
+    //   });
+    //   const data = await response.json();
+    //   this.products = data;
+    //   this.filteredProducts = data;
+    //   this.sel = true;
+    // },
+    addCat(cat) {
+      this.$store.commit('addCat', {
+        cat: cat,
+        url: this.url
       });
-      const data = await response.json();
-      this.products = data;
-      this.filteredProducts = data;
-      this.sel = true;
-    },
-    async addCat(cat) {
-      let add = {
-        name: cat.name,
-      };
-      if (cat.colorCode) {
-        add = {
-          name: cat.name,
-          colorCode: cat.colorCode,
-        };
-      }
-      await fetch(this.ogHost + "add/" + cat.sel, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
-        },
-        body: JSON.stringify(add),
-      });
-      await this.fetchStuff();
-      console.log("added");
+      // let add = {
+      //   name: cat.name,
+      // };
+      // if (cat.colorCode) {
+      //   add = {
+      //     name: cat.name,
+      //     colorCode: cat.colorCode,
+      //   };
+      // }
+      // await fetch(this.ogHost + "add/" + cat.sel, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: "Bearer " + this.token,
+      //   },
+      //   body: JSON.stringify(add),
+      // });
+      // await this.fetchStuff();
+      // console.log("added");
     },
     addProdClicked() {
       this.selectedComponent = "add-form";

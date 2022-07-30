@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import store from "./store.js";
+import store from "./store/index.js";
 import LoginPage from "./components/LoginPage.vue";
 import TheSidebar from '@/components/TheSidebar.vue'
 import DashboardPage from './pages/DashboardPage.vue'
