@@ -4,9 +4,18 @@
       <div class="field">
         <div class="label">Category</div>
         <div class="input">
-          <select name="category" id="category" v-model="category" @change="categoryChange">
+          <select
+            name="category"
+            id="category"
+            v-model="category"
+            @change="categoryChange"
+          >
             <option :value="prodType" disabled>{{ prodType }}</option>
-            <option v-for="category in categories" :key="category.id" :value="category.id">
+            <option
+              v-for="category in categories"
+              :key="category.id"
+              :value="category.id"
+            >
               {{ category.name }}
             </option>
           </select>
@@ -19,7 +28,11 @@
             <option :value="product.catagory.name" disabled>
               {{ product.catagory.name }}
             </option>
-            <option v-for="subCategory in subCategories" :key="subCategory.id" :value="subCategory.name">
+            <option
+              v-for="subCategory in subCategories"
+              :key="subCategory.id"
+              :value="subCategory.name"
+            >
               {{ subCategory.name }}
             </option>
           </select>
@@ -53,7 +66,11 @@
       <div class="field">
         <div class="label">Quantity</div>
         <div class="input">
-          <input type="number" :placeholder="product.quantity" v-model="productQuantity" />
+          <input
+            type="number"
+            :placeholder="product.quantity"
+            v-model="productQuantity"
+          />
         </div>
       </div>
 
@@ -145,25 +162,53 @@
       <div class="cfield">
         <div class="cbox">
           <div>
-            <input type="radio" @click="unCheck" name="tag" id="" value="bestSeller" v-model="tag" />
+            <input
+              type="radio"
+              @click="unCheck"
+              name="tag"
+              id=""
+              value="bestSeller"
+              v-model="tag"
+            />
           </div>
           <div>Best Selling</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="radio" @click="unCheck" name="tag" id="" value="Sale" v-model="tag" />
+            <input
+              type="radio"
+              @click="unCheck"
+              name="tag"
+              id=""
+              value="Sale"
+              v-model="tag"
+            />
           </div>
           <div>Sale</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="radio" @click="unCheck" name="tag" id="" value="new" v-model="tag" />
+            <input
+              type="radio"
+              @click="unCheck"
+              name="tag"
+              id=""
+              value="new"
+              v-model="tag"
+            />
           </div>
           <div>New</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="radio" @click="unCheck" name="tag" id="" value="out" v-model="tag" />
+            <input
+              type="radio"
+              @click="unCheck"
+              name="tag"
+              id=""
+              value="out"
+              v-model="tag"
+            />
           </div>
           <div>Out of stock</div>
         </div>
@@ -255,9 +300,13 @@
 
         <form action="" @submit.prevent="editStuff">
           <div class="addCat" v-if="selManage === 'sub categories'">
-            <select v-model="newCat" required>
+            <select v-model="newCat">
               <option :value="cat.mainCategory.name">{{ cat.mainCategory.name }}</option>
-              <option v-for="category in categories" :key="category.id" :value="category.name">
+              <option
+                v-for="category in categories"
+                :key="category.id"
+                :value="category.name"
+              >
                 {{ category.name }}
               </option>
             </select>
@@ -265,11 +314,16 @@
           <br />
 
           <div class="addCat" v-if="selManage === 'sub categories'">
-            <input type="file" name="file" @change="handleFileUpload($event)" required />
+            <input type="file" name="file" @change="handleFileUpload($event)" />
           </div>
           <br />
 
-          <img :src="src + cat.image" alt="sdsd" height="350" v-if="selManage === 'sub categories'" />
+          <img
+            :src="src + cat.image"
+            alt="sdsd"
+            height="350"
+            v-if="selManage === 'sub categories'"
+          />
           <br />
           <h1 v-if="selManage === 'sub categories'">{{ oldInf }}</h1>
           <br />
@@ -335,8 +389,6 @@ export default {
       image: null,
       prodType: null,
       oldInf: "Old Image",
-      src: "https://files.rdivas.in/",
-
       img1: "",
       img2: "",
       img3: "",
@@ -443,6 +495,9 @@ export default {
     token() {
       return this.$store.getters.token;
     },
+    src() {
+      return this.$store.state.imgHost;
+    },
   },
   methods: {
     async handleFileUpload(e, d) {
@@ -458,7 +513,7 @@ export default {
           },
           body: formData,
         };
-        await fetch( this.host + "upload", lol)
+        await fetch(this.host + "upload", lol)
           .then((response) => response.json())
           .then((data) => {
             this.cat.image = data.fileName;

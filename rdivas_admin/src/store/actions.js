@@ -9,6 +9,7 @@ export default {
     });
     const res = await response.json();
     context.commit("setProducts", res);
+    console.log(res);
   },
   async addCat(context, data) {
     let add = {
@@ -18,6 +19,11 @@ export default {
       add = {
         name: data.cat.name,
         colorCode: data.cat.colorCode,
+      };
+    } else if (data.cat.listId) {
+      add = {
+        listingId: data.cat.listId,
+        productId: data.cat.prodId,
       };
     }
     console.log(data.cat);

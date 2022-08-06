@@ -33,15 +33,15 @@
           <ul class="menu-links">
             <li class="nav-link" :class="{ selBox: dashActive }" @click="dashboardClicked">
               <a>
-                <i class='bx bx-home-alt icon'></i>
+                <i class='bx bx-bar-chart-alt-2 icon'></i>
                 <span class="text nav-text">Dashboard</span>
               </a>
             </li>
 
             <li class="nav-link" :class="{ selBox: anaActive }" @click="analyticsClicked">
               <a>
-                <i class='bx bx-bar-chart-alt-2 icon'></i>
-                <span class="text nav-text">Analytics </span>
+                <i class='bx bx-home-alt icon'></i>
+                <span class="text nav-text">Manage Home </span>
               </a>
             </li>
 

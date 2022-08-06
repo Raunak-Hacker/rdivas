@@ -31,6 +31,8 @@
         :index="index"
         :title="item.name"
         :products="item.products"
+        :poster1="poster1"
+        :poster2="poster2"
       />
     </div>
   </section>
@@ -48,6 +50,8 @@ export default {
       cats: [],
       list: [],
       banImgs: [],
+      poster1: null,
+      poster2: null,
     };
   },
 
@@ -61,6 +65,7 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         this.list = data;
+        console.log(this.list);
       });
     this.timer = setInterval(() => {
       this.rightClick();
@@ -69,6 +74,13 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         this.banImgs = data;
+      });
+    fetch(`${this.$store.getters.host}/get/home/poster`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        this.poster1 = data[0].image;
+        this.poster2 = data[1].image;
       });
   },
   computed: {

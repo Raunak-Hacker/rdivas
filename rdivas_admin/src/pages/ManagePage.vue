@@ -22,6 +22,7 @@
         <div class="box button-42" @click="selMan('products')">Products</div>
         <div class="box button-42" @click="selMan('colors')">Colors</div>
         <div class="box button-42" @click="selMan('fabrics')">Fabrics</div>
+        <div class="box button-42" @click="home">Home Page</div>
       </div>
     </section>
   </transition>
@@ -108,6 +109,10 @@ export default {
     setSelectedComponent(cmp) {
       this.selectedComponent = cmp;
     },
+    home() {
+      this.sel = true;
+      this.selectedComponent = "home-page";
+    },
   },
 };
 </script>
@@ -138,7 +143,7 @@ export default {
 }
 
 .box {
-  height: 30%;
+  height: 20%;
   width: 35%;
   display: flex;
   justify-content: center;

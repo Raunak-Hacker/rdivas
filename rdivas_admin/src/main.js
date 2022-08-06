@@ -7,14 +7,14 @@ import DashboardPage from './pages/DashboardPage.vue'
 import ManagePage from './pages/ManagePage.vue'
 import OrdersPage from './pages/OrdersPage.vue'
 import CommentsPage from './pages/CommentsPage.vue'
-import AnalyticsPage from './pages/AnalyticsPage.vue'
+import HomePage from './pages/HomePage.vue'
 
 const app = createApp(App);
 
 app.use(store);
 app.component('the-sidebar', TheSidebar);
 app.component('dashboard-page', DashboardPage);
-app.component('analytics-page', AnalyticsPage);
+app.component('home-page', HomePage);
 app.component('manage-page', ManagePage);
 app.component('comments-page', CommentsPage);
 app.component('orders-page', OrdersPage);

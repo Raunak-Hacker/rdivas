@@ -11,6 +11,7 @@ const store = createStore({
     host: "https://baku.rdivas.in/admin/",
     // host: "http://localhost:6969/admin/",
     logHost: "https://baku.rdivas.in/",
+    imgHost: "https://files.rdivas.in/",
     token: null,
     sel: false,
     filteredProducts: [],

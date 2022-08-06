@@ -1,7 +1,7 @@
 <template>
   <login-page v-if="!auth" />
   <the-sidebar v-else @dashboard="setSelectedComponent('dashboard-page')"
-    @analytics="setSelectedComponent('analytics-page')" @manage="setSelectedComponent('manage-page')"
+    @analytics="setSelectedComponent('home-page')" @manage="setSelectedComponent('manage-page')"
     @comments="setSelectedComponent('comments-page')" @orders="setSelectedComponent('orders-page')">
     <!-- <keep-alive> -->
     <component :is="selectedComponent" />
@@ -60,7 +60,6 @@ a {
   cursor: pointer;
   display: inline-block;
   outline: 0;
-  overflow: hidden;
   pointer-events: auto;
   position: relative;
   text-align: center;

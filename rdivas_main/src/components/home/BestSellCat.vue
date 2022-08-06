@@ -16,12 +16,14 @@
             </div>
         </div>
     </div>
-    <div class="flex-box ad" v-if="index == 0 || index == 2">
+    <div class="flex-box ad" v-if="index == 0">
         <div class="ad1">
-            <img src="@/assets/dres1.jpg" alt="" />
+            <img :src="imgHost + poster1" alt="" />
         </div>
-        <div class="ad2">
-            <img src="@/assets/top2.jpg" alt="" />
+    </div>
+    <div class="flex-box ad" v-if="index == 2">
+        <div class="ad1">
+            <img :src="imgHost + poster2" alt="" />
         </div>
     </div>
 </template>
@@ -30,48 +32,11 @@
 import ClothCard from "../category/ClothCard.vue";
 export default {
     components: { ClothCard },
-    props: ["title", "index", "products", "id"],
+    props: ["title", "index", "products", "id", "poster1", "poster2"],
     data() {
         return {
             dress:
                 "https://rukminim1.flixcart.com/image/832/832/kox8b680/track-suit/n/p/d/xl-solid-striped-women-track-suit-r-divas-original-imag39x9w6a6z9hj.jpeg?q=70",
-            clothes: [
-                {
-                    id: 1,
-                    name: "Printed Women Track Suit",
-                    price: 600,
-                    image:
-                        "https://rukminim1.flixcart.com/image/832/832/kr83ukw0/track-suit/b/k/2/s-nr-tsuit08-singnature-r-divas-original-imag528zf7f6zyzc.jpeg?q=70",
-                    Sale: true,
-                    Dprice: 1000,
-                    newProd: true,
-                },
-                {
-                    id: 2,
-                    name: "Printed Women Track Suit",
-                    price: 320,
-                    image:
-                        "https://rukminim1.flixcart.com/image/580/696/kulk9zk0/track-suit/s/v/g/m-track-suit-grey-r-divas-original-imag7zpuy8x6c9yt.jpeg?q=50",
-                    disc: true,
-                    newProd: false,
-                },
-                {
-                    id: 3,
-                    name: "Printed Women Track Suit",
-                    price: 300,
-                    image:
-                        "https://rukminim1.flixcart.com/image/580/696/kpwybgw0/track-suit/k/8/g/s-tracksuit-01-r-divas-original-imag4fnrwg2txhgh.jpeg?q=70",
-                    disc: false,
-                    BestSeller: true,
-                },
-                {
-                    id: 4,
-                    name: "Solid Women Black Tights",
-                    price: 600,
-                    image:
-                        "https://rukminim1.flixcart.com/image/580/696/kuof5ow0/track-suit/b/e/l/m-cotton-queen-tracksuit-orange-m-r-divas-original-imag7qthcaachxze.jpeg?q=50",
-                },
-            ],
         };
     },
     computed: {
@@ -122,8 +87,13 @@ img {
 }
 
 .ad1 {
-    width: 66%;
+    width: 100%;
+    height: 40vh;
+}
+.ad1 img {
+    width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .icon {
