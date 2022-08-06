@@ -18,6 +18,13 @@ export default {
       (product) => product.fabric == payload
     );
   },
+  filterByPrice(state, payload) {
+    const price = parseInt(payload);
+    console.log(price);
+    state.filteredProds = state.productList.products.filter(
+      (product) => product.sellingPrice <= price
+    );
+  },
   setSize(state, payload) {
     if (payload == "s") {
       state.s = true;

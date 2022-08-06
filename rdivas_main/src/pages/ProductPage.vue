@@ -13,7 +13,12 @@
       <div class="tags add" v-if="added">Added to Cart</div>
       <div class="prod-photos">
         <div class="images" v-if="data.images">
-          <div class="imgs" v-for="image in data.images" :key="image" @mouseenter="img(imgHost + image)">
+          <div
+            class="imgs"
+            v-for="image in data.images"
+            :key="image"
+            @mouseenter="img(imgHost + image)"
+          >
             <div class="img" v-if="image">
               <img :src="imgHost + image" alt="sdsd" />
             </div>
@@ -39,6 +44,9 @@
           </div>
         </div>
         <div class="flex-box">
+          <div class="tags" style="background: green; color: white">
+            4.5 <i style="color: white" class="bx bxs-star" />
+          </div>
           <div class="tags">{{ data.color }}</div>
           <div class="tags">{{ data.fabric }}</div>
           <div class="tags" v-if="data.Sale">Sale</div>
@@ -47,67 +55,119 @@
         <div class="description">
           <p>{{ data.description }}</p>
         </div>
-        <div class="specs">
-          <label>Specifications</label>
-          <div class="flex-box">
-            <div class="boxes">
-              <div class="box">
-                <label>Size</label>
-                <div class="in-boxes">
-                  <div class="in-box size" v-if="data.S" :class="{ selSize: s }" @click="sClick">
-                    S
-                  </div>
-                  <div class="in-box size" v-if="data.M" :class="{ selSize: m }" @click="mClick">
-                    M
-                  </div>
-                  <div class="in-box size" v-if="data.L" :class="{ selSize: l }" @click="lClick">
-                    L
-                  </div>
-                  <div class="in-box size" v-if="data.XL" :class="{ selSize: xl }" @click="xlClick">
-                    XL
-                  </div>
-                  <div class="in-box size" v-if="data.XXL" :class="{ selSize: xxl }" @click="xxlClick">
-                    XXL
+        <div class="fl-box" style="display: flex">
+          <div class="specs">
+            <label>Specifications</label>
+            <div class="flex-box">
+              <div class="boxes">
+                <div class="box">
+                  <label>Size</label>
+                  <div class="in-boxes">
+                    <div
+                      class="in-box size"
+                      v-if="data.S"
+                      :class="{ selSize: s }"
+                      @click="sClick"
+                    >
+                      S
+                    </div>
+                    <div
+                      class="in-box size"
+                      v-if="data.M"
+                      :class="{ selSize: m }"
+                      @click="mClick"
+                    >
+                      M
+                    </div>
+                    <div
+                      class="in-box size"
+                      v-if="data.L"
+                      :class="{ selSize: l }"
+                      @click="lClick"
+                    >
+                      L
+                    </div>
+                    <div
+                      class="in-box size"
+                      v-if="data.XL"
+                      :class="{ selSize: xl }"
+                      @click="xlClick"
+                    >
+                      XL
+                    </div>
+                    <div
+                      class="in-box size"
+                      v-if="data.XXL"
+                      :class="{ selSize: xxl }"
+                      @click="xxlClick"
+                    >
+                      XXL
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="box">
-                <label>Colors</label>
-                <div class="in-boxes colors">
-                  <div class="in-box" v-for="image in data.group" :key="image.id" @click="colorChange"
-                    @mouseover="lol = image.id">
-                    <img :src="imgHost + image.image" alt="" />
+                <div class="box">
+                  <label>Colors</label>
+                  <div class="in-boxes colors">
+                    <div
+                      class="in-box"
+                      v-for="image in data.group"
+                      :key="image.id"
+                      @click="colorChange"
+                      @mouseover="lol = image.id"
+                    >
+                      <img :src="imgHost + image.image" alt="" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="box">
-                <label>Count</label>
-                <div class="in-boxes count" style="border: 1px solid rgba(0, 0, 0, 0.212)">
-                  <div class="in-box" @click="quantity--" style="border: none; margin: 0">
-                    <i class="bx bx-minus" />
-                  </div>
-                  <div class="in-box" style="border: none; cursor: default">
-                    {{ quantity }}
-                  </div>
-                  <div class="in-box" @click="quantity++" style="border: none">
-                    <i class="bx bx-plus" />
+                <div class="box">
+                  <label>Count</label>
+                  <div
+                    class="in-boxes count"
+                    style="border: 1px solid rgba(0, 0, 0, 0.212)"
+                  >
+                    <div
+                      class="in-box"
+                      @click="quantity--"
+                      style="border: none; margin: 0"
+                    >
+                      <i class="bx bx-minus" />
+                    </div>
+                    <div class="in-box" style="border: none; cursor: default">
+                      {{ quantity }}
+                    </div>
+                    <div class="in-box" @click="quantity++" style="border: none">
+                      <i class="bx bx-plus" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="reviews"></div>
+          </div>
+
+          <div class="reviews">
+            <label>Reviews >></label>
+            <textarea name="" id="" cols="30" rows="5" />
+            <div class="stars">
+              <i class="bx bx-star" />
+              <i class="bx bx-star" />
+              <i class="bx bx-star" />
+              <i class="bx bx-star" />
+              <i class="bx bx-star" />
+            </div>
+            <button>Add Review</button>
+
           </div>
         </div>
 
         <div class="btn">
-          <div class="price">
+          <div class="price" style="margin-right: 8.5% ">
             <h3 style="margin-right: 12.5%">₹{{ data.sellingPrice }}</h3>
-            <p style="text-decoration: line-through; color: rgba(131, 131, 131, 0.818)">
+            <p style="text-decoration: line-through; color: rgba(131, 131, 131, 0.818); ">
               ₹{{ data.price }}
             </p>
           </div>
           <div class="btns">
-            <button @click="addToCart" style="margin-left: 8.5%">Add To Cart</button>
+            <button @click="addToCart" style="">Add To Cart</button>
             <button>Buy Now</button>
           </div>
         </div>
@@ -119,17 +179,31 @@
   <div class="mobile">
     <div class="navigation">
       <div class="swipe left" @click="prev">
-        <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width="20"
+          height="17"
+          viewBox="0 0 20 17"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             d="M9.87 7.74689L16.5106 1.10626C16.9696 0.647278 17.7118 0.647278 18.1659 1.10626L19.2694 2.20978C19.7284 2.66876 19.7284 3.41095 19.2694 3.86505L14.5673 8.57697L19.2743 13.284C19.7333 13.743 19.7333 14.4852 19.2743 14.9393L18.1708 16.0477C17.7118 16.5067 16.9696 16.5067 16.5155 16.0477L9.87488 9.40704C9.41101 8.94806 9.41101 8.20587 9.87 7.74689V7.74689ZM0.494998 9.40704L7.13562 16.0477C7.59461 16.5067 8.33679 16.5067 8.7909 16.0477L9.89441 14.9442C10.3534 14.4852 10.3534 13.743 9.89441 13.2889L5.19226 8.57697L9.89929 3.86993C10.3583 3.41095 10.3583 2.66876 9.89929 2.21466L8.79578 1.10626C8.33679 0.647278 7.59461 0.647278 7.14051 1.10626L0.49988 7.74689C0.0360131 8.20587 0.0360132 8.94806 0.494998 9.40704V9.40704Z"
-            fill="black" />
+            fill="black"
+          />
         </svg>
       </div>
       <div class="swipe right" @click="next">
-        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width="20"
+          height="16"
+          viewBox="0 0 20 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             d="M9.74365 8.64502L3.10303 15.2856C2.64404 15.7446 1.90186 15.7446 1.44775 15.2856L0.344238 14.1821C-0.114746 13.7231 -0.114746 12.981 0.344238 12.5269L5.05127 7.81982L0.344238 3.11279C-0.114746 2.65381 -0.114746 1.91162 0.344238 1.45752L1.44287 0.344238C1.90186 -0.114746 2.64404 -0.114746 3.09814 0.344238L9.73877 6.98486C10.2026 7.44385 10.2026 8.18604 9.74365 8.64502V8.64502ZM19.1187 6.98486L12.478 0.344238C12.019 -0.114746 11.2769 -0.114746 10.8228 0.344238L9.71924 1.44775C9.26025 1.90674 9.26025 2.64893 9.71924 3.10303L14.4263 7.81006L9.71924 12.5171C9.26025 12.9761 9.26025 13.7183 9.71924 14.1724L10.8228 15.2759C11.2817 15.7349 12.0239 15.7349 12.478 15.2759L19.1187 8.63525C19.5776 8.18603 19.5776 7.44385 19.1187 6.98486Z"
-            fill="black" />
+            fill="black"
+          />
         </svg>
       </div>
     </div>
@@ -142,10 +216,17 @@
       </div>
       <div class="rating">
         <div class="star">
-          <svg width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="24"
+            height="23"
+            viewBox="0 0 24 23"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M10.5985 1.29528L7.76429 7.0418L1.42314 7.96628C0.285991 8.13121 -0.169738 9.53312 0.654914 10.3361L5.24259 14.8066L4.15752 21.1217C3.96221 22.2632 5.16446 23.1182 6.17141 22.5843L11.8442 19.6026L17.5169 22.5843C18.5238 23.1138 19.7261 22.2632 19.5308 21.1217L18.4457 14.8066L23.0334 10.3361C23.858 9.53312 23.4023 8.13121 22.2652 7.96628L15.924 7.0418L13.0898 1.29528C12.582 0.27097 11.1106 0.257949 10.5985 1.29528Z"
-              fill="white" />
+              fill="white"
+            />
           </svg>
           <p>4.5</p>
         </div>
@@ -153,11 +234,13 @@
       </div>
       <div class="price">
         <h3>₹{{ data.sellingPrice }}</h3>
-        <h3 style="
+        <h3
+          style="
             text-decoration: line-through;
             color: rgba(131, 131, 131, 0.818);
             font-weight: 200;
-          ">
+          "
+        >
           ₹{{ data.price }}
         </h3>
       </div>
@@ -175,8 +258,13 @@
             <div class="box">
               <label>Colors</label>
               <div class="in-boxes colors">
-                <div class="in-box" v-for="image in data.group" :key="image.id" @click="colorChange"
-                  @mouseover="lol = image.id">
+                <div
+                  class="in-box"
+                  v-for="image in data.group"
+                  :key="image.id"
+                  @click="colorChange"
+                  @mouseover="lol = image.id"
+                >
                   <img :src="imgHost + image.image" alt="" />
                 </div>
               </div>
@@ -184,19 +272,44 @@
             <div class="box">
               <label>Size</label>
               <div class="in-boxes">
-                <div class="in-box size" v-if="data.S" :class="{ selSize: s }" @click="sClick">
+                <div
+                  class="in-box size"
+                  v-if="data.S"
+                  :class="{ selSize: s }"
+                  @click="sClick"
+                >
                   S
                 </div>
-                <div class="in-box size" v-if="data.M" :class="{ selSize: m }" @click="mClick">
+                <div
+                  class="in-box size"
+                  v-if="data.M"
+                  :class="{ selSize: m }"
+                  @click="mClick"
+                >
                   M
                 </div>
-                <div class="in-box size" v-if="data.L" :class="{ selSize: l }" @click="lClick">
+                <div
+                  class="in-box size"
+                  v-if="data.L"
+                  :class="{ selSize: l }"
+                  @click="lClick"
+                >
                   L
                 </div>
-                <div class="in-box size" v-if="data.XL" :class="{ selSize: xl }" @click="xlClick">
+                <div
+                  class="in-box size"
+                  v-if="data.XL"
+                  :class="{ selSize: xl }"
+                  @click="xlClick"
+                >
                   XL
                 </div>
-                <div class="in-box size" v-if="data.XXL" :class="{ selSize: xxl }" @click="xxlClick">
+                <div
+                  class="in-box size"
+                  v-if="data.XXL"
+                  :class="{ selSize: xxl }"
+                  @click="xxlClick"
+                >
                   XXL
                 </div>
               </div>
@@ -217,7 +330,6 @@
               </div>
             </div>
           </div>
-          <div class="reviews"></div>
         </div>
       </div>
 
@@ -606,7 +718,7 @@ body {
 }
 
 .description,
-.specs,
+.fl-box,
 .box,
 .boxes,
 .btn {
@@ -620,15 +732,23 @@ body {
   color: rgba(0, 0, 0, 0.6);
 }
 
-.specs label {
+.specs {
+  width: 50%;
+}
+
+.specs label,
+.reviews label {
   width: 45%;
   color: rgba(131, 131, 131, 0.918);
   font-weight: 600;
+  font-size: 1rem;
 }
 
 .box {
   display: flex;
   align-items: center;
+  /* justify-content: space-between; */
+  /* padding-right: 4rem; */
 }
 
 .box label {
@@ -639,7 +759,7 @@ body {
 }
 
 .boxes {
-  width: 70%;
+  width: 100%;
 }
 
 .in-boxes {
@@ -647,8 +767,6 @@ body {
   justify-content: flex-start;
   align-items: center;
   width: max-content;
-  height: 8%;
-  width: 75%;
 }
 
 .in-box {
@@ -664,8 +782,6 @@ body {
 
 .colors {
   min-height: 4rem;
-
-  flex-wrap: wrap;
 }
 
 .size {
@@ -686,7 +802,7 @@ body {
 
 .count {
   height: 2.5rem;
-  width: 25%;
+  width: 40%;
   margin-left: 3%;
   display: flex;
   justify-content: center;
@@ -716,7 +832,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 75%;
+  margin-top: 8.5%;
+
 }
 
 .price {
@@ -805,8 +922,24 @@ p {
 .reviews {
   font-size: 1.2rem;
   color: rgb(100, 100, 100);
+  width: 50%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
 }
+.reviews label {
+  padding-bottom: 1.5rem;
 
+}
+.reviews textarea {
+  resize: none;
+  border: 1px solid #d6d6d6;
+  outline: 0;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.6);
+}
 @media screen and (max-width: 768px) {
   .floating {
     position: fixed;

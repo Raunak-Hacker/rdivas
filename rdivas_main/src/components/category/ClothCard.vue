@@ -2,9 +2,8 @@
   <div class="prod" @mouseenter="iconHover" @mouseleave="iconHover">
     <div class="img" @click="$router.push('/product/' + id)">
       <img :src="imgUrl" :style="{ 'object-fit': fit }" />
-      <!-- style=" object-fit: cover " -->
-      <div class="sale" v-if="sale">SALE</div>
-      <div class="new" v-if="best">BEST SELLER</div>
+      <div class="sale tag" v-if="sale">SALE</div>
+      <div class="new tag" v-if="best">BEST SELLER</div>
     </div>
 
     <transition v-if="upHere">
@@ -238,22 +237,22 @@ i {
   object-fit: contain;
 }
 
-.sale,
-.new {
+.tag {
   position: absolute;
   top: 3%;
   left: 3%;
-  background: #ca1515;
   color: white;
   padding: 0.22rem 0.5rem;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 450;
-  font-family: "Raleway", sans-serif;
 }
 
+.sale {
+  background: #ca1515;
+  font-family: "Raleway", sans-serif;
+}
 .new {
   background: #36a300;
-  color: white;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -356,10 +355,13 @@ i {
     font-weight: 200;
     font-size: small;
     margin-bottom: 1rem;
-   
   }
   .det p:after {
     content: "\02026";
+  }
+  .new {
+    padding: 0.22rem 0.15rem;
+    font-size: 0.55rem;
   }
 }
 </style>

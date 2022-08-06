@@ -2,7 +2,7 @@
   <div class="productTops">
     <div class="sort" @click="myFunction">
       <small>Sort By</small>
-      <div class="dropdown">
+      <div class="dropdown" >
         <button class="dropbtn">Relevance</button>
         <div id="myDropdown" class="dropdown-content" v-if="dropdown">
           <a href="">Price: Low to High</a>
@@ -13,9 +13,16 @@
     </div>
     <div class="flex-wrap">
       <div class="card" v-for="product in filteredProds" :key="product.id">
-        <cloth-card :id="product.id" :name="product.name" :imgUrl="imgHost + product.image"
-          :price="product.sellingPrice" :best="product.BestSeller" :sale="product.Sale" :discount="product.price"
-          :color="product.color" />
+        <cloth-card
+          :id="product.id"
+          :name="product.name"
+          :imgUrl="imgHost + product.image"
+          :price="product.sellingPrice"
+          :best="product.BestSeller"
+          :sale="product.Sale"
+          :discount="product.price"
+          :color="product.color"
+        />
       </div>
     </div>
   </div>
@@ -36,9 +43,9 @@ export default {
     },
     imgHost() {
       return this.$store.getters.imgHost;
-    }
+    },
   },
-  created() { },
+  created() {},
   methods: {
     myFunction() {
       //   document.getElementById("myDropdown").classList.toggle("show");
@@ -115,6 +122,9 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
+  .productTops {
+    margin-top: 0.5rem;
+  }
   .card {
     width: 49%;
     height: 25%;
@@ -122,21 +132,19 @@ export default {
   }
 
   .sort {
-    width: 100%;
-    justify-content: flex-end;
+    display: none;
   }
 
   .dropdown {
     width: 60%;
     margin-left: 1rem;
-    margin-bottom: .5rem;
-    margin-top: .5rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
   }
 
   .dropdown-content {
     width: 100%;
+    z-index: -1;
   }
-
-
 }
 </style>

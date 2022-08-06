@@ -12,26 +12,31 @@
                 <router-link to="/home">HOME</router-link>
               </li>
               <li v-for="category in categories" :key="category.name">
-                <!-- <router-link :to="'/' + category.name" @click="category.name" :class="{ sel: dressActive }"> -->
                 <a @click="category.name">
                   {{ category.name }}
                 </a>
-                <!-- <a>
-                  {{ category.subcategories.name }}
-                </a> -->
                 <div class="dropdown-content">
-                  <router-link @click="subCatId(subcategory.subcategoryid)"
-                    v-for="subcategory in category.subcategories" :key="subcategory"
-                    :to="'/' + category.name + '/' + subcategory.subcategoryid">{{ subcategory.name
-                    }}</router-link>
+                  <router-link
+                    @click="subCatId(subcategory.subcategoryid)"
+                    v-for="subcategory in category.subcategories"
+                    :key="subcategory"
+                    :to="'/' + category.name + '/' + subcategory.subcategoryid"
+                    >{{ subcategory.name }}</router-link
+                  >
                 </div>
               </li>
             </ul>
           </div>
         </div>
         <div class="login">
-          <router-link to="/user" v-if="auth && $route.path !== '/user'"><i class="bx bx-user-circle" /></router-link>
-          <i class="bx bx-log-out" v-else-if="auth && $route.path === '/user'" @click="logout" />
+          <router-link to="/user" v-if="auth && $route.path !== '/user'"
+            ><i class="bx bx-user-circle"
+          /></router-link>
+          <i
+            class="bx bx-log-out"
+            v-else-if="auth && $route.path === '/user'"
+            @click="logout"
+          />
           <router-link to="/login" v-else><i class="bx bx-log-in" /></router-link>
           <!-- <a @click="logout" v-else><small>Logout</small ></a> -->
           <input type="text" placeholder="search..." v-if="search" />
@@ -48,7 +53,7 @@
           <img src="@/assets/logo.png" alt="" />
         </div>
         <div class="menu-btn" @click="togglemenu">
-          <i class="bx bx-x" style="font-size: 2rem;"></i>
+          <i class="bx bx-x" style="font-size: 2rem"></i>
         </div>
       </div>
       <div class="links">
@@ -56,36 +61,24 @@
           <router-link to="/home">HOME</router-link>
         </div>
 
-        <div class="link msel">
-          <div class="mlinkcategory ">
-            <div class="name">Top</div>
-            <div class="plus">
-            </div>
-          </div>
-
-          <router-link to="/Tops/1">
-            <div class="msubcategory">
-              Top
-            </div>
-          </router-link>
-          <router-link to="/Tops/3">
-            <div class="msubcategory">
-              Winter Wear
-            </div>
-          </router-link>
-
-        </div>
-        <div class="link" v-for="category in categories" :key="category.name">
+        <side-cat :categories="subcategories" />
+        <div class="link" v-for="(category, index) in categories" :key="category.name">
           <div class="mlinkcategory">
             <div class="name">{{ category.name }}</div>
-            <div class="plus">
-              <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M20.475 8.75625H13.4438V1.725C13.4438 0.862207 12.744 0.1625 11.8813 0.1625H10.3188C9.45596 0.1625 8.75626 0.862207 8.75626 1.725V8.75625H1.72501C0.862213 8.75625 0.162506 9.45596 0.162506 10.3188V11.8813C0.162506 12.744 0.862213 13.4438 1.72501 13.4438H8.75626V20.475C8.75626 21.3378 9.45596 22.0375 10.3188 22.0375H11.8813C12.744 22.0375 13.4438 21.3378 13.4438 20.475V13.4438H20.475C21.3378 13.4438 22.0375 12.744 22.0375 11.8813V10.3188C22.0375 9.45596 21.3378 8.75625 20.475 8.75625Z"
-                  fill="black" />
-              </svg>
+            <div class="plus" @click="lol(index)">
+              <i class="bx bx-plus" />
             </div>
           </div>
+          <router-link
+            @click="subCatId(subcategory.subcategoryid)"
+            v-for="subcategory in category.subcategories"
+            :key="subcategory"
+            :to="'/' + category.name + '/' + subcategory.subcategoryid"
+          >
+            <div class="msubcategory" v-if="clicked">
+              {{ subcategory.name }}
+            </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -101,8 +94,14 @@
         </div>
 
         <div class="right">
-          <router-link to="/user" v-if="auth && $route.path !== '/user'"><i class="bx bx-user-circle" /></router-link>
-          <i class="bx bx-log-out" v-else-if="auth && $route.path === '/user'" @click="logout" />
+          <router-link to="/user" v-if="auth && $route.path !== '/user'"
+            ><i class="bx bx-user-circle"
+          /></router-link>
+          <i
+            class="bx bx-log-out"
+            v-else-if="auth && $route.path === '/user'"
+            @click="logout"
+          />
           <router-link to="/login" v-else><i class="bx bx-log-in" /></router-link>
           <!-- <a @click="logout" v-else><small>Logout</small ></a> -->
           <input type="text" placeholder="search..." v-if="search" />
@@ -116,7 +115,9 @@
 </template>
 
 <script>
+import SideCat from "../ui/SideCat.vue";
 export default {
+  components: { SideCat },
   data() {
     return {
       scrolled: false,
@@ -125,6 +126,8 @@ export default {
       search: false,
       auth: false,
       showmenu: false,
+      clicked: true,
+      // click1: true,
     };
   },
   computed: {
@@ -144,12 +147,19 @@ export default {
     window.addEventListener("scroll", this.scroll);
   },
   methods: {
+    lol(index) {
+      this.clicked = !this.clicked;
+      this.categories[index].subcategories.forEach((subcategory) => {
+        subcategory.clicked = this.clicked;
+        console.log(subcategory.clicked);
+      });
+      console.log("index");
+      console.log(this.categories[index]);
+    },
     subCatId(id) {
       this.$store.state.id = id;
-      // console.log(this.$store.state.id);
     },
     togglemenu() {
-      //   this.$refs.menu.classList.toggle("active");
       this.showmenu = !this.showmenu;
     },
     logout() {
@@ -169,9 +179,6 @@ export default {
 
 <style scoped>
 .desktop {
-  /* display: flex;
-        justify-content: space-between;
-        align-items: center; */
   height: 100%;
 }
 
@@ -200,7 +207,7 @@ a {
   width: 0%;
 }
 
-.dropdown-content a:hover {
+.dropdown-content a:hover a:h {
   color: #000;
 }
 
@@ -303,7 +310,7 @@ small {
     position: absolute;
     top: 0;
     left: 0;
-    width: 90vw;
+    width: 80vw;
     height: 100vh;
     background-color: rgb(255, 255, 255);
   }
@@ -355,7 +362,7 @@ small {
 
   header {
     padding: 0 0.5rem;
-    width: 100vw;
+    z-index: 10;
   }
 
   .mflex-box {

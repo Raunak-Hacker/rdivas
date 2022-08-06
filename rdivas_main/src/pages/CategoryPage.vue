@@ -11,12 +11,12 @@
           <the-filter />
         </div>
         <div class="product">
-          <the-product />
+          <product-list />
         </div>
       </div>
     </div>
     <div class="mobile">
-      <the-product />
+      <product-list />
       <mob-filter />
     </div>
   </section>
@@ -24,10 +24,10 @@
 
 <script>
 import TheFilter from "@/components/category/TheFilter.vue";
-import TheProduct from "@/components/category/ProductList.vue";
+import ProductList from "@/components/category/ProductList.vue";
 import MobFilter from "@/components/category/MobFilter.vue";
 export default {
-  components: { TheFilter, TheProduct, MobFilter },
+  components: { TheFilter, ProductList, MobFilter },
   data() {
     return {
       data: null,
@@ -91,7 +91,6 @@ header {
   height: 100%;
   padding-left: 1rem;
   /* position: fixed; */
-  z-index: 1000;
 }
 
 .product {
