@@ -58,8 +58,8 @@
         </div>
       </div>
       <div class="mcopyright">
-          <small> RDivas &copy; 2022 All Rights Reserved</small>
-          <div class="just">|</div>
+        <small> RDivas &copy; 2022 All Rights Reserved</small>
+        <div class="just">|</div>
       </div>
     </div>
     <div class="copyright">
@@ -177,10 +177,12 @@ input {
   width: 50%;
   height: 50%;
 }
+
 i {
   margin-top: 9%;
   font-size: 1.5rem;
 }
+
 a {
   color: #000;
 }
@@ -194,6 +196,7 @@ a {
   text-align: center;
   border-radius: 50%;
 }
+
 .mcopyright {
   display: none;
 }
@@ -202,28 +205,35 @@ a {
   .about {
     width: 100%;
   }
+
   .social {
     width: 100%;
   }
+
   .links {
     width: 100%;
   }
+
   .account {
     width: 100%;
   }
+
   .flex-box {
     flex-direction: column;
     margin-bottom: 5vh;
     padding-bottom: 5%;
-  border-bottom: none;
+    border-bottom: none;
 
   }
+
   .copyright {
     display: none;
   }
+
   .mcopyright {
     display: block;
   }
+
   .just {
     height: 5vh;
     background-color: rgb(255, 255, 255);

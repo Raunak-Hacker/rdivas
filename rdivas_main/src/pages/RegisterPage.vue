@@ -1,30 +1,48 @@
 <template>
-  <section class="login pink">
-    <div class="pink">
-    </div>
+  <section class="login">
     <div class="login-card">
       <div class="sign-in">
         <div class="dets">
-          <h1 style="color:white;">Already have <br><br> an account?</h1>
-          <!-- <p style="color:white;">Sign up and discover many ongoing offers on best quality products!</p> -->
-          <router-link to="/login"><button class="button-37"
-              style="background-color:white; color:black; font-weight:bolder">Sign
-              In</button></router-link>
+          <h1 style="color: white" class="mob">
+            Already have <br />
+            an account? <br /><br />
+          </h1>
+          <h1 style="color: white" class="des">
+            Already have <br /><br />
+            an account? <br />
+          </h1>
+          <router-link to="/login"
+            ><button
+              class="button-37"
+              style="background-color: white; color: black; font-weight: bolder"
+            >
+              Sign In
+            </button></router-link
+          >
         </div>
       </div>
       <div class="info">
         <div class="img">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt="" />
         </div>
         <div class="details">
           <div class="title">
             <h1>Register Your Account</h1>
-          </div> <br>
+          </div>
+          <br />
           <form action="POST" @submit.prevent="subForm">
-            <input type="text" placeholder="Name" v-model.trim="name" required> <br>
-            <input type="number" placeholder="phone" v-model.trim="phone" required> <br>
-            <input type="email" placeholder="email" v-model.trim="email" required> <br>
-            <input type="password" placeholder="password" v-model.trim="password" required> <br>
+            <input type="text" placeholder="Name" v-model.trim="name" required /> <br />
+            <input type="number" placeholder="phone" v-model.trim="phone" required />
+            <br />
+            <input type="email" placeholder="email" v-model.trim="email" required />
+            <br />
+            <input
+              type="password"
+              placeholder="password"
+              v-model.trim="password"
+              required
+            />
+            <br />
             <!-- <p v-if="invalid">User already exists</p> -->
             <p v-if="authError">{{ authMessage }}</p>
             <button class="button-37" type="submit">REGISTER</button>
@@ -32,16 +50,13 @@
         </div>
       </div>
     </div>
-
   </section>
-
 </template>
 
 <script>
 export default {
   data() {
-    return {
-    }
+    return {};
   },
   mounted() {
     window.scrollTo({
@@ -55,7 +70,7 @@ export default {
     },
     authError() {
       return this.$store.getters.authError;
-    }
+    },
   },
 
   methods: {
@@ -65,22 +80,16 @@ export default {
         phone: this.phone,
         email: this.email,
         password: this.password,
-      }
+      };
       this.$store.dispatch("register", user);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
 .login {
-  width: 100%;
   height: 89vh;
-  background-color: rgba(119, 119, 119, 0.079);
-
-}
-
-.pink {
   width: 35%;
   background-color: var(--left-login);
 }
@@ -112,9 +121,11 @@ export default {
   left: 10%;
   top: 18%;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
   box-shadow: 3px 3px 5px 6px #ccc;
-  box-shadow: 18px 18px 50px 30px rgba(0, 0, 0, 0.15)
+  box-shadow: 18px 18px 50px 30px rgba(0, 0, 0, 0.15);
 }
 
 .info a small {
@@ -127,7 +138,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   color: var(--left-login);
 }
 
@@ -174,12 +185,10 @@ input {
   padding: 0.5rem;
   font-size: 1.2rem;
   border-radius: 20px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   outline: 0;
   text-indent: 10px;
-
 }
-
 
 form {
   width: 100%;
@@ -189,13 +198,12 @@ form {
   align-items: center;
 }
 
-
 /* CSS */
 .button-37 {
   background-color: var(--left-login);
   border: 1px solid var(--left-login);
   border-radius: 20px;
-  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px 0;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
@@ -211,17 +219,59 @@ form {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  font-weight: bolder
+  font-weight: bolder;
 }
 
 .button-37:hover {
-  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
   transform: translateY(-2px);
 }
 
-@media (min-width: 768px) {
-  .button-37 {
-    padding: 10px 30px;
+.mob {
+  display: none;
+}
+.des {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mob {
+    display: block;
+  }
+  .des {
+    display: none;
+  }
+  .login {
+    width: 100%;
+    height: 25vh;
+    margin-top: calc(48vw + 20rem);
+  }
+  .login-card {
+    flex-direction: column-reverse;
+    width: 80%;
+    height: max-content;
+  }
+  .sign-in {
+    height: 33.2%;
+    width: 100%;
+    padding: 1rem 0;
+  }
+  input {
+    width: 80%;
+    height: 3rem;
+    font-size: 0.9rem;
+  }
+  .info {
+    width: 100%;
+    padding: 0 0 7% 0;
+  }
+  h1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .img img {
+    width: 23%;
   }
 }
 </style>

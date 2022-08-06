@@ -1,42 +1,42 @@
 <template>
-  <!-- <section style="height: 100vh;" v-if="auth">
-    <div class="card">
-      <h2>Logged in successfully</h2>
-      <p>
-        You'll be redirected to our
-        <router-link to="/home">Home</router-link> in {{ countDown }} seconds.
-      </p>
-    </div>
-  </section> -->
-
-  <section class="login pink">
-    <div class="pink">
-    </div>
+  <section class="login">
     <div class="login-card">
       <div class="sign-in">
         <div class="dets">
-          <h1 style="color:white;">New Here?</h1>
-          <p style="color:white;">Sign up and discover many ongoing offers on best quality products! <br> <br> Register
-            now to access
-            features like wishlist, cart, etc.</p>
-          <router-link to="/register"><button class="button-37"
-              style="background-color:white; color:black; font-weight:bolder">Sign
-              Up</button></router-link>
+          <h1 style="color: white">New Here?</h1>
+          <p style="color: white">
+            <br />
+            Sign up and discover many ongoing offers on best quality products!
+            <br />
+            <br />
+            Register now to access features like wishlist, cart, etc. <br />
+            <br />
+          </p>
+          <router-link to="/register"
+            ><button
+              class="button-37"
+              style="background-color: white; color: black; font-weight: bolder"
+            >
+              Sign Up
+            </button></router-link
+          >
         </div>
       </div>
       <div class="info">
         <div class="img">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt="" />
         </div>
         <div class="details">
           <div class="title">
             <h1>Login to Your Account</h1>
-          </div> <br>
+          </div>
+          <br />
           <form action="POST" @submit.prevent="subForm">
-            <input type="email" placeholder="email" v-model.trim="email"> <br>
-            <input type="password" placeholder="password" v-model.trim="password"> <br>
+            <input type="email" placeholder="email" v-model.trim="email" /> <br />
+            <input type="password" placeholder="password" v-model.trim="password" />
+            <br />
             <p v-if="authError">{{ authMessage }}</p>
-            <router-link to=""><small>Forgot Password?</small></router-link> <br>
+            <router-link to=""><small>Forgot Password?</small></router-link> <br />
             <button class="button-37" role="button">LOGIN</button>
           </form>
         </div>
@@ -57,7 +57,7 @@ export default {
     return {
       email: null,
       password: null,
-    }
+    };
   },
   computed: {
     authMessage() {
@@ -65,7 +65,7 @@ export default {
     },
     authError() {
       return this.$store.getters.authError;
-    }
+    },
   },
 
   methods: {
@@ -73,32 +73,34 @@ export default {
       const user = {
         email: this.email,
         password: this.password,
-      }
-      await this.$store.dispatch('login', user);
+      };
+      await this.$store.dispatch("login", user);
       if (this.authError) {
         return;
       }
       window.location = "/home";
-
     },
   },
-
-}
+};
 </script>
 
 <style scoped>
 .login {
   width: 100%;
   height: 89vh;
-  background-color: rgba(119, 119, 119, 0.079);
-
-}
-
-.pink {
   width: 35%;
   background-color: var(--left-login);
 }
 
+.login-card {
+  width: 75%;
+  height: 75%;
+  position: absolute;
+  display: flex;
+  left: 10%;
+  top: 18%;
+  box-shadow: 18px 18px 50px 30px rgba(0, 0, 0, 0.15);
+}
 .sign-in {
   width: 33.2%;
   height: 100%;
@@ -118,19 +120,6 @@ export default {
   line-height: 1.5rem;
 }
 
-.login-card {
-  width: 75%;
-  height: 75%;
-  position: absolute;
-  display: flex;
-  left: 10%;
-  top: 18%;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
-  box-shadow: 3px 3px 5px 6px #ccc;
-  box-shadow: 18px 18px 50px 30px rgba(0, 0, 0, 0.15)
-}
-
 .info a small {
   color: rgb(0, 94, 202);
 }
@@ -141,14 +130,13 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   color: var(--left-login);
 }
 
 .info a {
   display: flex;
   justify-content: flex-end;
-  text-decoration: underline;
   align-items: flex-end;
   cursor: pointer;
 }
@@ -189,12 +177,10 @@ input {
   padding: 0.5rem;
   font-size: 1.2rem;
   border-radius: 20px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   outline: 0;
   text-indent: 10px;
-
 }
-
 
 form {
   width: 100%;
@@ -204,13 +190,12 @@ form {
   align-items: center;
 }
 
-
 /* CSS */
 .button-37 {
   background-color: var(--left-login);
   border: 1px solid var(--left-login);
   border-radius: 20px;
-  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px 0;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
@@ -226,30 +211,53 @@ form {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  font-weight: bolder
+  font-weight: bolder;
 }
 
 .button-37:hover {
-  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
   transform: translateY(-2px);
 }
 
-@media (min-width: 768px) {
-  .button-37 {
-    padding: 10px 30px;
+@media (max-width: 768px) {
+  .login-card {
+    flex-direction: column-reverse;
+    width: 80%;
+    height: max-content;
+  }
+  .login {
+    width: 100%;
+    height: 19rem;
+    margin-top: 25rem;
+  }
+  .sign-in {
+    height: 33.2%;
+    width: 100%;
+    padding: 1rem 0;
+  }
+  input {
+    width: 80%;
+    height: 3rem;
+    font-size: 0.9rem;
+  }
+  .info {
+    width: 100%;
+    height: 66.8%;
+    padding: 0 0 7% 0;
+  }
+  h1 {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  .dets p {
+    font-size: 0.75rem;
+  }
+  .dets h1 {
+    font-size: 1.75rem;
+  }
+  .img img {
+    width: 23%;
   }
 }
 
-.card {
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  padding: 1rem;
-  margin: 2rem auto;
-  max-width: 40rem;
-}
-
-.card a {
-  color: #0070f3;
-  text-decoration: underline;
-}
 </style>

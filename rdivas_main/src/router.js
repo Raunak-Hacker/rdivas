@@ -13,7 +13,7 @@ const router = createRouter({
     },
     {
       path: "/:category/:id",
-      component: () => import("./pages/AllProducts.vue"),
+      component: () => import("./pages/CategoryPage.vue"),
       props: true,
     },
     {
@@ -63,6 +63,10 @@ const router = createRouter({
       component: () => import("./pages/VerifyPage.vue"),
       props: true,
     },
+    // {
+    //   path: "/lol",
+    //   component: () => import("./pages/lolP.vue"),
+    // },
     {
       path: "/:pathMatch(.*)*",
       name: "NotFound",

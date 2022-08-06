@@ -3,7 +3,7 @@
     <div class="desktop">
       <div class="flex-box">
         <div class="logo">
-          <img src="@/assets/logo.png" alt="" />
+          <router-link to="/home"> <img src="@/assets/logo.png" alt="" /></router-link>
         </div>
         <div class="cats">
           <div class="nav-links">
@@ -16,6 +16,9 @@
                 <a @click="category.name">
                   {{ category.name }}
                 </a>
+                <!-- <a>
+                  {{ category.subcategories.name }}
+                </a> -->
                 <div class="dropdown-content">
                   <router-link @click="subCatId(subcategory.subcategoryid)"
                     v-for="subcategory in category.subcategories" :key="subcategory"
@@ -45,28 +48,18 @@
           <img src="@/assets/logo.png" alt="" />
         </div>
         <div class="menu-btn" @click="togglemenu">
-          <svg width="25" height="23" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M22.6562 0.5625H2.34375C1.0498 0.5625 0 1.6123 0 2.90625V20.0938C0 21.3877 1.0498 22.4375 2.34375 22.4375H22.6562C23.9502 22.4375 25 21.3877 25 20.0938V2.90625C25 1.6123 23.9502 0.5625 22.6562 0.5625ZM18.5742 14.7471C18.8086 14.9814 18.8086 15.3623 18.5742 15.5967L16.5967 17.5742C16.3623 17.8086 15.9814 17.8086 15.7471 17.5742L12.5 14.2979L9.25293 17.5742C9.01855 17.8086 8.6377 17.8086 8.40332 17.5742L6.42578 15.5967C6.19141 15.3623 6.19141 14.9814 6.42578 14.7471L9.70215 11.5L6.42578 8.25293C6.19141 8.01855 6.19141 7.6377 6.42578 7.40332L8.40332 5.42578C8.6377 5.19141 9.01855 5.19141 9.25293 5.42578L12.5 8.70215L15.7471 5.42578C15.9814 5.19141 16.3623 5.19141 16.5967 5.42578L18.5742 7.40332C18.8086 7.6377 18.8086 8.01855 18.5742 8.25293L15.2979 11.5L18.5742 14.7471Z"
-              fill="black" />
-          </svg>
+          <i class="bx bx-x" style="font-size: 2rem;"></i>
         </div>
       </div>
       <div class="links">
         <div class="link">
           <router-link to="/home">HOME</router-link>
-          <!-- :class="{ sel: homActive }" -->
         </div>
 
         <div class="link msel">
           <div class="mlinkcategory ">
             <div class="name">Top</div>
             <div class="plus">
-              <svg width="23" height="6" viewBox="0 0 23 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M20.475 0.75625H1.72501C0.862213 0.75625 0.162506 1.45596 0.162506 2.31875V3.88125C0.162506 4.74404 0.862213 5.44375 1.72501 5.44375H20.475C21.3378 5.44375 22.0375 4.74404 22.0375 3.88125V2.31875C22.0375 1.45596 21.3378 0.75625 20.475 0.75625Z"
-                  fill="black" />
-              </svg>
             </div>
           </div>
 
@@ -100,12 +93,10 @@
       <div class="mflex-box">
         <div class="left">
           <div class="menu-btn" @click="togglemenu">
-            <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 0V10H100V0H0ZM0 30V40H100V30H0ZM0 60V70H100V60H0Z" fill="black" />
-            </svg>
+            <i class="bx bx-menu" />
           </div>
           <div class="mlogo">
-            <img src="@/assets/logo.png" alt="" />
+            <router-link to="/home"> <img src="@/assets/logo.png" alt="" /></router-link>
           </div>
         </div>
 
@@ -145,6 +136,7 @@ export default {
     const response = await fetch(`${this.host}/get/header`);
     const data = await response.json();
     this.categories = data.categories;
+    console.log(this.categories.subcategories);
     // await this.$store.dispatch('auth');
     this.auth = await this.$store.getters.isAuth;
   },
@@ -384,7 +376,14 @@ small {
   }
 
   .menu-btn {
-    max-width: 20%;
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .menu-btn i {
+    font-size: 1.5rem;
   }
 
   svg {

@@ -15,62 +15,16 @@ export default {
   setSel(state, payload) {
     state.sel = payload;
   },
-  fetchStuff(state, payload) {
-    console.log("fetching stuff");
-    fetch(payload, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + state.token,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        state.products = data;
-        state.sel = true;
-        console.log(data);
+  filterProducts(state, payload) {
+    if (payload.length > 0) {
+      state.filteredProducts = state.products.filter((product) => {
+        return product.name.toLowerCase().includes(payload.toLowerCase());
       });
-    console.log("fetched stuff");
-    // context.commit("setProducts", res);
-    // context.commit("setSel", true);
-  },
-
-  addCat(state, data) {
-    let add = {
-      name: data.cat.name,
-    };
-    if (data.cat.colorCode) {
-      add = {
-        name: data.cat.name,
-        colorCode: data.cat.colorCode,
-      };
+    } else {
+      state.filteredProducts = state.products;
     }
-    console.log(data.cat);
-    fetch(state.host + "add/" + data.cat.sel, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + state.token,
-      },
-      body: JSON.stringify(add),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.status === "success") {
-          this.commit("fetchStuff", data.url);
-        }
-      });
-
-    // context.dispatch("fetchStuff", data.url);
-    // const response = await fetch(data.url, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: "Bearer " + state.token,
-    //   },
-    // });
-    // const res = await response.json();
-    // context.commit("setProducts", res);
+  },
+  setFilterProducts(state) {
+    state.filteredProducts = state.products;
   },
 };

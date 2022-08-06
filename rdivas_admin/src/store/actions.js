@@ -9,9 +9,7 @@ export default {
     });
     const res = await response.json();
     context.commit("setProducts", res);
-    context.commit("setSel", true);
   },
-
   async addCat(context, data) {
     let add = {
       name: data.cat.name,

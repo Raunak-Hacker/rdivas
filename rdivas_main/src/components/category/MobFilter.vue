@@ -1,19 +1,19 @@
 <template>
   <div class="main">
     <div class="filter" v-if="filter">
-        <filter-tops />
+        <the-filter />
     </div>
     <div class="filterbtn">
       <div class="sort" @click="togglefilter">Filter</div>
-      <div class="sort">Short By</div>
+      <div class="sort">Sort By</div>
     </div>
   </div>
 </template>
 
 <script>
-import FilterTops from "@/components/tops/FilterTops.vue";
+import TheFilter from "./TheFilter.vue";
 export default {
-    components: { FilterTops },
+    components: { TheFilter },
 
   data() {
     return {

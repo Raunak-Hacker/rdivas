@@ -1,14 +1,11 @@
 <template>
-    <top-sec />
-    <bottom-sec />
+    <main-page></main-page>
 </template>
 
 <script>
-import TopSec from '@/components/home/TopSec.vue';
-import BottomSec from '@/components/home/BottomSec.vue';
+import MainPage from '@/components/home/MainPage.vue'
 export default {
-    components: { TopSec, BottomSec },
-
+    components: { MainPage },
 }
 </script>
 

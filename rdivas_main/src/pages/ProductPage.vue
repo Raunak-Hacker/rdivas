@@ -101,7 +101,7 @@
 
         <div class="btn">
           <div class="price">
-            <h3 style="margin-right: 12.5%">₹{{ data.sellingPrice.toFixed(2) }}</h3>
+            <h3 style="margin-right: 12.5%">₹{{ data.sellingPrice }}</h3>
             <p style="text-decoration: line-through; color: rgba(131, 131, 131, 0.818)">
               ₹{{ data.price }}
             </p>

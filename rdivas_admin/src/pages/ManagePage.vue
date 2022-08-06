@@ -1,7 +1,18 @@
 <template>
   <!-- <keep-alive> -->
-  <component v-if="sel" :is="selectedComponent" @add-click="addProdClicked" @edit-click="editProdClicked" :id="id"
-    :name="name" :sel-manage="selManage" :filteredProds="filteredProducts" :prods="products" @add-cat="addCat" />
+  <component
+    v-if="sel"
+    :is="selectedComponent"
+    @add-click="addProdClicked"
+    @edit-click="editProdClicked"
+    :id="id"
+    :name="name"
+    :sel-manage="selManage"
+    @add-cat="addCat"
+    @edited="edited"
+    @back="back"
+    @back-click="backClicked"
+  />
   <transition appear v-else>
     <section class="man-page">
       <div class="boxes">
@@ -14,7 +25,6 @@
       </div>
     </section>
   </transition>
-
   <!-- </keep-alive> -->
 </template>
 
@@ -31,14 +41,12 @@ export default {
   },
   data() {
     return {
-      products: [],
-      filteredProds: [],
       addClick: false,
       editClick: false,
       selectedComponent: "main-page",
       id: null,
       name: null,
-
+      sel: false,
     };
   },
   computed: {
@@ -51,18 +59,15 @@ export default {
     token() {
       return this.$store.getters.token;
     },
-    sel() {
-      return this.$store.getters.sel;
-    },
+    // sel() {
+    //   return this.$store.getters.sel;
+    // },
     selManage() {
       return this.$store.state.selManage;
     },
-    // url() {
-    //   return this.$store.state.url;
-    // }
   },
   methods: {
-    selMan(val) {
+    async selMan(val) {
       this.$store.state.url = this.host + val;
       if (val === "categories") {
         const selMan = "types";
@@ -72,45 +77,25 @@ export default {
         this.$store.state.url = this.host + selMan;
       }
       this.$store.state.selManage = val;
-      this.$store.commit('fetchStuff', this.$store.state.url);
+      await this.$store.dispatch("fetchStuff", this.$store.state.url);
+      this.sel = true;
     },
-    // async fetchStuff() {
-    //   const response = await fetch(this.url, {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: "Bearer " + this.token,
-    //     },
-    //   });
-    //   const data = await response.json();
-    //   this.products = data;
-    //   this.filteredProducts = data;
-    //   this.sel = true;
-    // },
+    edited() {
+      this.selectedComponent = "main-page";
+      this.$store.commit("setFilterProducts");
+    },
+    back() {
+      this.selectedComponent = "main-page";
+      // this.$store.commit("setFilterProducts");
+    },
+    backClicked() {
+      this.sel = false;
+    },
     addCat(cat) {
-      this.$store.commit('addCat', {
+      this.$store.dispatch("addCat", {
         cat: cat,
-        url: this.url
+        url: this.url,
       });
-      // let add = {
-      //   name: cat.name,
-      // };
-      // if (cat.colorCode) {
-      //   add = {
-      //     name: cat.name,
-      //     colorCode: cat.colorCode,
-      //   };
-      // }
-      // await fetch(this.ogHost + "add/" + cat.sel, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: "Bearer " + this.token,
-      //   },
-      //   body: JSON.stringify(add),
-      // });
-      // await this.fetchStuff();
-      // console.log("added");
     },
     addProdClicked() {
       this.selectedComponent = "add-form";

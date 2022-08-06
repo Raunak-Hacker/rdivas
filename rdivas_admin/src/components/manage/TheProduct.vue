@@ -19,7 +19,7 @@ export default {
     props: ['name', 'id', 'sel-manage', 'colorCode'],
     computed: {
         host() {
-            return this.$store.getters.host + 'delete/';
+            return this.$store.getters.host;
         },
         token() {
             return this.$store.getters.token;
@@ -59,10 +59,9 @@ export default {
                 } else if (this.selManage == 'colors') {
                     url = 'color/';
                 }
-                const response = await fetch(this.host + url + this.id, details);
-                const data = await response.json();
-                console.log(data);
-                console.log('Thing was deleted.');
+                await fetch(this.host + 'delete/' + url + this.id, details);
+                await this.$store.dispatch('fetchStuff', this.$store.state.url);
+                this.$emit('delClicked');
             }
         }
     }
@@ -72,12 +71,16 @@ export default {
 <style scoped>
 .product {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
     height: 15%;
     border: 1px solid black;
     padding: 1.5%;
     margin: 1% 0;
+}
+
+body.dark .product {
+    border: 1px solid rgba(194, 193, 193, 0.686);
 }
 
 .man {

@@ -6,29 +6,28 @@
           {{ data.category }}
         </div>
       </header>
-
       <div class="flex-box">
         <div class="filter">
-          <filter-tops />
+          <the-filter />
         </div>
         <div class="product">
-          <product-tops />
+          <the-product />
         </div>
       </div>
     </div>
     <div class="mobile">
-      <product-tops />
-      <BottomFilter />
+      <the-product />
+      <mob-filter />
     </div>
   </section>
 </template>
 
 <script>
-import FilterTops from "@/components/tops/FilterTops.vue";
-import ProductTops from "@/components/tops/ProductTops.vue";
-import BottomFilter from "@/components/ui/bottomFilter.vue";
+import TheFilter from "@/components/category/TheFilter.vue";
+import TheProduct from "@/components/category/ProductList.vue";
+import MobFilter from "@/components/category/MobFilter.vue";
 export default {
-  components: { FilterTops, ProductTops, BottomFilter },
+  components: { TheFilter, TheProduct, MobFilter },
   data() {
     return {
       data: null,
@@ -60,6 +59,7 @@ export default {
 <style scoped>
 .flex-box {
   align-items: flex-start;
+
 }
 
 header {
@@ -90,12 +90,15 @@ header {
   width: 25%;
   height: 100%;
   padding-left: 1rem;
+  /* position: fixed; */
+  z-index: 1000;
 }
 
 .product {
-  width: 90%;
+  width: 75%;
   height: 100%;
   padding-right: 1rem;
+
 }
 
 @media screen and (max-width: 768px) {

@@ -67,7 +67,6 @@ export default {
       }
       const tokenResponse = await fetch(`${this.host}login`, user);
       const token = await tokenResponse.json();
-      console.log(token);
       if (!tokenResponse.ok) {
         const authErr = {
           message: "Invalid email or password",
@@ -79,10 +78,7 @@ export default {
         localStorage.setItem("token", token.token);
         this.$store.commit("setAuthError", { message: null, error: false });
         this.$store.dispatch("auth", token.token);
-        console.log('token');
       }
-      console.log(token);
-      console.log('token');
     },
     // async auth(token) {
     //   const auth = await fetch(`${this.host}/user/`, {

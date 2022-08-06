@@ -1,5 +1,5 @@
 <template>
-  <div class="product">
+  <div class="product" >
     <div class="dets">
       <div class="img">
         <img :src="img" alt="" />
@@ -8,6 +8,7 @@
         <label>{{ name }}</label>
         <small><label for="">Size: </label>{{ size }}</small>
         <small><label for="">Color: </label>{{ color }}</small>
+        <small class="mob"><label for="">Price: </label>₹{{ price }}</small>
       </div>
     </div>
     <div class="flex-prod">
@@ -24,16 +25,28 @@
           </div>
         </div>
       </div>
-      <div class="price">
+      <div class="price desktop">
         <label for="price">₹{{ price }}</label>
       </div>
-      <div class="offer">
+      <div class=" offer desktop">
         <label for="offer" style="color: red">-₹{{ offer }}</label>
       </div>
-      <div class="total">
+      <div class="total desktop">
         <div class="del" @click="removeItem"><i class="bx bx-x" /></div>
         <label for="total">₹{{ total }}</label>
       </div>
+
+      <!-- mobile sec  -->
+
+      <div class="box total mob">
+        <label for="total">₹{{ total }}</label>
+      </div>
+      <div class="box offer mob">
+        <div class="del" @click="removeItem"><i class="bx bx-x" /></div>
+        <label for="offer" style="color: red">-₹{{ offer }}</label>
+      </div>
+
+
     </div>
   </div>
 </template>
@@ -55,8 +68,6 @@ export default {
     "items",
   ],
   created() {
-    // this.quantity = this.qty;
-    // this.$emit("update-quantity", this.quantity);
   },
   data() {
     return {
@@ -65,7 +76,6 @@ export default {
   },
   computed: {
     offer() {
-      
       return ((this.price - this.selprice) * this.qty).toFixed(2);
     },
   },
@@ -75,7 +85,7 @@ export default {
         prodId: this.id,
         quantity: -this.qty,
         size: this.size,
-        color: this.color
+        color: this.color,
       };
       await this.$store.dispatch("addToCart", product);
     },
@@ -94,6 +104,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 .product {
   height: 33.33%;
   padding: 1% 0;
@@ -191,5 +203,66 @@ export default {
   height: 2rem;
   width: 1.7rem;
   cursor: pointer;
+}
+
+.mob {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+
+  .mob {
+    display: block;
+  }
+
+  .product {
+    margin-top: .5rem ;
+    padding-bottom: .5rem ;
+    width: 100%;
+    height: max-content;
+  }
+
+  .img {
+    margin-right: 1rem;
+  }
+  .img img {
+    width: 100%;
+    height: 12.5vh;
+  }
+  .dets {
+    width: 64%;
+
+  }
+
+  .prod-info {
+    flex-direction: column;
+    justify-content: center;
+    /* height: 7rem; */
+  }
+
+  .prod-info label {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .flex-prod {
+    flex-direction: column-reverse;
+    width: 35%;
+    height: 100%;
+    font-size: small;
+  }
+
+  .box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
 }
 </style>

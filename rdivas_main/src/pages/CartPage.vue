@@ -21,13 +21,13 @@
           :qty="item.quantity" @update-quantity="upQuantity">
         </cart-item>
       </div>
-      <router-link to="" class="cont">
+      <router-link to="" class="cont desktop">
         <i class="bx bx-left-arrow-circle" />Continue Shopping
       </router-link>
     </div>
     <div class="orders">
       <div class="title">
-        <h1>Orders Summary</h1>
+        <h1>Order Summary</h1>
       </div>
       <!-- <div class="boxes">
         <div class="box">
@@ -43,18 +43,17 @@
       <div class="prices">
         <div class="price-box">
           <label for="items">{{ cart ? cart.cartProducts.length : 0 }} items MRP</label>
-          <label for="rate">₹{{ cart ? cart.price.toFixed(2) : 0 }}</label>
+          <label for="rate">₹{{ cart ? cart.price : 0 }}</label>
         </div>
         <div class="price-box">
           <label for="items">Offer</label>
-          <label for="rate" style="color: red">-₹{{ cart ? cart.discount.toFixed(2) : 0
-          }}</label>
+          <label for="rate" style="color: red">-₹{{ cart ? cart.discount : 0 }}</label>
         </div>
         <!-- <div class="price-box">
           <label for="items">Promo Code (20%)</label>
           <label for="rate" style="color: red">-₹378</label>
-        </div> -->
-        <!-- <div class="price-box">
+        </div>
+        <div class="price-box">
           <label for="items">Delivery Charges</label>
           <label for="rate" style="color: green">+₹100</label>
         </div> -->
@@ -63,7 +62,7 @@
       <div class="checkout">
         <div class="checkout-price">
           <label for="items">Total Cost</label>
-          <label for="rate">₹{{ cart ? cart.total.toFixed(2) : 0 }}</label>
+          <label for="rate">₹{{ cart ? cart.total : 0 }}</label>
         </div>
         <button class="pay-btn">PAY NOW</button>
         <button class="pay-btn" style="
@@ -138,18 +137,17 @@ export default {
 </script>
 
 <style scoped>
-*::-webkit-scrollbar {
+.products::-webkit-scrollbar {
   width: 0.5rem;
 }
 
-*::-webkit-scrollbar-track {
+.products::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 100px;
 }
 
-*::-webkit-scrollbar-thumb {
+.products::-webkit-scrollbar-thumb {
   background-image: linear-gradient(360deg, #b6c5c9 0%, var(--left-login) 45%);
-  /* background: -webkit-linear-gradient(left, #a71b63, #ffd500); */
   box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
   border-radius: 100px;
 }
@@ -344,5 +342,66 @@ export default {
   border: none;
   outline: 0;
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+
+  .cart {
+    width: 100%;
+    height: max-content;
+    flex-direction: column;
+  }
+
+  .items {
+    width: 100%;
+    padding: 3% 5%;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: small;
+    height: 3rem;
+  }
+
+  .info {
+    display: none;
+  }
+
+  .products {
+    /* scrollbar-width: none; */
+    overflow: hidden;
+  }
+
+  .orders {
+    width: 100%;
+    padding: 3% 5%;
+    height: max-content;
+    flex-direction: column;
+  }
+
+  .prices {
+    padding: 0 2%;
+  }
+
+  .price-box {
+    height: 2rem;
+  }
+
+  .checkout {
+    width: 100%;
+    height: 30vh;
+
+    padding: 0 2%;
+  }
+
+  .checkout-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
 }
 </style>

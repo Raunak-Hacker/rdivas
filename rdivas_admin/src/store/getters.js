@@ -8,4 +8,5 @@ export default {
     authMessage: (state) => state.authMessage,
     products: (state) => state.products,
     sel: (state) => state.sel,
+    filteredProducts: (state) => state.filteredProducts,
 }
