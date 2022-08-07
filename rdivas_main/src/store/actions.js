@@ -1,7 +1,3 @@
-// import router from "../main.js";
-// import router from './router'
-// import router from "../router.js";
-
 export default {
   getProdList(context, data) {
     context.commit("setProdList", data);

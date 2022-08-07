@@ -186,7 +186,7 @@ i {
 
 .prod {
   width: 98%;
-  height: 10%;
+  height: 55vh;
   margin-bottom: 2%;
   display: flex;
   margin: 0.5%;

@@ -143,26 +143,12 @@
               </div>
             </div>
           </div>
-
-          <div class="reviews">
-            <label>Reviews >></label>
-            <textarea name="" id="" cols="30" rows="5" />
-            <div class="stars">
-              <i class="bx bx-star" />
-              <i class="bx bx-star" />
-              <i class="bx bx-star" />
-              <i class="bx bx-star" />
-              <i class="bx bx-star" />
-            </div>
-            <button>Add Review</button>
-
-          </div>
         </div>
 
         <div class="btn">
-          <div class="price" style="margin-right: 8.5% ">
+          <div class="price" style="margin-right: 8.5%">
             <h3 style="margin-right: 12.5%">₹{{ data.sellingPrice }}</h3>
-            <p style="text-decoration: line-through; color: rgba(131, 131, 131, 0.818); ">
+            <p style="text-decoration: line-through; color: rgba(131, 131, 131, 0.818)">
               ₹{{ data.price }}
             </p>
           </div>
@@ -174,6 +160,7 @@
         <br />
       </div>
     </section>
+    <the-review />
   </div>
 
   <div class="mobile">
@@ -342,7 +329,9 @@
 </template>
 
 <script>
+import TheReview from "@/components/ui/TheReview.vue";
 export default {
+  components: { TheReview },
   data() {
     return {
       data: null,
@@ -571,7 +560,7 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 2rem 0;
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
 }
 
@@ -621,7 +610,7 @@ body {
 
 .main-img {
   width: 50%;
-  height: 100%;
+  height: 80vh;
   background-color: #fff;
   border: 1px solid #e5e5e5;
 }
@@ -722,7 +711,7 @@ body {
 .box,
 .boxes,
 .btn {
-  margin-top: 4.5%;
+  margin-top: 3.5%;
 }
 
 .description p {
@@ -733,7 +722,7 @@ body {
 }
 
 .specs {
-  width: 50%;
+  width: 100%;
 }
 
 .specs label,
@@ -802,10 +791,9 @@ body {
 
 .count {
   height: 2.5rem;
-  width: 40%;
+  width: 20%;
   margin-left: 3%;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -833,7 +821,6 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-top: 8.5%;
-
 }
 
 .price {
@@ -920,16 +907,15 @@ p {
 }
 
 .reviews {
+  padding: 0 2%;
   font-size: 1.2rem;
   color: rgb(100, 100, 100);
-  width: 50%;
   height: max-content;
   display: flex;
   flex-direction: column;
 }
 .reviews label {
   padding-bottom: 1.5rem;
-
 }
 .reviews textarea {
   resize: none;
@@ -940,6 +926,52 @@ p {
   font-size: 0.8rem;
   color: rgba(0, 0, 0, 0.6);
 }
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+/****** Style Star Rating Widget *****/
+
+.rating {
+  border: none;
+  float: left;
+}
+
+.rating > input {
+  display: none;
+}
+.rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before {
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label {
+  color: #ddd;
+  float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label {
+  color: #ffd700;
+} /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label {
+  color: #ffed85;
+}
+
 @media screen and (max-width: 768px) {
   .floating {
     position: fixed;

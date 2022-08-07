@@ -63,10 +63,10 @@ const router = createRouter({
       component: () => import("./pages/VerifyPage.vue"),
       props: true,
     },
-    // {
-    //   path: "/lol",
-    //   component: () => import("./pages/lolP.vue"),
-    // },
+    {
+      path: "/lol",
+      component: () => import("./components/ui/TheReview.vue"),
+    },
     {
       path: "/:pathMatch(.*)*",
       name: "NotFound",

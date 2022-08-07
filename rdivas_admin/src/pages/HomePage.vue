@@ -2,14 +2,11 @@
   <component
     v-if="sel"
     :is="selectedComponent"
-    @add-click="addProdClicked"
-    @edit-click="editProdClicked"
     :id="id"
     :name="name"
     :sel-manage="selManage"
     @add-cat="addCat"
     @edited="edited"
-    @back="back"
     @back-click="backClicked"
   />
   <transition appear v-else>
