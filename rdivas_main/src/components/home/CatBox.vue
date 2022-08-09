@@ -52,4 +52,13 @@ export default {
   align-items: center;
   color: #000;
 }
+@media (max-width: 768px) {
+  .img {
+    width: calc(93vw / 3);
+    height: calc(93vw / 3);
+  }
+  h3 {
+    font-size: 0.8rem;
+  }
+}
 </style>

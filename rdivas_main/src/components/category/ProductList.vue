@@ -119,9 +119,10 @@ export default {
   width: 23%;
   height: 35%;
   margin: 1%;
+
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .productTops {
     margin-top: 0.5rem;
   }

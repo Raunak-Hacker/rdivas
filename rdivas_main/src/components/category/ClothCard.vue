@@ -38,7 +38,7 @@
         <p>{{ name }}</p>
       </router-link>
       <h5 :class="{ red: sale }">
-        ₹ {{ price }} <s v-if="sale">₹{{ discount }}</s>
+        &#8377; {{ price }} <s v-if="sale">₹{{ discount }}</s>
       </h5>
     </div>
   </div>
@@ -183,7 +183,9 @@ s {
 i {
   color: rgba(0, 0, 0, 0.505);
 }
-
+ .det h5 {
+    font-family: "Calibiri", sans-serif;
+  }
 .prod {
   width: 98%;
   height: 55vh;
@@ -193,6 +195,7 @@ i {
   flex-direction: column;
   position: relative;
   border: 1px solid #e0e0e0;
+  border-radius: 1rem;
 }
 
 .icons {
@@ -203,7 +206,6 @@ i {
   position: absolute;
   top: 30vh;
   left: 15%;
-  /* transition: 3s ease-in-out; */
 }
 
 .icons a {
@@ -213,7 +215,6 @@ i {
   background: #dddddd90;
   color: #111111;
   text-align: center;
-  /* transition: 3s ease-in-out; */
   border-radius: 50%;
 }
 
@@ -223,7 +224,7 @@ i {
 
 .img {
   width: 100%;
-  height: 40vh;
+  height: 75%;
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
@@ -234,7 +235,9 @@ i {
 .img img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  /* object-fit: contain; */
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
 }
 
 .tag {
@@ -286,24 +289,25 @@ i {
   font-family: "Montserrat", sans-serif;
   font-weight: 200;
   font-size: small;
+  /* height: 80%; */
   margin-bottom: 1rem;
 }
 
 @media (max-width: 768px) {
   .prod {
-    width: 100%;
-    height: 20%;
+    width: 98%;
+    height: calc(7vh + 15rem);
     margin-bottom: 2%;
     display: flex;
     margin: 0.5%;
     flex-direction: column;
     position: relative;
-    border: 1px solid #e0e0e0;
+    border: 1.75px solid #e0e0e0;
   }
 
   .img {
     width: 100%;
-    height: 20vh;
+    height: 66.5%;
     background-size: cover;
     background-position: right;
     background-repeat: no-repeat;
@@ -314,7 +318,8 @@ i {
   .img img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: fill;
+    /* object-fit: contain; */
   }
 
   .icons {
@@ -342,22 +347,30 @@ i {
 
   .det {
     width: 100%;
-    /* height: 30%; */
+    height: 5rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
   .det p {
     font-family: "Montserrat", sans-serif;
     font-weight: 200;
     font-size: small;
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     margin-bottom: 1rem;
   }
   .det p:after {
     content: "\02026";
+  }
+  .det h5 {
+    font-family: "DM sans", sans-serif;
   }
   .new {
     padding: 0.22rem 0.15rem;

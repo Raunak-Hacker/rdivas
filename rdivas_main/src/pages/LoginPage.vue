@@ -28,16 +28,29 @@
         </div>
         <div class="details">
           <div class="title">
-            <h1>Login to Your Account</h1>
+            <h1>{{ !forgot ? "Login to Your Account" : "Your Email" }}</h1>
           </div>
           <br />
-          <form action="POST" @submit.prevent="subForm">
-            <input type="email" placeholder="email" v-model.trim="email" /> <br />
-            <input type="password" placeholder="password" v-model.trim="password" />
+          <form @submit.prevent="subForm">
+            <input type="email" placeholder="email" v-model.trim="email" required />
             <br />
+            <input
+              v-if="!forgot"
+              type="password"
+              placeholder="password"
+              v-model.trim="password"
+              required
+            />
+            <br v-if="!forgot" />
             <p v-if="authError">{{ authMessage }}</p>
-            <router-link to=""><small>Forgot Password?</small></router-link> <br />
-            <button class="button-37" role="button">LOGIN</button>
+            <br v-if="space" />
+            <a @click="forgotPass"
+              ><small>{{ !forgot ? "Forgot Password?" : "Sign In?" }}</small></a
+            >
+            <br />
+            <button class="button-37" type="submit" style="text-transform: uppercase">
+              {{ !forgot ? "Login" : "Send Recovery Link" }}
+            </button>
           </form>
         </div>
       </div>
@@ -57,6 +70,7 @@ export default {
     return {
       email: null,
       password: null,
+      forgot: false,
     };
   },
   computed: {
@@ -66,10 +80,43 @@ export default {
     authError() {
       return this.$store.getters.authError;
     },
+    space() {
+      if (window.innerWidth > 768 && this.authError) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 
   methods: {
+    forgotPass() {
+      this.forgot = !this.forgot;
+      this.$store.commit("setAuthError", {
+        error: false,
+        message: null,
+      });
+    },
     async subForm() {
+      if (this.forgot) {
+        fetch(this.$store.getters.host + "/forgetpassword/" + this.email)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.status === "success") {
+              this.$store.commit("setAuthError", {
+                error: true,
+                message:
+                  "Recovery link has been sent to your email, please check your spam too.",
+              });
+            } else {
+              this.$store.commit("setAuthError", {
+                error: true,
+                message: "Email not found.",
+              });
+            }
+          });
+        return;
+      }
       const user = {
         email: this.email,
         password: this.password,
@@ -189,6 +236,10 @@ form {
   justify-content: center;
   align-items: center;
 }
+form p {
+  width: 70%;
+  text-align: center;
+}
 
 /* CSS */
 .button-37 {
@@ -259,5 +310,4 @@ form {
     width: 23%;
   }
 }
-
 </style>

@@ -1,11 +1,19 @@
 <template>
   <form class="reviews" @submit.prevent="subReview">
+    <hr
+      style="height: 1px; border: 0; border-top: 1px solid #ccc; margin-bottom: 1%"
+      class="des"
+    />
+    <slot />
     <hr style="height: 1px; border: 0; border-top: 1px solid #ccc" />
-    <h4 style="text-transform: uppercase; color: black; margin-top: 1%">
+    <br />
+
+    <h4 style="text-transform: uppercase; color: black;">
       Write your own Review >>
     </h4>
     <br />
-    <h6>Your Rating</h6>
+
+    <h6>Your Rating:</h6>
     <h6 style="margin-top: 1%">Rating</h6>
     <div>
       <fieldset class="rating">
@@ -21,7 +29,7 @@
         <input type="radio" id="star4" name="rating" value="4" v-model="star" /><label
           class="full"
           for="star4"
-          title="Pretty good - 4 stars"
+          title="Good - 4 stars"
         />
         <input
           type="radio"
@@ -29,7 +37,7 @@
           name="rating"
           value="3.5"
           v-model="star"
-        /><label class="half" for="star3half" title="Meh - 3.5 stars" />
+        /><label class="half" for="star3half" title="Not Bad - 3.5 stars" />
         <input type="radio" id="star3" name="rating" value="3" v-model="star" /><label
           class="full"
           for="star3"
@@ -45,7 +53,7 @@
         <input type="radio" id="star2" name="rating" value="2" v-model="star" /><label
           class="full"
           for="star2"
-          title="Kinda bad - 2 stars"
+          title="bad - 2 stars"
         />
         <input
           type="radio"
@@ -70,8 +78,8 @@
     </div>
     <small v-if="error" style="color: red">Please select a rating</small>
     <h6 style="margin-top: 1%">Review</h6>
-    <textarea name="" id="" cols="30" rows="5" v-model.trim="review" required />
-    <button style="margin-top: 1%; width: 20%" type="submit">Add Review</button>
+    <textarea name="" id="" cols="30" rows="5" v-model.trim="review" />
+    <button type="submit">Add Review</button>
   </form>
 </template>
 
@@ -84,6 +92,13 @@ export default {
       error: false,
     };
   },
+  watch: {
+    star(newVal) {
+      if (newVal) {
+        this.error = false;
+      }
+    },
+  },
   methods: {
     subReview() {
       if (!this.star) {
@@ -93,6 +108,8 @@ export default {
       this.error = false;
       const review = { star: Number(this.star), review: this.review };
       console.log(JSON.stringify(review));
+      this.review = null;
+      this.star = null;
       // this.$store.dispatch('addReview', {
       //   star: this.star,
       //   review: this.review,
@@ -180,5 +197,18 @@ button {
   background-color: rgb(44, 43, 43);
   font-weight: 500;
   color: rgb(223, 223, 223);
+  margin-top: 1%;
+  width: 20%;
+}
+@media (max-width: 768px) {
+  .des {
+    display: none;
+  }
+  button {
+    width: 100%;
+  }
+  h4 {
+    font-size: 1rem;
+  }
 }
 </style>

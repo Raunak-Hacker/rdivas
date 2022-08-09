@@ -1,7 +1,7 @@
 <template>
   <div class="banPage">
     <header>
-      <h1>Poster (3:1 aspect ratio)</h1>
+      <h1>Poster (4:1 aspect ratio)</h1>
       <button
         class="button-42"
         @click="backClick"

@@ -5,6 +5,7 @@
         <div class="icon" @click="leftClick"><i class="bx bx-chevron-left"></i></div>
         <div class="icon" @click="rightClick"><i class="bx bx-chevron-right"></i></div>
       </div>
+      <br /><br />
       <div class="title">
         <span>{{ title }}</span>
       </div>
@@ -21,6 +22,7 @@
       </div>
     </div>
   </div>
+  <br />
   <div class="flex-box ad" v-if="index == 0">
     <div class="ad1">
       <img :src="imgHost + poster1" alt="" />
@@ -41,7 +43,8 @@ export default {
   data() {
     return {
       l: 0,
-      r: 4,
+      r: 5,
+      m: 2,
     };
   },
   created() {
@@ -52,23 +55,50 @@ export default {
       return this.$store.getters.imgHost;
     },
     xyz() {
-      return this.products.slice(this.l, this.r);
+      if (this.products) {
+        if (window.innerWidth > 768) {
+          return this.products.slice(this.l, this.r);
+        } else {
+          return this.products.slice(this.l, this.m);
+        }
+      } else {
+        return [];
+      }
     },
   },
   methods: {
     leftClick() {
-      this.l -= 1;
-      this.r -= 1;
+      if (this.xyz.length >= 5) {
+        this.l -= 1;
+        this.r -= 1;
+      }
+      if (this.xyz.length >= 2 && window.innerWidth < 768) {
+        this.l -= 1;
+        this.m -= 1;
+      }
       if (this.xyz.length <= 0) {
         this.l = 0;
-        this.r = 4;
+        if (window.innerWidth < 768) {
+          this.m = 2;
+          return;
+        }
+        this.r = 5;
       }
     },
     rightClick() {
-      if (this.xyz.length < 4 || this.r == this.products.length) {
+      if (
+        (window.innerWidth > 768 && this.xyz.length < 5) ||
+        this.r == this.products.length ||
+        (window.innerWidth < 768 && this.xyz.length < 2) ||
+        this.m == this.products.length
+      ) {
         return;
       }
       this.l += 1;
+      if (window.innerWidth < 768) {
+        this.m += 1;
+        return;
+      }
       this.r += 1;
     },
   },
@@ -103,19 +133,14 @@ img {
   margin-bottom: 3vh;
 }
 
-.ad2 {
-  min-width: 31.8%;
-  height: 100%;
-}
-
 .ad1 {
   width: 100%;
-  height: 40vh;
+  height: calc(98vw / 4);
 }
 .ad1 img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
 }
 
 .icon {
@@ -147,16 +172,49 @@ img {
 }
 
 .card {
-  position: relative;
-  min-width: 23%;
+  min-width: 18%;
   min-height: 100%;
-  width: 25%;
-  height: 35%;
+  width: 18%;
   margin: 1%;
 }
 .scroll-images {
   width: 100%;
   display: flex;
   overflow-y: hidden;
+}
+@media screen and (max-width: 768px) {
+  .productTops {
+    margin-top: 0.5rem;
+  }
+  .card {
+    width: 49%;
+    height: 25%;
+    margin: 0.5%;
+    min-width: 49%;
+  }
+  .icon {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .icon i {
+    font-size: 1.2rem;
+  }
+  .ad1 {
+    width: 100%;
+    height: calc(98vw / 4);
+  }
+  .ad1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+  .scroll-images {
+    overflow-y: scroll;
+  }
 }
 </style>

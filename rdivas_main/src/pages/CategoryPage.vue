@@ -3,7 +3,7 @@
     <div class="desktop">
       <header>
         <div class="head">
-          {{ data.category }}
+          {{ data.category }} >
         </div>
       </header>
       <div class="flex-box">
@@ -39,6 +39,7 @@ export default {
     );
     const data = await response.json();
     this.data = data;
+    console.log(this.data);
     if (data.status === "success" && response.ok) {
       await this.$store.dispatch("getProdList", this.data);
     }
@@ -80,9 +81,9 @@ header {
 
 .head {
   height: 100%;
-  width: 8%;
+  width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
 }
 

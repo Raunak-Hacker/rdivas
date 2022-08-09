@@ -7,7 +7,7 @@
         </li>
       </ul>
       <div class="icons">
-        <div class="icon" @click="rightClick()">
+        <div class="icon" @click="rightClick">
           <i class="bx bx-chevron-right" />
         </div>
         <div class="icon" @click="leftClick">
@@ -52,6 +52,7 @@ export default {
       banImgs: [],
       poster1: null,
       poster2: null,
+      a: 0,
     };
   },
 
@@ -65,7 +66,6 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         this.list = data;
-        console.log(this.list);
       });
     this.timer = setInterval(() => {
       this.rightClick();
@@ -93,8 +93,13 @@ export default {
       const slidesContainer = document.getElementById("banner-con");
       const slide = document.querySelector(".banner");
       const slideWidth = slide.clientWidth;
+      this.a += slideWidth;
+      if (this.a > (this.banImgs.length - 1) * slideWidth) {
+        this.a = 0;
+        slidesContainer.scrollLeft = 0;
+        return;
+      }
       slidesContainer.scrollLeft += slideWidth;
-      clearInterval(this.timer);
     },
     leftClick() {
       const slidesContainer = document.getElementById("banner-con");
@@ -202,5 +207,44 @@ export default {
   font-size: 1.75rem;
   text-transform: uppercase;
   letter-spacing: 0.06rem;
+}
+@media (max-width: 768px) {
+  .banner-wrap {
+    width: 100%;
+    margin-bottom: 3vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .banner-con {
+    width: 100%;
+    height: calc(100vw / 2);
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    overflow: hidden;
+  }
+
+  .banner {
+    width: 100%;
+    height: 100%;
+    flex: 1 0 100%;
+  }
+
+  .banner img {
+    width: 100%;
+    height: 100%;
+  }
+  .icon {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .icon i {
+    font-size: 1.2rem;
+  }
 }
 </style>

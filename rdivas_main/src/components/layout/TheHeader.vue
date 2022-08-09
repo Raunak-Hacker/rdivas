@@ -260,15 +260,15 @@ header {
 }
 
 .logo {
-  width: 8%;
+  width: 7%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .logo img {
-  height: 100%;
-  width: 100%;
+  height: 3.2rem;
+  width: 120%;
 }
 
 .login img {

@@ -1,12 +1,12 @@
 <template>
-  <div class="floating" @click="closechart" v-if="chart">
+  <!-- <div class="floating" @click="closechart" v-if="chart">
     <div class="flex">
       <div class="content">
-        <img src="@/assets/sample.jpg" alt="" />
+        <img src="@/assets/sizeChart.png" alt="" />
       </div>
       <div class="close">X</div>
     </div>
-  </div>
+  </div> -->
 
   <div class="desktop">
     <section class="prod-page">
@@ -61,7 +61,8 @@
             <div class="flex-box">
               <div class="boxes">
                 <div class="box">
-                  <label>Size</label>
+                  <label>Size <a @click="showChart = true">(Size Chart)</a></label>
+                  <size-chart :show="showChart" @close="showChart = false" />
                   <div class="in-boxes">
                     <div
                       class="in-box size"
@@ -71,6 +72,7 @@
                     >
                       S
                     </div>
+
                     <div
                       class="in-box size"
                       v-if="data.M"
@@ -160,7 +162,33 @@
         <br />
       </div>
     </section>
-    <the-review />
+    <the-review>
+      <div class="benefits">
+        <div class="benefit">
+          <img src="@/assets/discount.png" />
+          <small>Special offer: Pay online and get 5% OFF</small>
+        </div>
+        <div class="benefit">
+          <img src="@/assets/discount.png" />
+          <small>Buy 2 Get ₹100 off in Clearance sale</small>
+        </div>
+        <div class="benefit">
+          <img src="@/assets/refresh.png" />
+          <small>7 Days Easy Return With Free Pickup</small>
+        </div>
+        <div class="benefit">
+          <img src="@/assets/rupees.png" />
+          <small>Cash on Delivery Available | Free shipping</small>
+        </div>
+        <div class="benefit">
+          <img src="@/assets/cargo-truck.png" />
+          <small>Delivery within 5 – 6 working days</small>
+        </div>
+      </div>
+    </the-review>
+    <div class="rel">
+      <best-sell-cat :products="list[3].products" :title="list[3].name" />
+    </div>
   </div>
 
   <div class="mobile">
@@ -232,14 +260,33 @@
         </h3>
       </div>
       <div class="benifits">
-        <div class="benefits-ind">
-          <img src="https://selvia.in/media/wysiwyg/discount.png" alt="" />
-          <p>Special offer: Pay online and get 5% OFF</p>
+        <div class="benefit">
+          <img src="@/assets/discount.png" alt="" />
+          <small>Special offer: Pay online and get 5% OFF</small>
+        </div>
+        <div class="benefit">
+          <img src="@/assets/discount.png" />
+          <small>Buy 2 Get ₹100 off in Clearance sale</small>
+        </div>
+        <div class="benefit">
+          <img src="@/assets/refresh.png" />
+          <small>7 Days Easy Return With Free Pickup</small>
+        </div>
+        <div class="benefit">
+          <img src="@/assets/rupees.png" />
+          <small>Cash on Delivery Available | Free shipping</small>
+        </div>
+        <div class="benefit">
+          <img src="@/assets/cargo-truck.png" />
+          <small>Delivery within 5 – 6 working days</small>
         </div>
       </div>
 
       <div class="specs">
-        <label @click="togglechart">Size Chart</label>
+        <!-- <label @click="togglechart">Size Chart</label> -->
+
+        <a @click="showChart = true">(Size Chart)</a>
+        <size-chart :show="showChart" @close="showChart = false" />
         <div class="flex-box">
           <div class="boxes">
             <div class="box">
@@ -319,19 +366,25 @@
           </div>
         </div>
       </div>
+      <the-review />
 
-      <div class="mbtn">
-        <button @click="addToCart">Add To Cart</button>
-        <button>Buy Now</button>
+      <div class="mbtns">
+        <mob-filter @add="addToCart" />
       </div>
     </div>
+  </div>
+  <div style="margin-top: 4%">
+    <best-sell-cat :products="list[3].products" :title="list[3].name" />
   </div>
 </template>
 
 <script>
 import TheReview from "@/components/ui/TheReview.vue";
+import SizeChart from "@/components/ui/SizeChart.vue";
+import BestSellCat from "@/components/home/BestSellCat.vue";
+import MobFilter from "@/components/ui/MobFilter.vue";
 export default {
-  components: { TheReview },
+  components: { TheReview, SizeChart, BestSellCat, MobFilter },
   data() {
     return {
       data: null,
@@ -341,6 +394,7 @@ export default {
       images: [],
       wish: false,
       quantity: 1,
+      showChart: false,
       s: false,
       m: false,
       l: false,
@@ -349,6 +403,7 @@ export default {
       size: null,
       added: false,
       chart: false,
+      list: null,
     };
   },
   mounted() {
@@ -358,20 +413,22 @@ export default {
     });
   },
   async created() {
-    try {
-      const response = await fetch(
-        `${this.$store.getters.host}/get/product/${this.$route.params.id}`
-      );
-      const data = await response.json();
+    const response = await fetch(
+      `${this.$store.getters.host}/get/product/${this.$route.params.id}`
+    );
+    const data = await response.json();
 
-      this.data = data;
-      this.images = data.images;
-      this.imgId = 0;
-      this.mimg = this.imgHost + this.data.images[0];
-      this.$store.dispatch("getProdDetails", data);
-    } catch (error) {
-      this.data = error;
-    }
+    this.data = data;
+    this.images = data.images;
+    this.imgId = 0;
+    this.mimg = this.imgHost + this.data.images[0];
+    this.$store.dispatch("getProdDetails", data);
+
+    fetch(`${this.$store.getters.host}/get/home/listing`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.list = data;
+      });
   },
   computed: {
     auth() {
@@ -609,7 +666,7 @@ body {
 }
 
 .main-img {
-  width: 50%;
+  width: 57.5%;
   height: 80vh;
   background-color: #fff;
   border: 1px solid #e5e5e5;
@@ -618,7 +675,7 @@ body {
 .main-img img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: fill;
 }
 
 .prod-info {
@@ -725,8 +782,7 @@ body {
   width: 100%;
 }
 
-.specs label,
-.reviews label {
+.specs label {
   width: 45%;
   color: rgba(131, 131, 131, 0.918);
   font-weight: 600;
@@ -736,8 +792,6 @@ body {
 .box {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  /* padding-right: 4rem; */
 }
 
 .box label {
@@ -906,72 +960,30 @@ p {
   margin-top: 0.5rem;
 }
 
-.reviews {
-  padding: 0 2%;
-  font-size: 1.2rem;
-  color: rgb(100, 100, 100);
-  height: max-content;
+.benefits {
+  padding: 0;
+  width: 100%;
+}
+.benefit {
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1%;
 }
-.reviews label {
-  padding-bottom: 1.5rem;
+.benefit img {
+  width: 1.2rem;
+  margin-right: 1rem;
 }
-.reviews textarea {
-  resize: none;
-  border: 1px solid #d6d6d6;
-  outline: 0;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  font-size: 0.8rem;
+.benefit small {
+  font-size: 0.9rem;
   color: rgba(0, 0, 0, 0.6);
 }
 
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
-/****** Style Star Rating Widget *****/
-
-.rating {
-  border: none;
-  float: left;
+.rel {
+  margin-top: 2%;
+  width: 100%;
+  padding: 0 2%;
 }
-
-.rating > input {
-  display: none;
-}
-.rating > label:before {
-  margin: 5px;
-  font-size: 1.25em;
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f005";
-}
-
-.rating > .half:before {
-  content: "\f089";
-  position: absolute;
-}
-
-.rating > label {
-  color: #ddd;
-  float: right;
-}
-
-/***** CSS Magic to Highlight Stars on Hover *****/
-
-.rating > input:checked ~ label, /* show gold star when clicked */
-.rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label {
-  color: #ffd700;
-} /* hover previous stars in list */
-
-.rating > input:checked + label:hover, /* hover current star when changing rating */
-.rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label {
-  color: #ffed85;
-}
-
 @media screen and (max-width: 768px) {
   .floating {
     position: fixed;
@@ -993,13 +1005,13 @@ p {
   .mimage {
     margin-top: 1rem;
     width: 100%;
-    height: 50vh;
+    height: 55vh;
   }
 
   .mimage img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: fill;
   }
 
   .navigation {
@@ -1052,7 +1064,7 @@ p {
     height: fit-content;
   }
 
-  .benefits-ind {
+  .benefit {
     height: 2.5em;
     padding: 0.5em;
     display: flex;
@@ -1060,12 +1072,12 @@ p {
     align-items: center;
   }
 
-  .benefits-ind img {
+  .benefit img {
     height: 80%;
     object-fit: contain;
   }
 
-  .benefits-ind p {
+  .benefit small {
     margin-left: 0.5rem;
     font-size: 0.8rem;
     color: rgb(100, 100, 100);

@@ -64,8 +64,9 @@ const router = createRouter({
       props: true,
     },
     {
-      path: "/lol",
-      component: () => import("./components/ui/TheReview.vue"),
+      path: "/resetpassword/:id",
+      props: true,
+      component: () => import("./pages/ResetPass.vue"),
     },
     {
       path: "/:pathMatch(.*)*",
