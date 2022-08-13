@@ -19,28 +19,32 @@
 export default {
   data() {
     return {
-      pass: null,
+      pass: "",
     };
   },
   methods: {
-    forgotSub() {
-      fetch(this.$store.getters.host + "/resetpassword/" + this.$route.params.id, {
-        method: "POST",
-        body: JSON.stringify({
-          password: this.pass,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (data.status === "success") {
-            this.$router.replace("/login");
-            alert("Password changed successfully");
-          } else {
-            this.$router.replace("/login");
-            alert("Something went wrong");
-          }
-        });
+    async forgotSub() {
+      const user = {
+        password: this.pass,
+      };
+      const response = await fetch(
+        `${this.$store.getters.host}/resetpassword/${this.$route.params.id}/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        this.$router.replace("/login");
+        alert("Password changed successfully");
+      } else {
+        this.$router.replace("/login");
+        alert("Something went wrong");
+      }
     },
     mounted() {
       window.scrollTo({
@@ -136,9 +140,8 @@ form {
   .card form .inp {
     flex-direction: column;
     width: 100%;
-
   }
-   input {
+  input {
     width: 85%;
     margin-top: 3vh;
   }

@@ -121,7 +121,6 @@ export default {
 .filterTops {
   width: 100%;
   padding: 1%;
-  /* border: 1px solid black; */
 }
 
 .color {

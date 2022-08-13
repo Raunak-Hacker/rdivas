@@ -1,9 +1,9 @@
 <template>
-  <section class="" v-if="data.status === 'success'">
+  <section class="" v-if="data">
     <div class="desktop">
       <header>
         <div class="head">
-          {{ data.category }} >
+          <small>{{ data.category }} > {{ data.subcategoryname }}</small>
         </div>
       </header>
       <div class="flex-box">
@@ -38,11 +38,15 @@ export default {
       `${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`
     );
     const data = await response.json();
-    this.data = data;
-    console.log(this.data);
-    if (data.status === "success" && response.ok) {
-      await this.$store.dispatch("getProdList", this.data);
+    console.log(data);
+    if (data.statusCode === 404) {
+      window.location = "/notfound";
+      return;
     }
+    
+    await this.$store.dispatch("getProdList", data);
+    this.data = data;
+    console.log(data);
   },
   watch: {
     async $route() {
@@ -60,7 +64,6 @@ export default {
 <style scoped>
 .flex-box {
   align-items: flex-start;
-
 }
 
 header {
@@ -98,7 +101,6 @@ header {
   width: 75%;
   height: 100%;
   padding-right: 1rem;
-
 }
 
 @media screen and (max-width: 768px) {

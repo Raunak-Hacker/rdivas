@@ -15,13 +15,24 @@
         </div>
       </div>
       <div class="products">
-        <cart-item v-for="item in items" :key="item.id" :id="item.productId" :name="item.productName"
-          :color="item.productColor" :img="imgHost + item.productImage" :size="item.productSize"
-          :total="item.totalPrice" :price="item.productPrice" :selprice="item.selprice" :items="this.quantity"
-          :qty="item.quantity" @update-quantity="upQuantity">
+        <cart-item
+          v-for="item in items"
+          :key="item.id"
+          :id="item.productId"
+          :name="item.productName"
+          :color="item.productColor"
+          :img="imgHost + item.productImage"
+          :size="item.productSize"
+          :total="item.totalPrice"
+          :price="item.productPrice"
+          :selprice="item.selprice"
+          :items="this.quantity"
+          :qty="item.quantity"
+          @update-quantity="upQuantity"
+        >
         </cart-item>
       </div>
-      <router-link to="" class="cont desktop">
+      <router-link to="/" class="cont desktop">
         <i class="bx bx-left-arrow-circle" />Continue Shopping
       </router-link>
     </div>
@@ -64,14 +75,14 @@
           <label for="items">Total Cost</label>
           <label for="rate">₹{{ cart ? cart.total : 0 }}</label>
         </div>
-        <button class="pay-btn">PAY NOW</button>
-        <button class="pay-btn" style="
+        <button class="pay-btn" @click="checkout">CHECK OUT</button>
+        <!-- <button class="pay-btn" style="
             background-color: white;
             color: var(--left-login);
             border: 1px solid var(--left-login);
           ">
           PAY ON DELIVERY
-        </button>
+        </button> -->
       </div>
     </div>
   </section>
@@ -131,6 +142,13 @@ export default {
   methods: {
     upQuantity() {
       this.update = true;
+    },
+    checkout() {
+      if (this.cart.total == null || this.cart.total == 0) {
+        alert("cart Empty");
+        return;
+      }
+      this.$router.push("/checkout");
     },
   },
 };
@@ -302,8 +320,10 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 30%;
-  padding: 0 5%;
+  /* height: 30%;
+  padding: 0 5%; */
+  height: 20%;
+  padding: 5% 5%;
   border-bottom: 1px solid rgba(128, 128, 128, 0.56);
 }
 

@@ -69,6 +69,13 @@ const router = createRouter({
       component: () => import("./pages/ResetPass.vue"),
     },
     {
+      path: "/checkout",
+      component: () => import("./pages/CheckoutPage.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "NotFound",
       component: NotFound,

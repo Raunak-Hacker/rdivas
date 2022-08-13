@@ -2,12 +2,16 @@
   <div class="productTops">
     <div class="sort" @click="myFunction">
       <small>Sort By</small>
-      <div class="dropdown" >
-        <button class="dropbtn">Relevance</button>
+      <div class="dropdown">
+        <button class="dropbtn">{{ sortBy }}</button>
         <div id="myDropdown" class="dropdown-content" v-if="dropdown">
-          <a href="">Price: Low to High</a>
-          <a href="">Price: High to Low</a>
-          <a href="">New</a>
+          <a @click="sort('Relevance')" v-if="sortBy != 'Relevance'">Relevance</a>
+          <a @click="sort('lth')" v-if="sortBy != 'Price: Low to High'"
+            >Price: Low to High</a
+          >
+          <a @click="sort('htl')" v-if="sortBy != 'Price: High to Low'"
+            >Price: High to Low</a
+          >
         </div>
       </div>
     </div>
@@ -34,6 +38,8 @@ export default {
     return {
       dropdown: false,
       upHere: false,
+      // sortBy: "Price: Low to High",
+      sortBy: "Relevance",
     };
   },
 
@@ -45,11 +51,22 @@ export default {
       return this.$store.getters.imgHost;
     },
   },
-  created() {},
   methods: {
     myFunction() {
-      //   document.getElementById("myDropdown").classList.toggle("show");
       this.dropdown = !this.dropdown;
+    },
+    sort(val) {
+      if (val == "lth") {
+        console.log("lth");
+        this.sortBy = "Price: Low to High";
+        this.$store.commit("sortProducts", val);
+      } else if (val == "htl") {
+        this.sortBy = "Price: High to Low";
+        this.$store.commit("sortProducts", val);
+      } else if (val == "Relevance") {
+        this.sortBy = "Relevance";
+        this.$store.commit("sortProducts", val);
+      }
     },
   },
 };
@@ -119,7 +136,6 @@ export default {
   width: 23%;
   height: 35%;
   margin: 1%;
-
 }
 
 @media screen and (max-width: 768px) {

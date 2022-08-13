@@ -103,7 +103,6 @@
             @click="logout"
           />
           <router-link to="/login" v-else><i class="bx bx-log-in" /></router-link>
-          <!-- <a @click="logout" v-else><small>Logout</small ></a> -->
           <input type="text" placeholder="search..." v-if="search" />
           <!-- <i class="bx bx-search" @click="search = !search" /> -->
           <router-link to="/wish-list"> <i class="bx bx-heart" /></router-link>
@@ -139,7 +138,6 @@ export default {
     const response = await fetch(`${this.host}/get/header`);
     const data = await response.json();
     this.categories = data.categories;
-    console.log(this.categories.subcategories);
     // await this.$store.dispatch('auth');
     this.auth = await this.$store.getters.isAuth;
   },
@@ -151,10 +149,7 @@ export default {
       this.clicked = !this.clicked;
       this.categories[index].subcategories.forEach((subcategory) => {
         subcategory.clicked = this.clicked;
-        console.log(subcategory.clicked);
       });
-      console.log("index");
-      console.log(this.categories[index]);
     },
     subCatId(id) {
       this.$store.state.id = id;
@@ -260,6 +255,7 @@ header {
 }
 
 .logo {
+  height: 100%;
   width: 7%;
   display: flex;
   justify-content: center;
@@ -268,7 +264,7 @@ header {
 
 .logo img {
   height: 3.2rem;
-  width: 120%;
+  width: 110%;
 }
 
 .login img {

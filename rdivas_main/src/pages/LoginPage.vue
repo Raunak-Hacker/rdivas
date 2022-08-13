@@ -60,6 +60,9 @@
 
 <script>
 export default {
+  created(){
+    console.log(Number('🤣'));
+  },
   mounted() {
     window.scrollTo({
       top: 0,
@@ -121,6 +124,7 @@ export default {
         email: this.email,
         password: this.password,
       };
+      console.log(user);
       await this.$store.dispatch("login", user);
       if (this.authError) {
         return;

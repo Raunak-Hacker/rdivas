@@ -1,13 +1,4 @@
 <template>
-  <!-- <div class="floating" @click="closechart" v-if="chart">
-    <div class="flex">
-      <div class="content">
-        <img src="@/assets/sizeChart.png" alt="" />
-      </div>
-      <div class="close">X</div>
-    </div>
-  </div> -->
-
   <div class="desktop">
     <section class="prod-page">
       <div class="tags add" v-if="added">Added to Cart</div>
@@ -61,7 +52,12 @@
             <div class="flex-box">
               <div class="boxes">
                 <div class="box">
-                  <label>Size <a @click="showChart = true">(Size Chart)</a></label>
+                  <label
+                    >Size
+                    <a style="text-decoration: underline" @click="showChart = true"
+                      >(Size Chart)</a
+                    ></label
+                  >
                   <size-chart :show="showChart" @close="showChart = false" />
                   <div class="in-boxes">
                     <div
@@ -155,6 +151,7 @@
             </p>
           </div>
           <div class="btns">
+            <br /><br />
             <button @click="addToCart" style="">Add To Cart</button>
             <button>Buy Now</button>
           </div>
@@ -187,7 +184,10 @@
       </div>
     </the-review>
     <div class="rel">
-      <best-sell-cat :products="list[3].products" :title="list[3].name" />
+      <best-sell-cat
+        :products="list[(Math.random() * (this.list.length - 1)) | 0].products"
+        title="Other Products You May Like"
+      />
     </div>
   </div>
 
@@ -285,7 +285,7 @@
       <div class="specs">
         <!-- <label @click="togglechart">Size Chart</label> -->
 
-        <a @click="showChart = true">(Size Chart)</a>
+        <a style="text-decoration: underline" @click="showChart = true">(Size Chart)</a>
         <size-chart :show="showChart" @close="showChart = false" />
         <div class="flex-box">
           <div class="boxes">
@@ -374,7 +374,10 @@
     </div>
   </div>
   <div style="margin-top: 4%">
-    <best-sell-cat :products="list[3].products" :title="list[3].name" />
+    <best-sell-cat
+      :products="list[(Math.random() * (this.list.length - 1)) | 0].products"
+      title="Other Products You May Like"
+    />
   </div>
 </template>
 
@@ -404,6 +407,7 @@ export default {
       added: false,
       chart: false,
       list: null,
+      prod: [],
     };
   },
   mounted() {
@@ -413,10 +417,18 @@ export default {
     });
   },
   async created() {
+    let wishl = this.$store.getters.wishlist;
+    let wished = wishl.filter((item) => {
+      return item.id == this.$route.params.id;
+    });
+    if (!wished.length == 0) {
+      this.wish = true;
+    }
     const response = await fetch(
       `${this.$store.getters.host}/get/product/${this.$route.params.id}`
     );
     const data = await response.json();
+    console.log(data);
 
     this.data = data;
     this.images = data.images;
@@ -428,6 +440,8 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         this.list = data;
+        this.prod = this.list[(Math.random() * (this.list.length - 1)) | 0];
+        console.log(this.prod);
       });
   },
   computed: {
@@ -515,17 +529,26 @@ export default {
     colorChange() {
       this.$router.push(`/product/${this.lol}`);
     },
-    toggleWish() {
+    async toggleWish() {
       if (this.auth) {
-        this.wish = !this.wish;
-        if (this.wish == true) {
-          const product = {
-            id: this.data.id,
-            name: this.data.name,
-            price: this.data.sellingPrice,
-            image: this.data.image1,
-          };
-          this.$store.commit("addToWishList", product);
+        if (this.wish == false) {
+          await fetch(this.$store.getters.host + "/user/addtowishlist/" + this.$route.params.id, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          });
+          this.$store.commit("getWishList");
+          this.wish = true;
+        } else {
+          await fetch(this.$store.getters.host + "/user/deletefromwishlist/" + this.$route.params.id, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          });
+          this.$store.commit("getWishList");
+          this.wish = false;
         }
       } else {
         this.$router.push("/login");
@@ -889,8 +912,6 @@ body {
 }
 
 .btns {
-  display: flex;
-  align-items: center;
   width: 68%;
 }
 

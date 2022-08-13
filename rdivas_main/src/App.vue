@@ -25,6 +25,7 @@ export default {
     if (localStorage.getItem("token")) {
       this.$store.commit('setAuth', true);
       this.$store.dispatch('autoLogin');
+      this.$store.commit('getWishList');
     }
   },
 

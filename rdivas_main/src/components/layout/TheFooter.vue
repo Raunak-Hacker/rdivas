@@ -4,9 +4,9 @@
       <div class="about">
         <h1>RDIVAS</h1>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-          eleifend, libero non euismod finibus, metus enim cursus enim, vitae
-          dignissim orci ligula et mauris.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eleifend,
+          libero non euismod finibus, metus enim cursus enim, vitae dignissim orci ligula
+          et mauris.
         </p>
       </div>
       <div class="links">
@@ -30,16 +30,16 @@
         <h4>ACCOUNT</h4>
         <ul>
           <li>
-            <router-link to=""> My Account </router-link>
+            <router-link to="/user"> My Account </router-link>
           </li>
           <li>
-            <router-link to=""> Orders Tracking </router-link>
+            <router-link to="/orders">My Orders </router-link>
           </li>
           <li>
             <router-link to="/cart"> Checkout </router-link>
           </li>
           <li>
-            <router-link to=""> Wishlist </router-link>
+            <router-link to="/wish-list"> Wishlist </router-link>
           </li>
         </ul>
       </div>
@@ -223,7 +223,6 @@ a {
     margin-bottom: 5vh;
     padding-bottom: 5%;
     border-bottom: none;
-
   }
 
   .copyright {

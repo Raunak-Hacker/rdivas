@@ -5,8 +5,9 @@ import actions from "./actions.js";
 
 const store = createStore({
   state: {
-    host: "https://baku.rdivas.in",
-    // host: "http://localhost:6969",
+    user: null,
+    // host: "https://baku.rdivas.in",
+    host: "http://localhost:6969",
     imgHost: "https://files.rdivas.in/",
     s: false,
     m: false,

@@ -2,42 +2,29 @@
   <div class="prod" @mouseenter="iconHover" @mouseleave="iconHover">
     <div class="img" @click="$router.push('/product/' + id)">
       <img :src="imgUrl" :style="{ 'object-fit': fit }" />
-      <div class="sale tag" v-if="sale">SALE</div>
-      <div class="new tag" v-if="best">BEST SELLER</div>
+      <div
+        class="sale tag"
+        v-if="sale && !($route.path == '/wish-list' || '/wish-list/')"
+      >
+        SALE
+      </div>
+      <div class="new tag" v-if="best && !($route.path == '/wish-list' || '/wish-list/')">
+        BEST SELLER
+      </div>
     </div>
 
-    <transition v-if="upHere">
-      <div class="icons siz" style="top: 24vh" v-if="icon">
-        <a @click="addCart('S')">
-          <p>S</p>
-        </a>
-        <a @click="addCart('M')">
-          <p>M</p>
-        </a>
-        <a @click="addCart('L')">
-          <p>L</p>
-        </a>
-        <a @click="addCart('XL')">
-          <p>XL</p>
-        </a>
-        <a @click="addCart('XXL')" v-if="l">
-          <p>XXL</p>
-        </a>
-      </div>
-    </transition>
     <transition v-if="true">
-      <div class="icons" v-if="icon">
-        <a @mouseenter="upHere = false"> <i class="bx bx-expand-alt" /> </a>
-        <a @click="addWish" @mouseenter="upHere = false"> <i class="bx bx-heart" /> </a>
-        <a @mouseenter="upHere = true"> <i class="bx bx-cart" /> </a>
-        <!-- <a @click="addCart" > <i class="bx bx-cart" /> </a> -->
+      <div class="icons" :class="{ wished: wish }">
+        <a @click="addWish" @mouseenter="upHere = false">
+          <i class="bx bxs-heart" v-if="wish" /> <i class="bx bx-heart" v-else />
+        </a>
       </div>
     </transition>
     <div class="det" @mouseenter="upHere = false">
       <router-link :to="'/product/' + id">
         <p>{{ name }}</p>
       </router-link>
-      <h5 :class="{ red: sale }">
+      <h5 :class="{ red: sale }" v-if="!($route.path == '/wish-list' || '/wish-list/')">
         &#8377; {{ price }} <s v-if="sale">₹{{ discount }}</s>
       </h5>
     </div>
@@ -87,26 +74,22 @@ export default {
     return {
       icon: false,
       upHere: false,
+      wish: false,
     };
+  },
+  created() {
+    console.log(this.$route.path);
+    let wishl = this.$store.getters.wishlist;
+    let wished = wishl.filter((item) => {
+      return item.id == this.id;
+    });
+    if (!wished.length == 0) {
+      this.wish = true;
+    }
   },
   computed: {
     auth() {
       return this.$store.getters.isAuth;
-    },
-    s() {
-      return this.$store.state.s;
-    },
-    m() {
-      return this.$store.state.m;
-    },
-    l() {
-      return this.$store.state.l;
-    },
-    xl() {
-      return this.$store.state.xl;
-    },
-    xxl() {
-      return this.$store.state.xxl;
     },
   },
   methods: {
@@ -114,15 +97,28 @@ export default {
       this.icon = !this.icon;
       this.upHere = false;
     },
-    addWish() {
+    async addWish() {
       if (this.auth) {
-        const product = {
-          id: this.id,
-          name: this.name,
-          price: this.price,
-          image: this.imgUrl,
-        };
-        this.$store.commit("addToWishList", product);
+        if (this.wish == false) {
+          await fetch(this.$store.getters.host + "/user/addtowishlist/" + this.id, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          });
+          this.$store.commit("getWishList");
+          this.wish = true;
+        } else {
+          await fetch(this.$store.getters.host + "/user/deletefromwishlist/" + this.id, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          });
+          this.$store.commit("getWishList");
+
+          this.wish = false;
+        }
       } else {
         this.$router.push("/login");
       }
@@ -183,9 +179,9 @@ s {
 i {
   color: rgba(0, 0, 0, 0.505);
 }
- .det h5 {
-    font-family: "Calibiri", sans-serif;
-  }
+.det h5 {
+  font-family: "Calibiri", sans-serif;
+}
 .prod {
   width: 98%;
   height: 55vh;
@@ -202,10 +198,9 @@ i {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 75%;
   position: absolute;
-  top: 30vh;
-  left: 15%;
+  top: 2%;
+  right: 5%;
 }
 
 .icons a {
@@ -217,7 +212,27 @@ i {
   text-align: center;
   border-radius: 50%;
 }
+.icons i {
+  margin-top: 25%;
+  font-size: 1.15rem;
+}
 
+.icons a:hover {
+  background-color: #ca1515;
+  transition: background-color 300ms linear;
+}
+
+.icons a:hover i {
+  transform: rotate(360deg);
+  color: white;
+  transition: all 300ms ease-in-out;
+}
+.wished a,
+.wished i {
+  background-color: #ca1515;
+  color: white;
+  transition: background-color 300ms linear;
+}
 .siz p {
   margin-top: 20%;
 }
@@ -257,22 +272,6 @@ i {
 .new {
   background: #36a300;
   font-family: "Montserrat", sans-serif;
-}
-
-.icons i {
-  margin-top: 25%;
-  font-size: 1.15rem;
-}
-
-.icons a:hover {
-  background-color: #ca1515;
-  transition: background-color 300ms linear;
-}
-
-.icons a:hover i {
-  transform: rotate(360deg);
-  color: white;
-  transition: all 300ms ease-in-out;
 }
 
 .det {
@@ -324,25 +323,6 @@ i {
 
   .icons {
     display: none;
-    /* display: flex; */
-    justify-content: space-evenly;
-    /* margin-top: 1.5rem; */
-    width: 75%;
-    position: absolute;
-    top: 55%;
-    left: 15%;
-    /* transition: 3s ease-in-out; */
-  }
-
-  .icons a {
-    display: block;
-    height: 2.5rem;
-    width: 2.5rem;
-    background: #dddddd90;
-    color: #111111;
-    text-align: center;
-    /* transition: 3s ease-in-out; */
-    border-radius: 50%;
   }
 
   .det {
