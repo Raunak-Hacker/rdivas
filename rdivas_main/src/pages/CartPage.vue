@@ -54,11 +54,15 @@
       <div class="prices">
         <div class="price-box">
           <label for="items">{{ cart ? cart.cartProducts.length : 0 }} items MRP</label>
-          <label for="rate">₹{{ cart ? cart.price : 0 }}</label>
+          <label for="rate" style="font-family: 'Montserrat', sans-serif"
+            >₹{{ cart ? cart.price : 0 }}</label
+          >
         </div>
         <div class="price-box">
           <label for="items">Offer</label>
-          <label for="rate" style="color: red">-₹{{ cart ? cart.discount : 0 }}</label>
+          <label for="rate" style="color: red; font-family: 'Montserrat', sans-serif"
+            >- ₹{{ cart ? cart.discount : 0 }}</label
+          >
         </div>
         <!-- <div class="price-box">
           <label for="items">Promo Code (20%)</label>
@@ -73,7 +77,7 @@
       <div class="checkout">
         <div class="checkout-price">
           <label for="items">Total Cost</label>
-          <label for="rate">₹{{ cart ? cart.total : 0 }}</label>
+          <label for="rate" style="font-family: 'Montserrat', sans-serif">₹{{ cart ? cart.total : 0 }}</label>
         </div>
         <button class="pay-btn" @click="checkout">CHECK OUT</button>
         <!-- <button class="pay-btn" style="
@@ -108,7 +112,6 @@ export default {
   },
   computed: {
     cart() {
-      // console.log(this.$store.state.cart);
       if (this.$store.getters.cart == null) {
         return false;
       }
@@ -148,6 +151,7 @@ export default {
         alert("cart Empty");
         return;
       }
+      this.$store.state.checkout = true;
       this.$router.push("/checkout");
     },
   },
@@ -172,7 +176,7 @@ export default {
 
 .cart {
   width: 100%;
-  height: 89vh;
+  height: 86vh;
   display: flex;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <section style="height: 89vh">
+  <section style="height: 86vh">
     <div class="card">
       <h2>Forgot password</h2>
       <br />

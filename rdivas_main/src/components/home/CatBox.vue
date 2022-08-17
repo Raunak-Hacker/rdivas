@@ -1,5 +1,5 @@
 <template>
-  <div class="cat-box">
+  <div class="cat-box" @click="$router.push('/' + cat + '/' + id)">
     <div class="img">
       <img :src="imgHost + img" />
     </div>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  props: ["name", "img", "id"],
+  props: ["name", "img", "id", "cat"],
   data() {
     return {};
   },
@@ -30,6 +30,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 1%;
+  cursor: pointer;
 }
 
 .img {

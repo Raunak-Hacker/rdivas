@@ -5,7 +5,7 @@
         <div class="nav">
           <div
             class="nav-show"
-            style="background-color: rgba(204, 204, 204, 0.596); padding: 0.5rem 1.2rem;"
+            style="background-color: rgba(204, 204, 204, 0.596); padding: 0.5rem 1.2rem"
             @click="$router.push('/cart')"
           >
             1
@@ -18,6 +18,7 @@
         </div>
       </div>
     </div>
+    <div class="space"></div>
     <div class="box address">
       <div class="card">
         <div class="in-box add">
@@ -41,9 +42,13 @@
                 >
               </div>
             </div>
+            <div class="in-flex mob" v-if="user.addresses.length < 4">
+              <small @click="showAdd = true">Add?</small>
+              <the-address :show="showAdd" @close="showAdd = false" />
+            </div>
           </div>
         </div>
-        <div class="in-flex" v-if="user.addresses.length < 4">
+        <div class="in-flex des" v-if="user.addresses.length < 4">
           <small @click="showAdd = true">Add?</small>
           <the-address :show="showAdd" @close="showAdd = false" />
         </div>
@@ -86,8 +91,15 @@ export default {
       return this.$store.state.user;
     },
   },
+
   created() {
     this.$store.commit("getUser");
+  },
+  mounted() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   },
   watch: {
     address(val) {
@@ -147,6 +159,7 @@ export default {
             .then((res) => res.json())
             .then((data) => {
               console.log(data);
+              window.location.replace("orders");
             });
         },
         prefill: {
@@ -158,7 +171,7 @@ export default {
           address: "Razorpay Corporate Office",
         },
         theme: {
-          color: "#3399cc",
+          color: "#ce3cba",
         },
       };
       var rzp = new window.Razorpay(options);
@@ -175,7 +188,7 @@ export default {
 <style scoped>
 .checkoutPg {
   width: 100%;
-  height: 89vh;
+  height: 86vh;
   padding: 0 8%;
   display: flex;
   flex-direction: column;
@@ -230,6 +243,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding: 0 19%;
 }
 
 .box {
@@ -322,5 +336,80 @@ button {
 }
 .in-flex small {
   cursor: pointer;
+}
+.mob {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .des {
+    display: none;
+  }
+  .checkoutPg {
+    justify-content: flex-start;
+  }
+  .navs {
+    height: 32vw;
+    margin-top: 8%;
+  }
+  .navs label {
+    font-size: smaller;
+  }
+  .nav {
+    height: 60%;
+    margin-right: -2.2rem;
+    margin-left: -1.8rem;
+  }
+  .addresses {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .address,
+  .add {
+    height: max-content;
+  }
+  .address .in-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .in-address {
+    width: 47%;
+    margin-right: 3%;
+    margin-bottom: 2vh;
+  }
+  .add label {
+    height: 4rem;
+    font-size: medium;
+  }
+   .full-add small {
+    font-size: x-small;
+   } 
+  .mob {
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    justify-content: right;
+    width: 47%;
+    padding-left: 5%;
+  }
+  .checkout {
+    width: 80%;
+    height: 20%;
+    padding: 0 3%;
+  }
+  .checkout-price {
+    padding: 0 8%;
+    font-size: .9rem;
+  }
+
+  button {
+    width: 100%;
+    height: 0%;
+    padding: 1.5rem 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .9rem;
+  }
 }
 </style>

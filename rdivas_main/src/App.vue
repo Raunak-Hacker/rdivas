@@ -22,10 +22,12 @@ export default {
     TheFooter,
   },
   created() {
+
     if (localStorage.getItem("token")) {
       this.$store.commit('setAuth', true);
       this.$store.dispatch('autoLogin');
       this.$store.commit('getWishList');
+      // console.log(localStorage.getItem("token"));
     }
   },
 
@@ -54,7 +56,7 @@ export default {
 }
 
 .view {
-  padding-top: 11vh;
+  padding-top: 14vh;
 }
 
 button,

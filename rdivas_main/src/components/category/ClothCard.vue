@@ -1,14 +1,17 @@
 <template>
   <div class="prod" @mouseenter="iconHover" @mouseleave="iconHover">
     <div class="img" @click="$router.push('/product/' + id)">
-      <img :src="imgUrl" :style="{ 'object-fit': fit }" />
+      <img :src="imgUrl"  />
       <div
         class="sale tag"
-        v-if="sale && !($route.path == '/wish-list' || '/wish-list/')"
+        v-if="sale && !($route.path == '/wish-list' || $route.path == '/wish-list/')"
       >
         SALE
       </div>
-      <div class="new tag" v-if="best && !($route.path == '/wish-list' || '/wish-list/')">
+      <div
+        class="new tag"
+        v-if="best && !($route.path == '/wish-list' || $route.path == '/wish-list/')"
+      >
         BEST SELLER
       </div>
     </div>
@@ -24,7 +27,10 @@
       <router-link :to="'/product/' + id">
         <p>{{ name }}</p>
       </router-link>
-      <h5 :class="{ red: sale }" v-if="!($route.path == '/wish-list' || '/wish-list/')">
+      <h5
+        :class="{ red: sale }"
+        v-if="!($route.path == '/wish-list' || $route.path == '/wish-list/')"
+      >
         &#8377; {{ price }} <s v-if="sale">₹{{ discount }}</s>
       </h5>
     </div>
@@ -33,43 +39,7 @@
 
 <script>
 export default {
-  props: {
-    id: {
-      type: Number,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    imgUrl: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-    best: {
-      type: Boolean,
-      required: true,
-    },
-    sale: {
-      type: Boolean,
-      required: true,
-    },
-    discount: {
-      type: Number,
-      required: true,
-    },
-    color: {
-      type: String,
-      required: true,
-    },
-    fit: {
-      type: String,
-    },
-  },
+  props: ["id", "name", "imgUrl", "price", "best", "sale", "discount", "color"],
   data() {
     return {
       icon: false,
@@ -78,13 +48,14 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.path);
-    let wishl = this.$store.getters.wishlist;
-    let wished = wishl.filter((item) => {
-      return item.id == this.id;
-    });
-    if (!wished.length == 0) {
-      this.wish = true;
+    if (this.$store.getters.wishlist) {
+      let wishl = this.$store.getters.wishlist;
+      let wished = wishl.filter((item) => {
+        return item.id == this.id;
+      });
+      if (!wished.length == 0) {
+        this.wish = true;
+      }
     }
   },
   computed: {
@@ -350,7 +321,7 @@ i {
     content: "\02026";
   }
   .det h5 {
-    font-family: "DM sans", sans-serif;
+    font-family: "Calibiri", sans-serif;
   }
   .new {
     padding: 0.22rem 0.15rem;

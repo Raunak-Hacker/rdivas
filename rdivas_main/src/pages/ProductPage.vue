@@ -151,7 +151,6 @@
             </p>
           </div>
           <div class="btns">
-            <br /><br />
             <button @click="addToCart" style="">Add To Cart</button>
             <button>Buy Now</button>
           </div>
@@ -229,7 +228,7 @@
       <div class="mtitle">
         <h1>{{ data.name }}</h1>
       </div>
-      <div class="rating">
+      <div class="ratingp">
         <div class="star">
           <svg
             width="24"
@@ -245,7 +244,12 @@
           </svg>
           <p>4.5</p>
         </div>
-        <div class="reviews">Reviews >></div>
+        <div class="reviewsp">Reviews >></div>
+        <div class="wish wishm" :class="{ wished: wish }" @click="toggleWish">
+          <i class="bx bxs-heart" v-if="wish" />
+          <i class="bx bx-heart" v-else />
+          <p>Wishlist</p>
+        </div>
       </div>
       <div class="price">
         <h3>₹{{ data.sellingPrice }}</h3>
@@ -373,7 +377,7 @@
       </div>
     </div>
   </div>
-  <div style="margin-top: 4%">
+  <div class="mobile" style="margin-top: 4%">
     <best-sell-cat
       :products="list[(Math.random() * (this.list.length - 1)) | 0].products"
       title="Other Products You May Like"
@@ -417,18 +421,19 @@ export default {
     });
   },
   async created() {
-    let wishl = this.$store.getters.wishlist;
-    let wished = wishl.filter((item) => {
-      return item.id == this.$route.params.id;
-    });
-    if (!wished.length == 0) {
-      this.wish = true;
+    if (this.$store.getters.wishlist) {
+      let wishl = this.$store.getters.wishlist;
+      let wished = wishl.filter((item) => {
+        return item.id == this.$route.params.id;
+      });
+      if (!wished.length == 0) {
+        this.wish = true;
+      }
     }
     const response = await fetch(
       `${this.$store.getters.host}/get/product/${this.$route.params.id}`
     );
     const data = await response.json();
-    console.log(data);
 
     this.data = data;
     this.images = data.images;
@@ -441,7 +446,6 @@ export default {
       .then((data) => {
         this.list = data;
         this.prod = this.list[(Math.random() * (this.list.length - 1)) | 0];
-        console.log(this.prod);
       });
   },
   computed: {
@@ -532,21 +536,29 @@ export default {
     async toggleWish() {
       if (this.auth) {
         if (this.wish == false) {
-          await fetch(this.$store.getters.host + "/user/addtowishlist/" + this.$route.params.id, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          });
+          await fetch(
+            this.$store.getters.host + "/user/addtowishlist/" + this.$route.params.id,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          );
           this.$store.commit("getWishList");
           this.wish = true;
         } else {
-          await fetch(this.$store.getters.host + "/user/deletefromwishlist/" + this.$route.params.id, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          });
+          await fetch(
+            this.$store.getters.host +
+              "/user/deletefromwishlist/" +
+              this.$route.params.id,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          );
           this.$store.commit("getWishList");
           this.wish = false;
         }
@@ -895,9 +907,10 @@ body {
 
 .btn {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 8.5%;
+  flex-direction: column;
+  justify-content: space-around;
+  /* align-items: center; */
+  height: 18.5vh;
 }
 
 .price {
@@ -973,14 +986,33 @@ p {
   margin-left: 0.1rem;
 }
 
-.rating {
+.ratingp {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   width: fit-content;
   margin-top: 0.5rem;
+  width: 100%;
+}
+.reviewsp {
+  width: 50%;
+}
+.wishm {
+  width: 30%;
+  height: 2.4rem;
+  padding: 0 2.5%;
+  font-size: small;
+  border: 1px solid #d6d6d6;
+  background-color: #d6d6d650;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
+
+.wished {
+  background-color: #ff3c3c25;
+  color: red;
+}
 .benefits {
   padding: 0;
   width: 100%;

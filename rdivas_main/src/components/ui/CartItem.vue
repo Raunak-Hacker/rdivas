@@ -1,14 +1,18 @@
 <template>
-  <div class="product" >
+  <div class="product">
     <div class="dets">
-      <div class="img">
+      <div class="img" @click="$router.push('/product/' + id)">
         <img :src="img" alt="" />
       </div>
       <div class="prod-info">
-        <label>{{ name }}</label>
+        <label style="cursor: pointer" @click="$router.push('/product/' + id)">{{
+          name
+        }}</label>
         <small><label for="">Size: </label>{{ size }}</small>
         <small><label for="">Color: </label>{{ color }}</small>
-        <small class="mob"><label for="">Price: </label>₹{{ price }}</small>
+        <small class="mob" style="font-family: 'Montserrat', sans-serif"
+          ><label for="">Price: </label>₹{{ price }}</small
+        >
       </div>
     </div>
     <div class="flex-prod">
@@ -26,27 +30,35 @@
         </div>
       </div>
       <div class="price desktop">
-        <label for="price">₹{{ price }}</label>
+        <label for="price" style="font-family: 'Montserrat', sans-serif"
+          >₹{{ price }}</label
+        >
       </div>
-      <div class=" offer desktop">
-        <label for="offer" style="color: red">-₹{{ offer }}</label>
+      <div class="offer desktop">
+        <label for="offer" style="color: red; font-family: 'Montserrat', sans-serif"
+          >- ₹{{ offer }}</label
+        >
       </div>
       <div class="total desktop">
         <div class="del" @click="removeItem"><i class="bx bx-x" /></div>
-        <label for="total">₹{{ total }}</label>
+        <label for="total" style="font-family: 'Montserrat', sans-serif"
+          >₹{{ total }}</label
+        >
       </div>
 
       <!-- mobile sec  -->
 
       <div class="box total mob">
-        <label for="total">₹{{ total }}</label>
+        <label for="total" style="font-family: 'Montserrat', sans-serif"
+          >₹{{ total }}</label
+        >
       </div>
       <div class="box offer mob">
         <div class="del" @click="removeItem"><i class="bx bx-x" /></div>
-        <label for="offer" style="color: red">-₹{{ offer }}</label>
+        <label for="offer" style="color: red; font-family: 'Montserrat', sans-serif"
+          >- ₹{{ offer }}</label
+        >
       </div>
-
-
     </div>
   </div>
 </template>
@@ -67,8 +79,7 @@ export default {
     "selprice",
     "items",
   ],
-  created() {
-  },
+  created() {},
   data() {
     return {
       quantity: null,
@@ -104,8 +115,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .product {
   height: 33.33%;
   padding: 1% 0;
@@ -124,6 +133,7 @@ export default {
 .img {
   width: 25%;
   height: 100%;
+  cursor: pointer;
 }
 
 .del {
@@ -149,7 +159,7 @@ export default {
 .img img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: fill;
 }
 
 .prod-info {
@@ -160,6 +170,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   color: rgb(102, 102, 102);
+  margin-left: 2%;
 }
 
 .prod-info label {
@@ -219,22 +230,26 @@ export default {
   }
 
   .product {
-    margin-top: .5rem ;
-    padding-bottom: .5rem ;
+    margin-top: 0.5rem;
+    padding-bottom: 0.5rem;
     width: 100%;
     height: max-content;
   }
 
   .img {
-    margin-right: 1rem;
+    margin-right: .7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10.5vh;
+    width: 33%;
   }
   .img img {
     width: 100%;
-    height: 12.5vh;
+    height: 100%;
   }
   .dets {
     width: 64%;
-
   }
 
   .prod-info {

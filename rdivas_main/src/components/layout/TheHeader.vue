@@ -1,6 +1,9 @@
 <template>
   <header :class="{ fix: scrolled }">
     <div class="desktop">
+      <div class="offer">
+        <marquee>Buy 2 Get ₹500 Off* | CLEARANCE SALE</marquee>
+      </div>
       <div class="flex-box">
         <div class="logo">
           <router-link to="/home"> <img src="@/assets/logo.png" alt="" /></router-link>
@@ -17,7 +20,6 @@
                 </a>
                 <div class="dropdown-content">
                   <router-link
-                    @click="subCatId(subcategory.subcategoryid)"
                     v-for="subcategory in category.subcategories"
                     :key="subcategory"
                     :to="'/' + category.name + '/' + subcategory.subcategoryid"
@@ -38,51 +40,63 @@
             @click="logout"
           />
           <router-link to="/login" v-else><i class="bx bx-log-in" /></router-link>
-          <!-- <a @click="logout" v-else><small>Logout</small ></a> -->
-          <input type="text" placeholder="search..." v-if="search" />
-          <!-- <i class="bx bx-search" @click="search = !search" /> -->
           <router-link to="/wish-list"> <i class="bx bx-heart" /></router-link>
           <router-link to="/cart"> <i class="bx bx-cart" /></router-link>
         </div>
       </div>
     </div>
 
-    <div class="mnav-links" v-if="showmenu">
-      <div class="mlinkhead">
-        <div class="mlogo">
-          <img src="@/assets/logo.png" alt="" />
-        </div>
-        <div class="menu-btn" @click="togglemenu">
-          <i class="bx bx-x" style="font-size: 2rem"></i>
-        </div>
-      </div>
-      <div class="links">
-        <div class="link">
-          <router-link to="/home">HOME</router-link>
-        </div>
-
-        <side-cat :categories="subcategories" />
-        <div class="link" v-for="(category, index) in categories" :key="category.name">
-          <div class="mlinkcategory">
-            <div class="name">{{ category.name }}</div>
-            <div class="plus" @click="lol(index)">
-              <i class="bx bx-plus" />
-            </div>
+    <transition name="slide">
+      <div class="mnav-links" v-if="showmenu">
+        <div class="mlinkhead">
+          <div class="mlogo">
+            <img src="@/assets/logo.png" alt="" />
           </div>
-          <router-link
-            @click="subCatId(subcategory.subcategoryid)"
-            v-for="subcategory in category.subcategories"
-            :key="subcategory"
-            :to="'/' + category.name + '/' + subcategory.subcategoryid"
+          <div class="menu-btn" @click="togglemenu">
+            <i class="bx bx-x" style="font-size: 2rem" />
+          </div>
+        </div>
+        <div class="links">
+          <div class="link mlinkcategory">
+            <router-link to="/home">Home</router-link>
+          </div>
+
+          <div
+            class="link"
+            v-for="(category, index) in categories"
+            :class="{ msel: category.toggle }"
+            :key="category.name"
           >
-            <div class="msubcategory" v-if="clicked">
-              {{ subcategory.name }}
+            <div class="mlinkcategory" @click="toggleCat(index)">
+              <div class="name">{{ category.name }}</div>
+              <div class="plus">
+                <i class="bx bx-plus" v-if="!category.toggle" />
+                <i class="bx bx-minus" v-else />
+              </div>
             </div>
-          </router-link>
+            <transition name="fade">
+              <div class="list" v-if="category.toggle">
+                <router-link
+                  v-for="subcategory in category.subcategories"
+                  :key="subcategory"
+                  @click="togglemenu"
+                  :to="'/' + category.name + '/' + subcategory.subcategoryid"
+                >
+                  <div class="msubcategory">
+                    {{ subcategory.name }}
+                  </div>
+                </router-link>
+              </div>
+            </transition>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
+
     <div class="mobile">
+      <div class="offer">
+        <marquee>Buy 2 Get ₹500 Off* | CLEARANCE SALE</marquee>
+      </div>
       <div class="mflex-box">
         <div class="left">
           <div class="menu-btn" @click="togglemenu">
@@ -103,8 +117,6 @@
             @click="logout"
           />
           <router-link to="/login" v-else><i class="bx bx-log-in" /></router-link>
-          <input type="text" placeholder="search..." v-if="search" />
-          <!-- <i class="bx bx-search" @click="search = !search" /> -->
           <router-link to="/wish-list"> <i class="bx bx-heart" /></router-link>
           <router-link to="/cart"> <i class="bx bx-cart" /></router-link>
         </div>
@@ -114,19 +126,13 @@
 </template>
 
 <script>
-import SideCat from "../ui/SideCat.vue";
 export default {
-  components: { SideCat },
   data() {
     return {
       scrolled: false,
-      topActive: false,
       categories: [],
-      search: false,
       auth: false,
       showmenu: false,
-      clicked: true,
-      // click1: true,
     };
   },
   computed: {
@@ -136,23 +142,22 @@ export default {
   },
   async created() {
     const response = await fetch(`${this.host}/get/header`);
-    const data = await response.json();
-    this.categories = data.categories;
-    // await this.$store.dispatch('auth');
+    let data = await response.json();
+    data = data.categories;
+    for (let i = 0; i < data.length; i++) {
+      data[i].toggle = false;
+    }
+    this.categories = data;
     this.auth = await this.$store.getters.isAuth;
   },
   mounted() {
     window.addEventListener("scroll", this.scroll);
   },
   methods: {
-    lol(index) {
-      this.clicked = !this.clicked;
-      this.categories[index].subcategories.forEach((subcategory) => {
-        subcategory.clicked = this.clicked;
-      });
-    },
-    subCatId(id) {
-      this.$store.state.id = id;
+    toggleCat(index) {
+      if (this.categories[index].subcategories.length > 0) {
+        this.categories[index].toggle = !this.categories[index].toggle;
+      }
     },
     togglemenu() {
       this.showmenu = !this.showmenu;
@@ -220,18 +225,32 @@ i {
 }
 
 .flex-box {
-  height: 100%;
+  height: 75%;
   padding-top: 0.5%;
   margin-top: auto;
   margin-bottom: auto;
+  padding: 0 2rem;
+}
+.offer {
+  background-color: #29282d;
+  height: 25%;
+  width: 100%;
+  font-size: 0.9rem;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.offer marquee {
+  font-size: 0.8rem;
+  font-family: "Montserrat", sans-serif;
 }
 
 header {
   position: fixed;
   z-index: 1;
   background-color: white;
-  padding: 0 2rem;
-  height: 11vh;
+  height: 14vh;
   width: 100%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   font-family: "Montserrat", sans-serif;
@@ -295,6 +314,20 @@ small {
 .mnav-links {
   display: none;
 }
+.fade-enter-from,
+.fade-leave-to {
+  transform: scaleY(0);
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.4s ease-in-out;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-100%);
+  transition: all 200ms ease-in-out 0s;
+}
 
 @media screen and (max-width: 768px) {
   .desktop {
@@ -309,6 +342,7 @@ small {
     width: 80vw;
     height: 100vh;
     background-color: rgb(255, 255, 255);
+    z-index: 2;
   }
 
   .mlinkhead {
@@ -324,14 +358,17 @@ small {
 
   .link {
     width: 100%;
-    border-bottom: 1px solid #767676;
-    padding: 0.2rem 0.5rem;
+    border-bottom: 1px solid #7676765e;
+    font-size: 0.8rem;
   }
-
+  .link i {
+    font-size: 1rem;
+  }
   .mlinkcategory {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0.7rem 0.5rem;
 
     text-transform: capitalize;
   }
@@ -340,10 +377,10 @@ small {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 0.5rem;
+    padding: 0.8rem 0.5rem;
     margin-left: 10%;
     text-transform: capitalize;
-    border-top: 1px solid #767676;
+    border-top: 1px solid #7676765e;
   }
 
   .msel {
@@ -357,7 +394,7 @@ small {
   }
 
   header {
-    padding: 0 0.5rem;
+    padding: 0 ;
     z-index: 10;
   }
 
@@ -365,9 +402,10 @@ small {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
+    height: 75%;
     width: 100%;
     padding-right: 1.5rem;
+    padding-left: 0.5rem;
   }
 
   .left {
@@ -404,6 +442,10 @@ small {
 
   img {
     width: 25vw;
+  }
+  .list {
+    transform-origin: top;
+    transition: transform 0.3s ease-in-out;
   }
 }
 </style>

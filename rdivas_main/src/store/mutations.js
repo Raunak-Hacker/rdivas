@@ -18,16 +18,13 @@ export default {
   },
   filterByPrice(state, payload) {
     const price = parseInt(payload);
-    console.log(price);
     state.filteredProds = state.productList.products.filter(
       (product) => product.sellingPrice <= price
     );
   },
   sortProducts(state, payload) {
-    console.log(state.filteredProds);
     if (payload == "lth") {
       state.filteredProds.sort((a, b) => a.sellingPrice - b.sellingPrice);
-      console.log(state.filteredProds);
     } else if (payload == "htl") {
       state.filteredProds.sort((a, b) => b.sellingPrice - a.sellingPrice);
     } else if (payload == "Relevance") {
@@ -81,7 +78,6 @@ export default {
       .then((data) => {
         state.items = data.cartProducts;
         state.cart = data;
-        console.log(data);
       });
   },
   setUpdate(state, payload) {
@@ -107,7 +103,6 @@ export default {
       .then((response) => response.json())
       .then((data) => {
         state.wishlist = data.products;
-        console.log(data);
       });
   },
   getUser(state) {

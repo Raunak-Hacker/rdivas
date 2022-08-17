@@ -60,14 +60,18 @@
                 <label for="name">City: </label>
                 <select required v-model="city" v-if="foundPin">
                   <option value="" v-if="districts.length == 0">Enter Pin Code</option>
-                  <option v-for="city in districts" :key="city.District" :value="city.District">
+                  <option
+                    v-for="city in districts"
+                    :key="city.District"
+                    :value="city.District"
+                  >
                     {{ city.District }}
                   </option>
                 </select>
                 <input type="text" v-model.trim="city" required v-else />
               </div>
             </div>
-            <div class="field">
+            <div class="field adr">
               <label for="name" style="margin-right: 4%">Full Address: </label
               ><textarea
                 style="margin-right: 4%"
@@ -120,7 +124,6 @@ export default {
       fetch("https://api.postalpincode.in/pincode/" + this.pinCode)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data[0].Status == "Error") {
             this.foundPin = false;
             return;
@@ -148,7 +151,9 @@ export default {
                 State: this.post[i].State,
               });
             }
-            let savedcity = this.districts.find((district) => district.District == this.post[i].District);
+            let savedcity = this.districts.find(
+              (district) => district.District == this.post[i].District
+            );
             if (savedcity == undefined) {
               this.districts.push({
                 District: this.post[i].District,
@@ -167,7 +172,7 @@ export default {
         city: this.city,
         address: this.address,
       };
-       await fetch(this.$store.getters.host + "/user/add/address", {
+      await fetch(this.$store.getters.host + "/user/add/address", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -298,11 +303,6 @@ menu {
   }
 }
 @media (max-width: 768px) {
-  /* .img img {
-    height: 20vh;
-    width: 75vw;
-    object-fit: contain;
-  } */
   header h2 {
     font-size: 1rem;
   }
@@ -310,8 +310,51 @@ menu {
   header i {
     font-size: 1.5rem;
   }
+  .field input,
+  .field select,
+  option {
+    width: 70%;
+    border: 0;
+    background-color: rgba(221, 221, 221, 0.305);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    outline: none;
+    resize: none;
+  }
   dialog {
-    top: 32vh;
+    top: 8vh;
+    width: 90vw;
+    left: 5%;
+    position: absolute;
+  }
+  .flex-box {
+    margin: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .flex-box .field {
+    width: 100%;
+  }
+  .field label {
+    font-size: smaller;
+  }
+  section,
+  form {
+    width: 100%;
+  }
+  .adr {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 2vh;
+  }
+  .field textarea {
+    width: 100%;
+  }
+  .adr button {
+    margin-top: 2vh;
+    width: 100%;
   }
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <div class="productTops">
-    <div class="sort" @click="myFunction">
+  <div class="productTops" >
+    <div class="sort" >
       <small>Sort By</small>
-      <div class="dropdown">
+      <div class="dropdown" @click="dropdown = !dropdown">
         <button class="dropbtn">{{ sortBy }}</button>
         <div id="myDropdown" class="dropdown-content" v-if="dropdown">
           <a @click="sort('Relevance')" v-if="sortBy != 'Relevance'">Relevance</a>
@@ -37,8 +37,6 @@ export default {
   data() {
     return {
       dropdown: false,
-      upHere: false,
-      // sortBy: "Price: Low to High",
       sortBy: "Relevance",
     };
   },
@@ -52,12 +50,8 @@ export default {
     },
   },
   methods: {
-    myFunction() {
-      this.dropdown = !this.dropdown;
-    },
     sort(val) {
       if (val == "lth") {
-        console.log("lth");
         this.sortBy = "Price: Low to High";
         this.$store.commit("sortProducts", val);
       } else if (val == "htl") {
@@ -73,18 +67,19 @@ export default {
 </script>
 
 <style scoped>
-.dropbtn {
-  background-color: white;
+button {
+  background-color: #f3f3f3;
   color: black;
-  padding: 0.7rem;
+  padding: 0.7rem 1.2rem;
   font-size: 16px;
   border: none;
   cursor: pointer;
+  border-radius: 20px;
 }
 
 .dropdown {
   position: relative;
-  border: 1px solid black;
+  margin-left: 1.5rem;
 }
 
 .dropdown-content {
@@ -106,9 +101,9 @@ export default {
 
 .sort {
   display: flex;
-  width: 20%;
-  justify-content: space-around;
+  width: 50%;
   align-items: center;
+  padding-left: 1.5rem;
 }
 
 .dropdown a:hover {

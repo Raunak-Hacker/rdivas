@@ -22,6 +22,7 @@
         :name="cat.name"
         :img="cat.image"
         :id="cat.id"
+        :cat="cat.mainCategory"
       />
     </div>
     <div class="pad1">
@@ -69,7 +70,7 @@ export default {
       });
     this.timer = setInterval(() => {
       this.rightClick();
-    }, 3000);
+    }, 5000);
     fetch(`${this.$store.getters.host}/get/home/hero`)
       .then((response) => response.json())
       .then((data) => {
@@ -78,10 +79,12 @@ export default {
     fetch(`${this.$store.getters.host}/get/home/poster`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         this.poster1 = data[0].image;
         this.poster2 = data[1].image;
       });
+  },
+  unmounted() {
+    clearInterval(this.timer);
   },
   computed: {
     imgHost() {
@@ -89,7 +92,7 @@ export default {
     },
   },
   methods: {
-    rightClick() {
+   async rightClick() {
       const slidesContainer = document.getElementById("banner-con");
       const slide = document.querySelector(".banner");
       const slideWidth = slide.clientWidth;
@@ -99,7 +102,7 @@ export default {
         slidesContainer.scrollLeft = 0;
         return;
       }
-      slidesContainer.scrollLeft += slideWidth;
+       slidesContainer.scrollLeft += slideWidth;
     },
     leftClick() {
       const slidesContainer = document.getElementById("banner-con");

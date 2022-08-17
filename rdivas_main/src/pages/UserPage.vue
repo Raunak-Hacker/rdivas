@@ -1,8 +1,10 @@
 <template>
   <section class="user-page">
-    fg
+    <div class="cont">
+      <i class="bx bx-right-arrow-circle" />
+      <router-link to="/orders"> My Orders </router-link>
+    </div>
     <div class="box name">
-      
       <div class="card">
         <div class="in-box">
           <label for="name">Name:</label>
@@ -38,7 +40,7 @@
     <div class="box address">
       <div class="card">
         <div class="in-box add">
-          <label for="Email" >Address:</label>
+          <label for="Address">Address:</label>
           <div class="addresses">
             <div class="in-address" v-for="add in user.addresses" :key="add.id">
               <i @click="delAdd(add.id)" class="bx bx-trash-alt" /> <br />
@@ -58,12 +60,15 @@
                 >
               </div>
             </div>
+            <div class="in-flex mob" v-if="user.addresses.length < 4">
+              <small @click="showAdd = true">Add?</small>
+            </div>
           </div>
         </div>
-        <div class="in-flex" v-if="user.addresses.length < 4">
+        <div class="in-flex des" v-if="user.addresses.length < 4">
           <small @click="showAdd = true">Add?</small>
-          <the-address :show="showAdd" @close="showAdd = false" />
         </div>
+        <the-address :show="showAdd" @close="showAdd = false" />
       </div>
     </div>
   </section>
@@ -88,6 +93,12 @@ export default {
   created() {
     this.$store.commit("getUser");
   },
+    mounted() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  },
   methods: {
     async delAdd(id) {
       if (confirm("Are you sure you want to delete your address?")) {
@@ -107,7 +118,7 @@ export default {
 
 <style scoped>
 .user-page {
-  height: 89vh;
+  height: 86vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -141,6 +152,7 @@ label {
 .in-box {
   width: 90%;
   display: flex;
+  align-items: center;
   padding: 0 5%;
 }
 .in-box label {
@@ -193,5 +205,74 @@ label {
 }
 .in-flex small {
   cursor: pointer;
+}
+.cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 7rem;
+  height: 5%;
+  font-weight: bolder;
+  color: var(--left-login);
+}
+.cont a {
+  color: var(--left-login);
+}
+
+.cont a i {
+  font-size: large;
+}
+.mob {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .des {
+    display: none;
+  }
+
+  .box {
+    height: 15%;
+    padding: 2% 0%;
+  }
+  .in-box {
+    font-size: small;
+  }
+
+  label {
+    font-size: medium;
+  }
+  .in-flex {
+    width: 18.5%;
+  }
+
+  .addresses {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .address,
+  .add {
+    height: max-content;
+  }
+  .address .in-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .in-address {
+    width: 47%;
+    margin-right: 3%;
+    margin-bottom: 2vh;
+  }
+  .add label {
+    height: 4rem;
+  }
+  .mob {
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    justify-content: right;
+    width: 47%;
+    padding-left: 5%;
+  }
 }
 </style>

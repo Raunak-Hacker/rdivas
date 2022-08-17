@@ -47,9 +47,6 @@ export default {
       m: 2,
     };
   },
-  created() {
-    this.xyz = this.products.slice(this.l, this.r);
-  },
   computed: {
     imgHost() {
       return this.$store.getters.imgHost;

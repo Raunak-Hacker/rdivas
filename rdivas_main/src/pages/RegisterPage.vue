@@ -11,7 +11,7 @@
             Already have <br /><br />
             an account? <br />
           </h1>
-          <router-link to="/login"
+          <router-link to="/login" @click="signIn"
             ><button
               class="button-37"
               style="background-color: white; color: black; font-weight: bolder"
@@ -55,9 +55,6 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
   mounted() {
     window.scrollTo({
       top: 0,
@@ -74,14 +71,26 @@ export default {
   },
 
   methods: {
-    subForm() {
+    signIn() {
+      this.$store.commit("setAuthError", {
+        error: false,
+        message: null,
+      });
+    },
+    async subForm() {
       const user = {
         name: this.name,
         phone: this.phone,
         email: this.email,
         password: this.password,
       };
-      this.$store.dispatch("register", user);
+      await this.$store.dispatch("register", user);
+      if (!this.authError) {
+        this.name = null;
+        this.phone = null;
+        this.email = null;
+        this.password = null;
+      }
     },
   },
 };
@@ -89,7 +98,7 @@ export default {
 
 <style scoped>
 .login {
-  height: 89vh;
+  height: 86vh;
   width: 35%;
   background-color: var(--left-login);
 }

@@ -12,7 +12,7 @@
             Register now to access features like wishlist, cart, etc. <br />
             <br />
           </p>
-          <router-link to="/register"
+          <router-link to="/register" @click="forgotPass"
             ><button
               class="button-37"
               style="background-color: white; color: black; font-weight: bolder"
@@ -60,9 +60,6 @@
 
 <script>
 export default {
-  created(){
-    console.log(Number('🤣'));
-  },
   mounted() {
     window.scrollTo({
       top: 0,
@@ -124,7 +121,6 @@ export default {
         email: this.email,
         password: this.password,
       };
-      console.log(user);
       await this.$store.dispatch("login", user);
       if (this.authError) {
         return;
@@ -138,7 +134,7 @@ export default {
 <style scoped>
 .login {
   width: 100%;
-  height: 89vh;
+  height: 86vh;
   width: 35%;
   background-color: var(--left-login);
 }

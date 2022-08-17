@@ -33,20 +33,24 @@ export default {
       data: null,
     };
   },
+  mounted() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  },
   async created() {
     const response = await fetch(
       `${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`
     );
     const data = await response.json();
-    console.log(data);
-    if (data.statusCode === 404) {
-      window.location = "/notfound";
+    if (data.status == "error" || data.category != this.$route.params.category) {
+      console.log("data");
+      this.$router.replace({ name: "NotFound" });
       return;
     }
-    
     await this.$store.dispatch("getProdList", data);
     this.data = data;
-    console.log(data);
   },
   watch: {
     async $route() {

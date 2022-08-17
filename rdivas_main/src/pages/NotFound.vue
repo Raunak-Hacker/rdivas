@@ -12,9 +12,6 @@
 
 <script>
 export default {
-  created() {
-    this.$router.replace({ name: 'NotFound' });
-  },
   mounted() {
     window.scrollTo({
       top: 0,

@@ -1,13 +1,17 @@
 <template>
-    <main-page/>
+  <main-page />
 </template>
 
 <script>
-import MainPage from '@/components/home/MainPage.vue'
+import MainPage from "@/components/home/MainPage.vue";
 export default {
-    components: { MainPage },
-}
+  components: { MainPage },
+  mounted() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  },
+};
 </script>
 
-<style scoped>
-</style>

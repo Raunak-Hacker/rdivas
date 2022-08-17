@@ -10,6 +10,7 @@ const router = createRouter({
       path: "/",
       component: HomePage,
       alias: "/home",
+      name: "home",
     },
     {
       path: "/:category/:id",
@@ -47,6 +48,7 @@ const router = createRouter({
     {
       path: "/cart",
       component: () => import("./pages/CartPage.vue"),
+      name: "cart",
       meta: {
         requiresAuth: true,
       },
@@ -67,10 +69,27 @@ const router = createRouter({
       path: "/resetpassword/:id",
       props: true,
       component: () => import("./pages/ResetPass.vue"),
+      meta: {
+        requiresUnauth: true,
+      },
     },
     {
       path: "/checkout",
       component: () => import("./pages/CheckoutPage.vue"),
+      beforeEnter: (_, from, next) => {
+        if (from.name === "cart") {
+          next();
+        } else {
+          next({ name: "cart" });
+        }
+      },
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: "/orders",
+      component: () => import("./pages/OrdersPage.vue"),
       meta: {
         requiresAuth: true,
       },
