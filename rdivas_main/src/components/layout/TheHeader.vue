@@ -15,7 +15,7 @@
                 <router-link to="/home">HOME</router-link>
               </li>
               <li v-for="category in categories" :key="category.name">
-                <a @click="category.name">
+                <a >
                   {{ category.name }}
                 </a>
                 <div class="dropdown-content">
@@ -111,11 +111,9 @@
           <router-link to="/user" v-if="auth && $route.path !== '/user'"
             ><i class="bx bx-user-circle"
           /></router-link>
-          <i
-            class="bx bx-log-out"
-            v-else-if="auth && $route.path === '/user'"
-            @click="logout"
-          />
+          <a v-else-if="auth && $route.path === '/user'" @click="logout">
+            <i class="bx bx-log-out"
+          /></a>
           <router-link to="/login" v-else><i class="bx bx-log-in" /></router-link>
           <router-link to="/wish-list"> <i class="bx bx-heart" /></router-link>
           <router-link to="/cart"> <i class="bx bx-cart" /></router-link>
@@ -394,7 +392,7 @@ small {
   }
 
   header {
-    padding: 0 ;
+    padding: 0;
     z-index: 10;
   }
 

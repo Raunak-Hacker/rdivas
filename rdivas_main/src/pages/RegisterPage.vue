@@ -31,19 +31,52 @@
           </div>
           <br />
           <form action="POST" @submit.prevent="subForm">
-            <input type="text" placeholder="Name" v-model.trim="name" required /> <br />
-            <input type="number" placeholder="phone" v-model.trim="phone" required />
+            <input
+              type="text"
+              placeholder="Name"
+              v-model.trim="name"
+              pattern="[a-zA-Z'-'\s]*"
+              onkeydown="return /[a-z ]/i.test(event.key)"
+              oninvalid="setCustomValidity('Invalid Name')"
+              title="Only Alphabets"
+              oninput="setCustomValidity('')"
+              required
+            />
             <br />
-            <input type="email" placeholder="email" v-model.trim="email" required />
+            <input
+              type="text"
+              maxlength="10"
+              inputmode="numeric"
+              pattern="[0-9]{10}"
+              onkeypress="return /[0-9]/i.test(event.key) || event.key === 'Backspace'"
+              placeholder="phone"
+              title="Only Numbers and 10 digits"
+              oninvalid="setCustomValidity('Invalid Mobile Number')"
+              oninput="setCustomValidity('')"
+              v-model.trim="phone"
+              required
+            />
+            <br />
+            <input
+              type="email"
+              placeholder="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              oninvalid="setCustomValidity('Invalid Email')"
+              oninput="setCustomValidity('')"
+              v-model.trim="email"
+              required
+            />
             <br />
             <input
               type="password"
+              maxlength="18"
+              pattern="[a-zA-Z0-9+&@#/%?=~_|!:,.;*^'-'\s]{6,}"
               placeholder="password"
+              title="Valid and Min 6 chars"
               v-model.trim="password"
               required
             />
             <br />
-            <!-- <p v-if="invalid">User already exists</p> -->
             <p v-if="authError">{{ authMessage }}</p>
             <button class="button-37" type="submit">REGISTER</button>
           </form>

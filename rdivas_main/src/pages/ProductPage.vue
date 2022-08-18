@@ -191,6 +191,7 @@
   </div>
 
   <div class="mobile">
+    <div class="tags add" v-if="added">Added to Cart</div>
     <div class="navigation">
       <div class="swipe left" @click="prev">
         <svg
@@ -784,6 +785,7 @@ body {
   margin-right: 2%;
   height: fit-content;
   position: fixed;
+  z-index: 1000;
   right: 0;
   border: 1px solid #d6d6d6;
 }
@@ -1008,7 +1010,6 @@ p {
   transition: all 0.3s ease-in-out;
 }
 
-
 .wished {
   background-color: #ff3c3c25;
   color: red;
@@ -1151,6 +1152,17 @@ p {
 
   .box {
     margin-bottom: 0.7rem;
+  }
+  .add {
+    top: 15%;
+    padding: 0 4%;
+    font-size: .75rem;
+    background-color: #d6d6d63d;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #c5c5c577;
   }
 
   .boxes {

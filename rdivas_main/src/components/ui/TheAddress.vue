@@ -13,11 +13,32 @@
             <div class="flex-box">
               <div class="field">
                 <label for="name">Name: </label
-                ><input type="text" v-model.trim="name" required />
+                ><input
+                  type="text"
+                  v-model.trim="name"
+                  pattern="[a-zA-Z'-'\s]*"
+                  onkeydown="return /[a-z ]/i.test(event.key)"
+                  oninvalid="setCustomValidity('Invalid Name')"
+                  title="Only Alphabets"
+                  oninput="setCustomValidity('')"
+                  required
+                />
               </div>
               <div class="field">
                 <label for="name">Phone: </label
-                ><input type="number" v-model.trim="phone" required />
+                ><input
+                  type="text"
+                  maxlength="10"
+                  inputmode="numeric"
+                  pattern="[0-9]{10}"
+                  onkeypress="return /[0-9]/i.test(event.key) || event.key === 'Backspace'"
+                  placeholder="phone"
+                  title="Only Numbers and 10 digits"
+                  oninvalid="setCustomValidity('Invalid Mobile Number')"
+                  oninput="setCustomValidity('')"
+                  v-model.trim="phone"
+                  required
+                />
               </div>
             </div>
             <div class="flex-box">
@@ -77,8 +98,8 @@
                 style="margin-right: 4%"
                 v-model.trim="address"
                 rows="10"
-                maxlength="200"
-                placeholder="Max 200 Chars"
+                maxlength="100"
+                placeholder="Max 100 Chars"
               ></textarea>
               <button type="submit">Add</button>
             </div>
