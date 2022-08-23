@@ -36,7 +36,7 @@
         </div>
         <div class="flex-box">
           <div class="tags" style="background: green; color: white">
-            4.5 <i style="color: white" class="bx bxs-star" />
+            {{data.rating}} <i style="color: white" class="bx bxs-star" />
           </div>
           <div class="tags">{{ data.color }}</div>
           <div class="tags">{{ data.fabric }}</div>
@@ -152,13 +152,13 @@
           </div>
           <div class="btns">
             <button @click="addToCart" style="">Add To Cart</button>
-            <button>Buy Now</button>
+            <button @click="buyNow">Buy Now</button>
           </div>
         </div>
         <br />
       </div>
     </section>
-    <the-review>
+    <the-review :id="$route.params.id">
       <div class="benefits">
         <div class="benefit">
           <img src="@/assets/discount.png" />
@@ -374,14 +374,14 @@
       <the-review />
 
       <div class="mbtns">
-        <mob-filter @add="addToCart" />
+        <mob-filter @add="addToCart" @buy="buyNow" />
       </div>
     </div>
   </div>
   <div class="mobile" style="margin-top: 4%">
     <best-sell-cat
       :products="list[(Math.random() * (this.list.length - 1)) | 0].products"
-      title="Other Products You May Like"
+      title="You May Like"
     />
   </div>
 </template>
@@ -435,7 +435,6 @@ export default {
       `${this.$store.getters.host}/get/product/${this.$route.params.id}`
     );
     const data = await response.json();
-
     this.data = data;
     this.images = data.images;
     this.imgId = 0;
@@ -530,6 +529,18 @@ export default {
       setTimeout(() => {
         this.added = false;
       }, 2000);
+    },
+    buyNow(){
+      if (!this.auth) {
+        this.$router.push("/login");
+        return;
+      }
+      if (!this.size) {
+        alert("Select size");
+        return;
+      }
+      this.addToCart();
+      this.$router.push("/cart");
     },
     colorChange() {
       this.$router.push(`/product/${this.lol}`);
@@ -924,6 +935,10 @@ body {
 
 .price h3 {
   font-size: 1.8rem;
+  font-family: 'Montserrat', sans-serif;
+}
+.price p {
+  font-family: 'Montserrat', sans-serif;
 }
 
 .btns {
@@ -1156,7 +1171,7 @@ p {
   .add {
     top: 15%;
     padding: 0 4%;
-    font-size: .75rem;
+    font-size: 0.75rem;
     background-color: #d6d6d63d;
     height: 2rem;
     display: flex;

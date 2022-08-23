@@ -27,8 +27,8 @@ export default {
       state.filteredProds.sort((a, b) => a.sellingPrice - b.sellingPrice);
     } else if (payload == "htl") {
       state.filteredProds.sort((a, b) => b.sellingPrice - a.sellingPrice);
-    } else if (payload == "Relevance") {
-      window.location.reload();
+    } else if (payload == "Rating") {
+      state.filteredProds.sort((a, b) => b.rating - a.rating);
     }
   },
   setSize(state, payload) {

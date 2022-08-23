@@ -43,6 +43,7 @@ export default {
   height: 100%;
   border-radius: 15px;
   object-fit: cover;
+  border: 4px solid var(--left-login);
 }
 
 .cat {

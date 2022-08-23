@@ -5,7 +5,7 @@
       <div class="dropdown" @click="dropdown = !dropdown">
         <button class="dropbtn">{{ sortBy }}</button>
         <div id="myDropdown" class="dropdown-content" v-if="dropdown">
-          <a @click="sort('Relevance')" v-if="sortBy != 'Relevance'">Relevance</a>
+          <a @click="sort('Rating')" v-if="sortBy != 'Rating'">Rating</a>
           <a @click="sort('lth')" v-if="sortBy != 'Price: Low to High'"
             >Price: Low to High</a
           >
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       dropdown: false,
-      sortBy: "Relevance",
+      sortBy: "Select",
     };
   },
 
@@ -57,8 +57,8 @@ export default {
       } else if (val == "htl") {
         this.sortBy = "Price: High to Low";
         this.$store.commit("sortProducts", val);
-      } else if (val == "Relevance") {
-        this.sortBy = "Relevance";
+      } else if (val == "Rating") {
+        this.sortBy = "Rating";
         this.$store.commit("sortProducts", val);
       }
     },
@@ -86,7 +86,7 @@ button {
   display: block;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 10rem;
+  min-width: 12rem;
   overflow: auto;
   box-shadow: 0px 0.5rem 1rem 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -129,7 +129,6 @@ button {
 
 .card {
   width: 23%;
-  height: 35%;
   margin: 1%;
 }
 

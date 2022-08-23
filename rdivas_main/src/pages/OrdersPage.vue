@@ -23,7 +23,7 @@
           <div class="orders">
             <order-item
               :id="1"
-              :name="'Casual Butterfly Sleeves Solid Women Dark Green Top'"
+              :name="'Casual Butterfly Sleeves'"
               :img="'https://files.rdivas.in/a48042fe7eb8517feb9102dc912c30191.png'"
               :size="'xl'"
               :color="'blue'"

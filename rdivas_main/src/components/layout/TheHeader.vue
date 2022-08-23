@@ -241,6 +241,7 @@ i {
 }
 .offer marquee {
   font-size: 0.8rem;
+  font-weight: 600;
   font-family: "Montserrat", sans-serif;
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="filterbtn">
-      <div class="sort pink">Buy Now</div>
+      <div class="sort pink" @click="buy">Buy Now</div>
       <div class="sort " @click="add">Add To Cart</div>
     </div>
   </div>
@@ -12,6 +12,9 @@ export default {
   methods: {
     add() {
       this.$emit("add");
+    },
+    buy() {
+      this.$emit("buy");
     },
   },
 };

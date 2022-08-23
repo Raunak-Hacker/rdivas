@@ -67,7 +67,6 @@ export default {
         this.$store.state.url = this.host + val;
       }
       this.$store.state.selManage = val;
-      console.log(this.$store.state.selManage);
       await this.$store.dispatch("fetchStuff", this.$store.state.url);
       this.sel = true;
     },

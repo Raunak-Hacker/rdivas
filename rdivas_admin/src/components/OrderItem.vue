@@ -2,7 +2,7 @@
   <div class="product">
     <div class="dets">
       <div class="img">
-        <img :src="img" alt="" />
+        <img :src="img" />
       </div>
       <div class="prod-info">
         <label>{{ name }}</label>
@@ -64,8 +64,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid rgba(128, 128, 128, 0.26);
-  border-right: 1px solid rgba(128, 128, 128, 0.26);
-  border-left: 1px solid rgba(128, 128, 128, 0.26);
   /* background-color: white; */
 }
 
@@ -76,8 +74,8 @@ export default {
 }
 
 .img {
-  min-width: 8vw;
   max-width: 8vw;
+  min-width: 8vw;
   height: 100%;
   margin: 0 1rem;
 }
@@ -87,7 +85,7 @@ export default {
 }
 
 .prod-info {
-  max-width: 75%;
+  /* width: 75%; */
   height: 100%;
   padding: 2% 0;
   display: flex;
@@ -106,6 +104,7 @@ export default {
   font-weight: 600;
   margin: 5%;
   color: #000;
+  font-family: "Montserrat", sans-serif;
 }
 
 .mob {

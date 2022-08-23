@@ -1,7 +1,7 @@
 <template>
   <div class="prod" @mouseenter="iconHover" @mouseleave="iconHover">
     <div class="img" @click="$router.push('/product/' + id)">
-      <img :src="imgUrl"  />
+      <img :src="imgUrl" />
       <div
         class="sale tag"
         v-if="sale && !($route.path == '/wish-list' || $route.path == '/wish-list/')"
@@ -16,13 +16,6 @@
       </div>
     </div>
 
-    <transition v-if="true">
-      <div class="icons" :class="{ wished: wish }">
-        <a @click="addWish" @mouseenter="upHere = false">
-          <i class="bx bxs-heart" v-if="wish" /> <i class="bx bx-heart" v-else />
-        </a>
-      </div>
-    </transition>
     <div class="det" @mouseenter="upHere = false">
       <router-link :to="'/product/' + id">
         <p>{{ name }}</p>
@@ -33,6 +26,12 @@
       >
         &#8377; {{ price }} <s v-if="sale">₹{{ discount }}</s>
       </h5>
+    </div>
+
+    <div class="icons" :class="{ wished: wish }">
+      <a @click="addWish" @mouseenter="upHere = false">
+        <i class="bx bxs-heart" v-if="wish" /> <i class="bx bx-heart" v-else />
+      </a>
     </div>
   </div>
 </template>
@@ -115,22 +114,6 @@ export default {
 };
 </script>
 <style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: all 0.35s ease-in-out;
-}
-
-.v-enter-from,
-.v-leave-to {
-  transform: translateY(100%);
-  opacity: 0;
-}
-
-.v-enter-to,
-.v-leave-from {
-  opacity: 1;
-}
-
 .red {
   color: #ca1515;
 }
@@ -161,8 +144,6 @@ i {
   margin: 0.5%;
   flex-direction: column;
   position: relative;
-  border: 1px solid #e0e0e0;
-  border-radius: 1rem;
 }
 
 .icons {
@@ -210,7 +191,8 @@ i {
 
 .img {
   width: 100%;
-  height: 75%;
+  min-height: 75%;
+  max-height: 75%;
   background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
@@ -222,8 +204,10 @@ i {
   width: 100%;
   height: 100%;
   /* object-fit: contain; */
-  border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  border: 4px solid var(--left-login);
+  border-bottom: 0;
 }
 
 .tag {
@@ -247,19 +231,28 @@ i {
 
 .det {
   width: 100%;
-  /* height: 30%; */
+  min-height: 25%;
+  max-height: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
 .det p {
   font-family: "Montserrat", sans-serif;
   font-weight: 200;
   font-size: small;
-  /* height: 80%; */
+  /* height: 3.5rem; */
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   margin-bottom: 1rem;
 }
 
@@ -272,7 +265,6 @@ i {
     margin: 0.5%;
     flex-direction: column;
     position: relative;
-    border: 1.75px solid #e0e0e0;
   }
 
   .img {
@@ -304,6 +296,7 @@ i {
     justify-content: flex-start;
     align-items: center;
     padding: 1rem;
+    padding-bottom: 4.5rem;
   }
 
   .det p {

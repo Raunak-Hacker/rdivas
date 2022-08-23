@@ -211,7 +211,8 @@ img {
     font-size: 1rem;
   }
   .scroll-images {
-    overflow-y: scroll;
+    overflow-y: hidden;
+    height: 20rem
   }
 }
 </style>

@@ -167,7 +167,6 @@ export default {
       fetch(this.$store.state.host + "get/listing/" + id, det)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.listing.products);
           this.$store.state.products = data.listing.products;
           this.$store.state.filteredProducts = data.listing.products;
         });

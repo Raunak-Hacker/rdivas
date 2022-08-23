@@ -17,7 +17,7 @@
 export default {
   data() {
     return {
-      selectedComponent: 'manage-page',
+      selectedComponent: 'comments-page',
     }
   },
   created() {
@@ -40,6 +40,11 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Montserrat&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+:root {
+  --left-login: #ce3cba;
+  --white: #ffffff;
+}
 * {
   margin: 0;
   padding: 0;

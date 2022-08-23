@@ -8,9 +8,7 @@
     <hr style="height: 1px; border: 0; border-top: 1px solid #ccc" />
     <br />
 
-    <h4 style="text-transform: uppercase; color: black;">
-      Write your own Review >>
-    </h4>
+    <h4 style="text-transform: uppercase; color: black">Write your own Review >></h4>
     <br />
 
     <h6>Your Rating:</h6>
@@ -79,17 +77,22 @@
     <small v-if="error" style="color: red">Please select a rating</small>
     <h6 style="margin-top: 1%">Review</h6>
     <textarea name="" id="" cols="30" rows="5" v-model.trim="review" />
+    <small v-if="nOrder" style="color: red; margin-top: 1rem"
+      >You first need to order this product to add your review</small
+    >
     <button type="submit">Add Review</button>
   </form>
 </template>
 
 <script>
 export default {
+  props: ["id"],
   data() {
     return {
       star: null,
       review: null,
       error: false,
+      nOrder: false,
     };
   },
   watch: {
@@ -100,20 +103,33 @@ export default {
     },
   },
   methods: {
-    subReview() {
+    async subReview() {
       if (!this.star) {
         this.error = true;
         return;
       }
       this.error = false;
-      const review = { star: Number(this.star), review: this.review };
-      console.log(JSON.stringify(review));
+      let review = {
+        productId: this.id,
+        rating: Number(this.star),
+      };
+      if (this.review != null) {
+        review.review = this.review;
+      }
+      const resp = await fetch(this.$store.getters.host + "/user/addreview/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify(review),
+      });
+      const data = await resp.json();
+      if (data.success != true) {
+        this.nOrder = true;
+      }
       this.review = null;
       this.star = null;
-      // this.$store.dispatch('addReview', {
-      //   star: this.star,
-      //   review: this.review,
-      // });
     },
   },
   computed: {
@@ -127,7 +143,6 @@ export default {
 <style scoped>
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
-/****** Style Star Rating Widget *****/
 
 .rating {
   border: none;

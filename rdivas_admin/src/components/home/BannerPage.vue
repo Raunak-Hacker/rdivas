@@ -12,7 +12,7 @@
         <button class="button-42" type="submit">Upload</button>
         <button class="button-42" @click="backClick" style="padding: 0.2rem 1rem">
           <i
-            style="font-size: 1.2rem; color: whitesmoke; padding-top: 25%;"
+            style="font-size: 1.2rem; color: whitesmoke; padding-top: 25%"
             class="bx bx-arrow-back"
           ></i>
         </button>
@@ -81,7 +81,7 @@ export default {
       await fetch(this.$store.getters.host + "add/hero", details);
       this.$store.dispatch("fetchStuff", this.$store.state.url);
     },
-    del(id) {
+    async del(id) {
       const details = {
         method: "GET",
         headers: {
@@ -89,12 +89,12 @@ export default {
           Authorization: "Bearer " + this.$store.getters.token,
         },
       };
-      fetch(this.$store.getters.host + "delete/hero/" + id, details)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          this.$store.dispatch("fetchStuff", this.$store.state.url);
-        });
+      await fetch(this.$store.getters.host + "delete/hero/" + id, details);
+      // .then((response) => response.json())
+      // .then((data) => {
+      //   this.$store.dispatch("fetchStuff", this.$store.state.url);
+      // });
+      this.$store.dispatch("fetchStuff", this.$store.state.url);
     },
     backClick() {
       this.$emit("backClick");

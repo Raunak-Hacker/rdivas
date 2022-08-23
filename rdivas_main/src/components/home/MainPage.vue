@@ -15,6 +15,10 @@
         </div>
       </div>
     </div>
+    <div class="cat-title">
+      <h2>CATEGORIES</h2>
+      <div class="ctbx" />
+    </div>
     <div class="flex-wrap">
       <cat-box
         v-for="cat in cats"
@@ -92,7 +96,7 @@ export default {
     },
   },
   methods: {
-   async rightClick() {
+    async rightClick() {
       const slidesContainer = document.getElementById("banner-con");
       const slide = document.querySelector(".banner");
       const slideWidth = slide.clientWidth;
@@ -102,7 +106,7 @@ export default {
         slidesContainer.scrollLeft = 0;
         return;
       }
-       slidesContainer.scrollLeft += slideWidth;
+      slidesContainer.scrollLeft += slideWidth;
     },
     leftClick() {
       const slidesContainer = document.getElementById("banner-con");
@@ -202,7 +206,28 @@ export default {
   width: 100%;
   height: 100%;
 }
-
+.cat-title {
+  text-align: center;
+  margin-top: 8vh;
+  margin-bottom: 6vh;
+  position: relative;
+}
+.cat-title h2 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #111111;
+  letter-spacing: 6px;
+}
+.ctbx {
+  width: calc(6vh + 8.5rem);
+  height: 3.5rem;
+  background-color: var(--left-login);
+  position: absolute;
+  bottom: -0.2rem;
+  right: 39.5vw;
+  z-index: -1;
+  border-radius: 1rem;
+}
 .title {
   display: flex;
   justify-content: flex-end;
@@ -248,6 +273,27 @@ export default {
 
   .icon i {
     font-size: 1.2rem;
+  }
+  .cat-title {
+    text-align: center;
+    margin: 6vh 0;
+    position: relative;
+  }
+  .cat-title h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #111111;
+    letter-spacing: 6px;
+  }
+  .ctbx {
+    width: calc(6vh + 7.5rem);
+    height: 3rem;
+    background-color: var(--left-login);
+    position: absolute;
+    bottom: 0rem;
+    left: 43.2vw;
+    z-index: -1;
+    border-radius: 1rem;
   }
 }
 </style>
