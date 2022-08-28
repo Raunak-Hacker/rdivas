@@ -6,9 +6,26 @@ export default {
     context.commit("setProdDetails", data);
   },
   async addToCart(context, data) {
-    await context.commit("addToCart", {
-      ...data,
-    });
+    let item = {
+      productId: data.prodId,
+      quantity: data.quantity,
+      productSize: data.size,
+      productColor: data.color,
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(item),
+    };
+    await fetch(`${context.getters.host}/user/editroduct`, requestOptions);
+    // console.log()
+    // context.commit("getCart");
+    // await context.commit("addToCart", {
+    //   ...data,
+    // });
   },
 
   //register

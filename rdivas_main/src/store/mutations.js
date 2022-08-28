@@ -94,29 +94,25 @@ export default {
       state.xxl = true;
     }
   },
-  addToCart(state, payload) {
-    let item = {
-      productId: payload.prodId,
-      quantity: payload.quantity,
-      productSize: payload.size,
-      productColor: payload.color,
-    };
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(item),
-    };
-    fetch(`${state.host}/user/editroduct`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status == "success") {
-          this.commit("getCart");
-        }
-      });
-  },
+  // addToCart(state, payload) {
+  //   let item = {
+  //     productId: payload.prodId,
+  //     quantity: payload.quantity,
+  //     productSize: payload.size,
+  //     productColor: payload.color,
+  //   };
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //     },
+  //     body: JSON.stringify(item),
+  //   };
+  //   fetch(`${state.host}/user/editroduct`, requestOptions).then(
+  //     this.commit("getCart")
+  //   );
+  // },
   getCart(state) {
     fetch(`${state.host}/user/getcart/`, {
       headers: {

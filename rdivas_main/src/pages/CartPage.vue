@@ -2,8 +2,8 @@
   <section class="cart">
     <div class="items">
       <div class="title">
-        <h1>Shopping Cart</h1>
-        <h1>{{ cart ? cart.cartProducts.length : 0 }} Items</h1>
+        <h1>Shopping Cart </h1>
+        <h1 v-if="cart">{{ cart ? cart.cartProducts.length : 0 }} Items </h1>
       </div>
       <div class="info">
         <label class="label">Product Details</label>
@@ -14,7 +14,7 @@
           <label for="">Total</label>
         </div>
       </div>
-      <div class="products">
+      <div class="products" v-if="items">
         <cart-item
           v-for="item in items"
           :key="item.id"
@@ -29,8 +29,7 @@
           :items="this.quantity"
           :qty="item.quantity"
           @update-quantity="upQuantity"
-        >
-        </cart-item>
+        />
       </div>
       <router-link to="/" class="cont desktop">
         <i class="bx bx-left-arrow-circle" />Continue Shopping
@@ -51,7 +50,7 @@
           <label for="">Delivery Charges - ₹100</label>
         </div>
       </div> -->
-      <div class="prices">
+      <div class="prices" v-if="cart">
         <div class="price-box">
           <label for="items">{{ cart ? cart.cartProducts.length : 0 }} items MRP</label>
           <label for="rate" style="font-family: 'Montserrat', sans-serif"
@@ -74,7 +73,7 @@
         </div> -->
       </div>
 
-      <div class="checkout">
+      <div class="checkout" v-if="cart">
         <div class="checkout-price">
           <label for="items">Total Cost</label>
           <label for="rate" style="font-family: 'Montserrat', sans-serif">₹{{ cart ? cart.total : 0 }}</label>

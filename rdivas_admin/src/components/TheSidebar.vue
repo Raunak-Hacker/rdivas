@@ -1,16 +1,17 @@
 <template>
-
   <body :class="{ dark: dark }">
-
     <head>
-      <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+      <link
+        href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+        rel="stylesheet"
+      />
     </head>
 
     <nav class="sidebar" :class="{ close: close }">
       <header>
         <div class="image-text">
           <span class="image">
-            <img src="@/assets/logo.png">
+            <img src="@/assets/logo.png" />
           </span>
 
           <div class="text logo-text">
@@ -19,28 +20,31 @@
           </div>
         </div>
 
-        <i class='bx bx-chevron-right toggle' @click="toggle"></i>
+        <i class="bx bx-chevron-right toggle" @click="toggle"></i>
       </header>
 
       <div class="menu-bar">
         <div class="menu">
-
           <!-- <li class="search-box">
             <i class='bx bx-search icon'></i>
             <input type="text" placeholder="Search...">
           </li> -->
 
           <ul class="menu-links">
-            <li class="nav-link" :class="{ selBox: dashActive }" @click="dashboardClicked">
+            <li
+              class="nav-link"
+              :class="{ selBox: dashActive }"
+              @click="dashboardClicked"
+            >
               <a>
-                <i class='bx bx-bar-chart-alt-2 icon'></i>
+                <i class="bx bx-bar-chart-alt-2 icon"></i>
                 <span class="text nav-text">Dashboard</span>
               </a>
             </li>
 
             <li class="nav-link" :class="{ selBox: anaActive }" @click="analyticsClicked">
               <a>
-                <i class='bx bx-home-alt icon'></i>
+                <i class="bx bx-home-alt icon"></i>
                 <span class="text nav-text">Manage Home </span>
               </a>
             </li>
@@ -54,33 +58,47 @@
 
             <li class="nav-link" :class="{ selBox: manActive }" @click="manageClicked">
               <a>
-                <i class='bx bx-edit icon'></i>
+                <i class="bx bx-edit icon"></i>
                 <span class="text nav-text">Manage Stuff</span>
+              </a>
+            </li>
+
+            <li class="nav-link" :class="{ selBox: compActive }" @click="compClicked">
+              <a>
+                <i class="bx bx-image-alt icon"></i>
+                <span class="text nav-text">Compressor</span>
               </a>
             </li>
 
             <li class="nav-link" :class="{ selBox: comActive }" @click="commentsClicked">
               <a>
                 <!-- <i class='bx bx-heart icon'></i> -->
-                <i class='bx bx-comment-check icon'></i>
+                <i class="bx bx-comment-check icon"></i>
                 <span class="text nav-text">Comments</span>
               </a>
             </li>
 
             <li class="nav-link" :class="{ selBox: orderActive }" @click="ordersClicked">
               <a>
-                <i class='bx bx-cart icon'></i>
+                <i class="bx bx-cart icon"></i>
                 <span class="text nav-text">Orders</span>
               </a>
             </li>
 
+            <li class="nav-link" :class="{ selBox: mailActive }" @click="mailClicked">
+              <a>
+                <i class="bx bx-mail-send icon"></i>
+
+                <span class="text nav-text">Send Mail</span>
+              </a>
+            </li>
           </ul>
         </div>
 
         <div class="bottom-content">
           <li class="" @click="logout">
             <a>
-              <i class='bx bx-log-out icon'></i>
+              <i class="bx bx-log-out icon"></i>
               <span class="text nav-text">Logout</span>
             </a>
           </li>
@@ -88,8 +106,8 @@
           <li class="mode">
             <div class="">
               <div class="sun-moon">
-                <i class='bx bx-moon icon moon'></i>
-                <i class='bx bx-sun icon sun'></i>
+                <i class="bx bx-moon icon moon"></i>
+                <i class="bx bx-sun icon sun"></i>
               </div>
             </div>
             <span class="mode-text text">
@@ -101,10 +119,8 @@
               <span class="switch" @click="darkMode"></span>
             </div>
           </li>
-
         </div>
       </div>
-
     </nav>
 
     <section class="home">
@@ -113,9 +129,6 @@
       </div>
       <slot></slot>
     </section>
-
-
-
   </body>
 </template>
 
@@ -129,72 +142,86 @@ export default {
       anaActive: false,
       manActive: false,
       comActive: false,
-      orderActive: false
-    }
+      orderActive: false,
+      compActive: false,
+      mailActive: false,
+    };
   },
   methods: {
     logout() {
       this.$store.dispatch("logout");
     },
     toggle() {
-      this.close = !this.close
+      this.close = !this.close;
     },
     darkMode() {
-      this.dark = !this.dark
+      this.dark = !this.dark;
     },
     sideIconClick() {
-      this.dashActive = false
-      this.anaActive = false
-      this.manActive = false
-      this.comActive = false
-      this.orderActive = false
+      this.dashActive = false;
+      this.anaActive = false;
+      this.manActive = false;
+      this.comActive = false;
+      this.orderActive = false;
+      this.mailActive = false;
+      this.compActive = false;
     },
     dashboardClicked() {
       this.sideIconClick();
-      this.dashActive = true
-      this.$emit('dashboard');
+      this.dashActive = true;
+      this.$emit("dashboard");
     },
     analyticsClicked() {
       this.sideIconClick();
-      this.anaActive = true
-      this.$emit('analytics');
+      this.anaActive = true;
+      this.$emit("analytics");
     },
     manageClicked() {
       this.sideIconClick();
-      this.manActive = true
-      this.$emit('manage');
+      this.manActive = true;
+      this.$emit("manage");
     },
     commentsClicked() {
       this.sideIconClick();
-      this.comActive = true
-      this.$emit('comments');
+      this.comActive = true;
+      this.$emit("comments");
     },
     ordersClicked() {
       this.sideIconClick();
-      this.orderActive = true
-      this.$emit('orders');
-    }
-  }
-}
+      this.orderActive = true;
+      this.$emit("orders");
+    },
+    mailClicked() {
+      this.sideIconClick();
+      this.mailActive = true;
+      this.$emit("mail");
+    },
+    compClicked() {
+      this.sideIconClick();
+      this.compActive = true;
+      this.$emit("comp");
+    },
+  },
+};
 </script>
 
-<style>
+<style >
 /* Google Font Import - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 :root {
-  --body-color: #E4E9F7;
-  --sidebar-color: #FFF;
-  --primary-color: #695CFE;
-  --primary-color-light: #F6F5FF;
-  --toggle-color: #DDD;
+  --body-color: #e4e9f7;
+  --sidebar-color: #fff;
+  --primary-color: #695cfe;
+  --primary-color-light: #f6f5ff;
+  --toggle-color: #ddd;
   --text-color: #707070;
   --tran-03: all 0.2s ease;
   --tran-03: all 0.3s ease;
@@ -237,7 +264,6 @@ body.dark {
 .sidebar.close {
   width: 4.8rem;
   margin-right: 1rem;
-
 }
 
 .sidebar li {
@@ -296,14 +322,12 @@ body.dark {
   display: flex;
   flex-direction: column;
   margin-left: 8%;
-
 }
 
 header .image-text .name {
   margin-top: 2px;
   font-size: 1.15rem;
   font-weight: 600;
-
 }
 
 header .image-text .profession {
@@ -357,10 +381,7 @@ body.dark .sidebar header .toggle {
   border-radius: 6px;
   cursor: pointer;
   transition: var(--tran-05);
-
 }
-
-
 
 .sidebar li.search-box input {
   height: 100%;
@@ -469,7 +490,7 @@ body.dark .mode .sun-moon i.moon {
 }
 
 .switch::before {
-  content: '';
+  content: "";
   position: absolute;
   height: 0.93rem;
   width: 0.93rem;
@@ -487,7 +508,7 @@ body.dark .switch::before {
 
 .home {
   position: absolute;
-  
+
   top: 0;
   top: 0;
   left: 15rem;
@@ -504,7 +525,7 @@ body.dark .switch::before {
   padding: 12px 60px;
 }
 
-.sidebar.close~.home {
+.sidebar.close ~ .home {
   left: 4.8rem;
   height: 100vh;
   width: calc(100% - 4.8rem);

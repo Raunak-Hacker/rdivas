@@ -83,7 +83,6 @@ export default {
       highestPrice = Math.floor(highestPrice / 200) * 200;
       this.hPrice = lowestPrice;
       this.lPrice = highestPrice;
-      console.log(this.hPrice, this.lPrice);
       
       await this.$store.dispatch("getProdList", data);
       this.data = data;

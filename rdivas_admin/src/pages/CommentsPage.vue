@@ -26,7 +26,7 @@
 
     <div class="cards">
       <div class="card" v-for="review in reviews" :key="review.id">
-        <div class="card-head" :class="{delist: review.status != 'approved'}">
+        <div class="card-head" :class="{ delist: review.status != 'approved' }">
           <div class="order-det">
             <div class="order-id">
               <strong for="Order">{{ Number(review.rating).toFixed(1) }}</strong> &nbsp;<i
@@ -152,9 +152,24 @@ body.dark .card-head {
   padding: 3% 10%;
   display: flex;
   flex-direction: column;
-  min-height: 86vh;
+  min-height: 76%;
   background-color: var(--body-color);
-  overflow-x: hidden;
+}
+
+.flex-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 90vw;
+  margin-left: -10%;
+  height: 18vh;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  right: 0;
+  margin-bottom: 5vh;
+  background-color: var(--body-color);
+  z-index: 500;
 }
 
 .head h1 {
@@ -182,7 +197,6 @@ body.dark .card-head {
 }
 .card-head {
   background-color: #ffffff;
-
   height: 12vh;
   display: flex;
   align-items: center;
@@ -262,19 +276,6 @@ input {
   outline: 0;
   width: 85%;
   /* padding-top: 3rem; */
-}
-
-.flex-end {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 90vw;
-  margin-left: -10%;
-  height: 18vh;
-  position: sticky;
-  top: -2vh;
-  margin-bottom: 5vh;
-  background-color: var(--body-color);
 }
 
 .search {

@@ -111,7 +111,7 @@ export default {
         this.$router.push("/login");
         return;
       }
-      if (this.star == null) {
+      if (this.star == null || this.star == 0) {
         this.error = true;
         return;
       }

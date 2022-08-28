@@ -5,8 +5,10 @@
     @dashboard="setSelectedComponent('dashboard-page')"
     @analytics="setSelectedComponent('home-page')"
     @manage="setSelectedComponent('manage-page')"
+    @comp="setSelectedComponent('comp-page')"
     @comments="setSelectedComponent('comments-page')"
     @orders="setSelectedComponent('orders-page')"
+    @mail="setSelectedComponent('mail-page')"
   >
     <!-- <keep-alive> -->
     <component :is="selectedComponent" />
@@ -52,14 +54,15 @@ export default {
   box-sizing: border-box;
   color: var(--text-color);
 }
+
+
 body::-webkit-scrollbar {
-  width: .85em;
+  width: 0.85em;
 }
 
 body::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
   background-color: rgba(168, 167, 167, 0.171);
-
 }
 
 body::-webkit-scrollbar-thumb {

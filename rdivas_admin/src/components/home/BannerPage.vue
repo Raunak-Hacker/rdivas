@@ -32,10 +32,18 @@
 </template>
 
 <script>
+
 export default {
+
   data() {
     return {
+      img: "",
+      scale: 50,
+      quality: 70,
+      originalSize: false,
+      original: {},
       image: null,
+      compressed: {},
     };
   },
   computed: {
@@ -53,6 +61,7 @@ export default {
     getImg() {
       let formData = new FormData();
       formData.append("file", this.image);
+      console.log(this.image);
       const details = {
         method: "POST",
         body: formData,
@@ -78,6 +87,7 @@ export default {
           image: img,
         }),
       };
+      this.image = null;
       await fetch(this.$store.getters.host + "add/hero", details);
       this.$store.dispatch("fetchStuff", this.$store.state.url);
     },

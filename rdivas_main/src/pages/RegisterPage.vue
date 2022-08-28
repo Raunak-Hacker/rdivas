@@ -1,5 +1,5 @@
 <template>
-  <section class="sub" v-if="!submitted">
+  <section class="sub" v-if="submitted">
     <h1>
       Thank You {{ name }}, <br />
       for Signing with RDivas

@@ -182,9 +182,8 @@ body.dark .card-orders
   padding: 3% 10%;
   display: flex;
   flex-direction: column;
-  min-height: 86vh;
+  min-height: 76%;
   background-color: var(--body-color);
-  overflow-x: hidden;
 }
 
 .head h1 {
