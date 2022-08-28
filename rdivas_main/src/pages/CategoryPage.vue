@@ -17,7 +17,7 @@
     </div>
     <div class="mobile">
       <product-list />
-      <mob-filter />
+      <mob-filter :lPrice="lPrice" :hPrice="hPrice" />
     </div>
   </section>
 </template>
@@ -61,6 +61,10 @@ export default {
         `${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`
       );
       const data = await response.json();
+      if (data.status == "error" || data.category != this.$route.params.category) {
+        this.$router.replace({ name: "NotFound" });
+        return;
+      }
       let highestPrice = null;
       let lowestPrice = null;
       data.products.forEach((product) => {
@@ -75,15 +79,12 @@ export default {
           lowestPrice = product.sellingPrice;
         }
       });
-      lowestPrice = Math.floor(lowestPrice / 150) * 150;
-      highestPrice = Math.ceil(highestPrice / 200) * 200;
-      this.hPrice = highestPrice;
-      this.lPrice = lowestPrice;
-
-      if (data.status == "error" || data.category != this.$route.params.category) {
-        this.$router.replace({ name: "NotFound" });
-        return;
-      }
+      lowestPrice = Math.ceil(lowestPrice / 150) * 150;
+      highestPrice = Math.floor(highestPrice / 200) * 200;
+      this.hPrice = lowestPrice;
+      this.lPrice = highestPrice;
+      console.log(this.hPrice, this.lPrice);
+      
       await this.$store.dispatch("getProdList", data);
       this.data = data;
     },

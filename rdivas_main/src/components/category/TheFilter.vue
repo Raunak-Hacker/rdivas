@@ -99,9 +99,9 @@ export default {
       priceCon: false,
       fabricCon: false,
       designCon: false,
-      price: this.hPrice,
       color: null,
       fabric: null,
+      price: this.hPrice,
     };
   },
   methods: {
@@ -115,6 +115,7 @@ export default {
       this.$store.commit("filterByPrice", this.price);
     },
   },
+
 };
 </script>
 

@@ -12,6 +12,7 @@
 
 <script>
 export default {
+
   mounted() {
     window.scrollTo({
       top: 0,

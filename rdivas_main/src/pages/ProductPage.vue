@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop">
+  <div class="desktop" v-if="data">
     <section class="prod-page">
       <div class="tags add" v-if="added">Added to Cart</div>
       <div class="prod-photos">
@@ -160,7 +160,7 @@
     </div>
   </div>
 
-  <div class="mobile">
+  <div class="mobile" v-if="data">
     <div class="tags add" v-if="added">Added to Cart</div>
     <div class="navigation">
       <div class="swipe left" @click="prev">
@@ -274,10 +274,10 @@
                   class="in-box size"
                   v-for="size in data.sizes"
                   :key="size"
-                  :class="{ selSize: selSize(size) }"
-                  @click="sClick(size)"
+                  :class="{ selSize: selSize(size.size) }"
+                  @click="sClick(size.size)"
                 >
-                  {{ size }}
+                  {{ size.size }}
                 </div>
               </div>
             </div>
@@ -349,6 +349,14 @@ export default {
     });
   },
   async created() {
+    const response = await fetch(
+      `${this.$store.getters.host}/get/product/${this.$route.params.id}`
+    );
+    let data = await response.json();
+    if (data.status == "error" || data.statusCode == 500) {
+      window.location.replace("/not-found");
+      return;
+    }
     if (this.$store.getters.wishlist) {
       let wishl = this.$store.getters.wishlist;
       let wished = wishl.filter((item) => {
@@ -358,10 +366,6 @@ export default {
         this.wish = true;
       }
     }
-    const response = await fetch(
-      `${this.$store.getters.host}/get/product/${this.$route.params.id}`
-    );
-    let data = await response.json();
     for (let i = 0; i < data.reviews.length; i++) {
       var date = new Date(data.reviews[i].createdAt);
       data.reviews[i].createdAt = date.toDateString();
@@ -392,18 +396,18 @@ export default {
     randomList() {
       return this.list[(Math.random() * (this.list.length - 1)) | 0].products;
     },
-    cmaxCount(){
+    cmaxCount() {
       let sizeobj = this.data.sizes;
-      let quantity=1;
+      let quantity = 1;
 
-      for(let i = 0; i < sizeobj.length; i++){
-        if(sizeobj[i].size == this.size){
+      for (let i = 0; i < sizeobj.length; i++) {
+        if (sizeobj[i].size == this.size) {
           return sizeobj[i].quantity;
         }
       }
-      
+
       return quantity;
-    }
+    },
   },
   methods: {
     selSize(size) {
@@ -571,12 +575,12 @@ export default {
     },
     size(newVal) {
       let sizeobj = this.data.sizes;
-      for(let i = 0; i < sizeobj.length; i++){
-        if(sizeobj[i].size == newVal){
-          this.maxCount =  sizeobj[i].quantity;
+      for (let i = 0; i < sizeobj.length; i++) {
+        if (sizeobj[i].size == newVal) {
+          this.maxCount = sizeobj[i].quantity;
         }
       }
-      if(this.quantity>this.maxCount){
+      if (this.quantity > this.maxCount) {
         this.quantity = this.maxCount;
       }
     },

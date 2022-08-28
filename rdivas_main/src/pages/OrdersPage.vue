@@ -31,6 +31,7 @@
               :color="orderItem.productColor"
               :price="orderItem.totalPrice"
               :qty="orderItem.quantity"
+              :productId="orderItem.productId"
             />
           </div>
           <div class="flex-prod">

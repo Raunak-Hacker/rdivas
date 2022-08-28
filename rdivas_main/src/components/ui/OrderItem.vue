@@ -1,11 +1,11 @@
 <template>
   <div class="product">
     <div class="dets">
-      <div class="img">
+      <div class="img" @click="$router.push('/product/' + productId)" >
         <img :src="img" alt="" />
       </div>
       <div class="prod-info">
-        <label>{{ name }}</label>
+        <label @click="$router.push('/product/' + productId)">{{ name }}</label>
         <strong> ₹{{ price }}</strong>
         <small>
           <label for="">Size: </label>{{ size }} <label for="">Color: </label>{{ color }}
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  props: ["id", "name", "img", "size", "color", "price", "qty"],
+  props: ["id", "name", "img", "size", "color", "price", "qty", 'productId'],
   created() {},
   data() {
     return {

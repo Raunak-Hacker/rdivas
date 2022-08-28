@@ -2,7 +2,7 @@
   <div class="main">
     <transition name="fade">
       <div class="filter list" v-if="filter">
-        <the-filter />
+        <the-filter :lPrice="lPrice" :hPrice="hPrice" />
       </div>
     </transition>
     <div class="filterbtn">
@@ -25,7 +25,7 @@
 import TheFilter from "./TheFilter.vue";
 export default {
   components: { TheFilter },
-
+  props: ["lPrice", "hPrice"],
   data() {
     return {
       message: "Hello Vue!",
