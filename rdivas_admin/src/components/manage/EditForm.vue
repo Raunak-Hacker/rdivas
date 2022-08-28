@@ -64,17 +64,6 @@
       </div>
 
       <div class="field">
-        <div class="label">Quantity</div>
-        <div class="input">
-          <input
-            type="number"
-            :placeholder="product.quantity"
-            v-model="productQuantity"
-          />
-        </div>
-      </div>
-
-      <div class="field">
         <div class="label">Description</div>
         <div class="input">
           <textarea :placeholder="product.description" v-model="productDescription" />
@@ -110,56 +99,113 @@
       <div class="cfield">
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" value="S" v-model="s" />
+            <input
+              type="number"
+              name="size"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s"
+            />
           </div>
-          <div>Small (S)</div>
+          <div>(S)</div>
+        </div>
+        <div class="cbox">
+          <input type="number" style="max-width: 3rem; margin-right: 1rem" v-model="xl" />
+          <div>(XL)</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="L" v-model="l" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s28"
+            />
           </div>
-          <div>Large (L)</div>
+          <div>28</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="26/28" v-model="s28" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s30"
+            />
           </div>
-          <div>26/28</div>
+          <div>30</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="30/32" v-model="s30" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s32"
+            />
           </div>
-          <div>30/32</div>
+          <div>32</div>
         </div>
       </div>
       <div class="cfield">
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="M" v-model="m" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="m"
+            />
           </div>
-          <div>Medium (M)</div>
+          <div>(M)</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="XL" v-model="xl" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="xxl"
+            />
           </div>
-          <div>Extra Large (XL)</div>
+          <div>(XXL)</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="28/30" v-model="s29" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s34"
+            />
           </div>
-          <div>28/30</div>
+          <div>34</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="32/34" v-model="xxl" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s36"
+            />
           </div>
-          <div>XXL</div>
+          <div>36</div>
+        </div>
+        <div class="cbox">
+          <div>
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s38"
+            />
+          </div>
+          <div>38</div>
         </div>
       </div>
       <div class="cfield">
+        <div class="cbox">
+          <div>
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="l"
+            />
+          </div>
+          <div>(L)</div>
+        </div>
         <div class="cbox">
           <div>
             <input
@@ -186,33 +232,9 @@
           </div>
           <div>Sale</div>
         </div>
-        <div class="cbox">
-          <div>
-            <input
-              type="radio"
-              @click="unCheck"
-              name="tag"
-              id=""
-              value="new"
-              v-model="tag"
-            />
-          </div>
-          <div>New</div>
-        </div>
-        <div class="cbox">
-          <div>
-            <input
-              type="radio"
-              @click="unCheck"
-              name="tag"
-              id=""
-              value="out"
-              v-model="tag"
-            />
-          </div>
-          <div>Out of stock</div>
-        </div>
       </div>
+
+
       <div class="imggs">
         <div class="imgs">
           <div class="files">
@@ -369,7 +391,6 @@ export default {
       cat: null,
       subCategory: "",
       group: "",
-      productQuantity: null,
       productName: "",
       productPrice: null,
       productDescription: null,
@@ -395,14 +416,17 @@ export default {
       img4: "",
       img5: "",
       img6: "",
-      s: false,
-      m: false,
-      l: false,
-      xl: false,
-      xxl: false,
-      s28: false,
-      s29: false,
-      s30: false,
+      s: null,
+      m: null,
+      l: null,
+      xl: null,
+      xxl: null,
+      s28: null,
+      s30: null,
+      s32: null,
+      s34: null,
+      s36: null,
+      s38: null,
     };
   },
   async created() {
@@ -437,7 +461,6 @@ export default {
         this.subCategory = this.product.catagory.name;
         this.productDescription = this.product.description;
         this.productPrice = this.product.price;
-        this.productQuantity = this.product.quantity;
         this.productName = this.product.name;
         this.productColour = this.product.color.name;
         this.productFabric = this.product.fabric.name;
@@ -452,9 +475,12 @@ export default {
         this.l = this.product.L;
         this.xl = this.product.XL;
         this.xxl = this.product.XXL;
-        this.s28 = this.product[28];
-        this.s29 = this.product[29];
-        this.s30 = this.product[30];
+        this.s28 = this.product.L28;
+        this.s30 = this.product.L30;
+        this.s32 = this.product.L32;
+        this.s34 = this.product.L34;
+        this.s36 = this.product.L36;
+        this.s38 = this.product.L38;
         if (this.product.BestSeller == true) {
           this.tag = "bestSeller";
         }
@@ -634,16 +660,10 @@ export default {
     },
     async submitForm() {
       let product = {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + this.token,
-          ContentType: "multipart/form-data",
-        },
         name: this.productName,
         category: this.subCategory,
         description: this.productDescription,
         price: this.productPrice,
-        quantity: this.productQuantity,
         group: this.group,
         color: this.productColour,
         fabric: this.productFabric,
@@ -660,9 +680,12 @@ export default {
         L: this.l,
         XL: this.xl,
         XXL: this.xxl,
-        28: this.s28,
-        29: this.s29,
-        30: this.s30,
+        L28: this.s28,
+        L30: this.s30,
+        L32: this.s32,
+        L34: this.s34,
+        L36: this.s36,
+        L38: this.s38,
         id: this.id,
       };
       if (this.tag === "bestSeller") {
@@ -670,6 +693,7 @@ export default {
       } else if (this.tag === "Sale") {
         product.sale = true;
       }
+      // const resp =
       await fetch(this.host + "edit/product", {
         method: "POST",
         headers: {
@@ -686,6 +710,9 @@ export default {
 </script>
 
 <style scoped>
+body.dark * {
+  color: rgba(245, 245, 245, 0.705);
+}
 * {
   outline: none;
   border: none;
@@ -694,6 +721,7 @@ export default {
 .flex-box {
   display: flex;
   justify-content: space-between;
+  background-color: var(--body-color);
 }
 
 .checkboxes {
@@ -719,12 +747,12 @@ body.dark .input,
 body.dark .cbox,
 body.dark input::placeholder,
 body.dark textarea::placeholder {
-  color: whitesmoke;
+  color: rgba(245, 245, 245, 0.705);
 }
 
 body.dark input::placeholder,
 body.dark textarea::placeholder {
-  color: rgb(195, 195, 195);
+  color: rgba(245, 245, 245, 0.705);
 }
 
 body.dark input,
@@ -733,13 +761,13 @@ body.dark select,
 body.dark .optCol option,
 body.dark textarea {
   background: rgba(255, 255, 255, 0.185);
-  color: whitesmoke;
+  color: rgba(245, 245, 245, 0.705);
 }
 
 body.dark select option {
   background: rgba(0, 0, 0, 0.7);
-  color: whitesmoke;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+  color: rgba(245, 245, 245, 0.705);
 }
 
 body.dark input[type="file"] {
@@ -785,7 +813,9 @@ body.dark input[type="file"] {
   /* margin: auto; */
   /* border:1px solid black; */
 }
-
+.tS input {
+  width: 0.5rem;
+}
 .field {
   width: 100%;
   display: flex;
@@ -828,7 +858,7 @@ input[type="radio"] {
 }
 
 .cbox {
-  width: 10rem;
+  width: 22%;
   display: flex;
   align-items: flex-start;
 }
@@ -846,7 +876,7 @@ textarea {
 .cfield {
   display: flex;
   justify-content: flex-start;
-  margin-left: 28%;
+  margin-left: 24%;
   margin-bottom: 2vh;
 }
 
@@ -880,6 +910,7 @@ body.dark .form {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  margin-right: 1rem;
 }
 
 .sub-btn:hover {

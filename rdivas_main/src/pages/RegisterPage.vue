@@ -1,5 +1,23 @@
 <template>
-  <section class="login">
+  <section class="sub" v-if="!submitted">
+    <h1>
+      Thank You {{ name }}, <br />
+      for Signing with RDivas
+    </h1>
+    <br />
+    <h2>
+      We have sent you a verification link on your email address <br />
+      please check your spam folder if you don't find it in your inbox
+    </h2>
+    <br />
+    <h3>{{ email }}</h3>
+    <br />
+    <img
+      src="https://i.pinimg.com/originals/af/8d/9a/af8d9ac62dd43026957e1cf82a027637.gif"
+      alt=""
+    />
+  </section>
+  <section class="login" v-else>
     <div class="login-card">
       <div class="sign-in">
         <div class="dets">
@@ -88,6 +106,15 @@
 
 <script>
 export default {
+  data() {
+    return {
+      name: "",
+      phone: "",
+      email: "",
+      password: "",
+      submitted: false,
+    };
+  },
   mounted() {
     window.scrollTo({
       top: 0,
@@ -119,10 +146,9 @@ export default {
       };
       await this.$store.dispatch("register", user);
       if (!this.authError) {
-        this.name = null;
         this.phone = null;
-        this.email = null;
         this.password = null;
+        this.submitted = true;
       }
     },
   },
@@ -130,6 +156,26 @@ export default {
 </script>
 
 <style scoped>
+.sub {
+  height: 86vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.sub h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.sub h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.sub img {
+  height: 40%;
+}
 .login {
   height: 86vh;
   width: 35%;
@@ -279,6 +325,21 @@ form {
 @media (max-width: 768px) {
   .mob {
     display: block;
+  }
+  .sub {
+    text-align: left;
+    padding: 0 10%;
+  }
+  .sub h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .sub h2 {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  .sub img {
+    height: 20%;
   }
   .des {
     display: none;

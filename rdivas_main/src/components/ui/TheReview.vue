@@ -2,7 +2,7 @@
   <form class="reviews" @submit.prevent="subReview">
     <hr
       style="height: 1px; border: 0; border-top: 1px solid #ccc; margin-bottom: 1%"
-      class="des"
+      class="des" v-if="showHr"
     />
     <slot />
     <hr style="height: 1px; border: 0; border-top: 1px solid #ccc" />
@@ -11,9 +11,9 @@
     <h4 style="text-transform: uppercase; color: black">Write your own Review >></h4>
     <br />
 
-    <h6>Your Rating:</h6>
+    <h6>Your Rating: {{ star }}</h6>
     <h6 style="margin-top: 1%">Rating</h6>
-    <div>
+    <div style="width: 100%">
       <fieldset class="rating">
         <input type="radio" id="star5" name="rating" value="5" v-model="star" />
         <label class="full" for="star5" title="Awesome - 5 stars" />
@@ -86,7 +86,8 @@
 
 <script>
 export default {
-  props: ["id"],
+  emits: ['get-reviews'],
+  props: ["id", 'showHr'],
   data() {
     return {
       star: null,
@@ -97,14 +98,20 @@ export default {
   },
   watch: {
     star(newVal) {
+      this.star = Number(newVal);
       if (newVal) {
         this.error = false;
       }
     },
   },
+
   methods: {
     async subReview() {
-      if (!this.star) {
+      if (!this.auth) {
+        this.$router.push("/login");
+        return;
+      }
+      if (this.star == null) {
         this.error = true;
         return;
       }
@@ -125,8 +132,10 @@ export default {
         body: JSON.stringify(review),
       });
       const data = await resp.json();
-      if (data.success != true) {
+      if (data.status != "success") {
         this.nOrder = true;
+      } else{
+        this.$emit('getReviews');
       }
       this.review = null;
       this.star = null;
@@ -136,13 +145,15 @@ export default {
     imgHost() {
       return this.$store.getters.imgHost;
     },
+    auth() {
+      return this.$store.getters.isAuth;
+    },
   },
 };
 </script>
 
 <style scoped>
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
 
 .rating {
   border: none;
@@ -170,8 +181,6 @@ export default {
   color: #ddd;
   float: right;
 }
-
-/***** CSS Magic to Highlight Stars on Hover *****/
 
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */

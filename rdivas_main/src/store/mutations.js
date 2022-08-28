@@ -7,20 +7,70 @@ export default {
     state.productDetails = payload;
   },
   filterByColor(state, payload) {
+    state.cFilter = payload;
+
+    let a = state.cFilter;
+    let b = state.fFilter;
+    let c = state.pFilter;
+    if ((a && b) || (a && c) || (b && c)) {
+      return this.commit("moreFilter");
+    }
     state.filteredProds = state.productList.products.filter(
       (product) => product.color == payload
     );
   },
   filterByFabric(state, payload) {
+    state.fFilter = payload;
+    let a = state.cFilter;
+    let b = state.fFilter;
+    let c = state.pFilter;
+    if ((a && b) || (a && c) || (b && c)) {
+      return this.commit("moreFilter");
+    }
     state.filteredProds = state.productList.products.filter(
       (product) => product.fabric == payload
     );
   },
   filterByPrice(state, payload) {
-    const price = parseInt(payload);
+    state.pFilter = payload;
+    let a = state.cFilter;
+    let b = state.fFilter;
+    let c = state.pFilter;
+    if ((a && b) || (a && c) || (b && c)) {
+      return this.commit("moreFilter");
+    }
+    let price = parseInt(payload);
     state.filteredProds = state.productList.products.filter(
       (product) => product.sellingPrice <= price
     );
+  },
+  moreFilter(state) {
+    let a = state.cFilter;
+    let b = state.fFilter;
+    let c = state.pFilter;
+
+    let prods = state.productList.products;
+    for (let i = 0; i < prods.length; i++) {
+      prods[i].sellingPrice = Number(prods[i].sellingPrice);
+    }
+    if (a && b && !c) {
+      state.filteredProds = prods.filter(
+        (product) => product.color == a && product.fabric == b
+      );
+    } else if (a && c && !b) {
+      state.filteredProds = prods.filter(
+        (product) => product.color == a && product.sellingPrice <= c
+      );
+    } else if (b && c && !a) {
+      state.filteredProds = prods.filter(
+        (product) => product.fabric == b && product.sellingPrice <= c
+      );
+    } else if (a && b && c) {
+      state.filteredProds = prods.filter(
+        (product) =>
+          product.color == a && product.fabric == b && product.sellingPrice <= c
+      );
+    }
   },
   sortProducts(state, payload) {
     if (payload == "lth") {
@@ -68,7 +118,7 @@ export default {
       });
   },
   getCart(state) {
-    fetch(`${state.host}/user/getcart`, {
+    fetch(`${state.host}/user/getcart/`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -83,10 +133,10 @@ export default {
   setUpdate(state, payload) {
     state.update = payload;
   },
-  removeFromCart(state, payload) {
-    let item = state.cart.find((item) => item.prodId == payload);
-    state.cart.splice(state.cart.indexOf(item), 1);
-  },
+  // removeFromCart(state, payload) {
+  //   let item = state.cart.find((item) => item.prodId == payload);
+  //   state.cart.splice(state.cart.indexOf(item), 1);
+  // },
   // addToWishList(state, payload) {
   //   let item = state.wishlist.find((item) => item.id == payload.id);
   //   if (!item) {
@@ -110,7 +160,7 @@ export default {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
     fetch(state.host + "/user/", fet)

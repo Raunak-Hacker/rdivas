@@ -221,6 +221,7 @@ export default {
 
 <style scoped>
 .manageMain {
+  background-color: var(--body-color);
   display: flex;
   flex-direction: column;
   align-items: flex-start;

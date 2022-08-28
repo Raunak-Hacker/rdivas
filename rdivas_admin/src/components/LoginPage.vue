@@ -107,13 +107,10 @@ export default {
 .login {
   width: 100%;
   height: 89vh;
-  background-color: rgba(119, 119, 119, 0.079);
-
 }
 
 .pink {
   width: 35%;
-  background-color: var(--left-login);
 }
 
 .dets {
@@ -150,7 +147,6 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   font-family: 'Montserrat', sans-serif;
-  color: var(--left-login);
 }
 
 .info a {
@@ -215,8 +211,8 @@ form {
 
 /* CSS */
 .button-37 {
-  background-color: var(--left-login);
-  border: 1px solid var(--left-login);
+  background-color: rgba(90, 90, 90, 0.062);
+  border: none;
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
   box-sizing: border-box;

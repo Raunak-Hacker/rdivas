@@ -15,7 +15,7 @@
         <div class="box button-42" @click="selMan('banner')">Banner</div>
         <div class="box button-42" @click="selMan('listings')">Listing</div>
         <div class="box button-42" @click="selMan('poster')">Poster</div>
-        <div class="box button-42" style="visibility: hidden" />
+        <div class="box button-42" @click="selMan('blacktext')">Header Text</div>
       </div>
     </section>
   </transition>
@@ -25,12 +25,14 @@
 import BanPage from "@/components/home/BannerPage.vue";
 import PosterPage from "@/components/home/PosterPage.vue";
 import ListPage from "@/components/home/ListPage.vue";
+import BlackText from "@/components/home/BlackText.vue";
 
 export default {
   components: {
     BanPage,
     ListPage,
     PosterPage,
+    BlackText,
   },
   data() {
     return {
@@ -64,6 +66,9 @@ export default {
         this.$store.state.url = this.host + val;
       } else if (val === "poster") {
         this.selectedComponent = "poster-page";
+        this.$store.state.url = this.host + val;
+      } else if (val === "blacktext") {
+        this.selectedComponent = "black-text";
         this.$store.state.url = this.host + val;
       }
       this.$store.state.selManage = val;
@@ -117,5 +122,6 @@ export default {
 
 .man-page {
   height: 75%;
+  background-color: var(--body-color);
 }
 </style>

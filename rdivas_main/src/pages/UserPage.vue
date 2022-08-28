@@ -7,11 +7,24 @@
     <div class="box name">
       <div class="card">
         <div class="in-box">
-          <label for="name">Name:</label>
-          {{ user.name }}
+          <label>Name:</label>
+          <form v-if="editNClick" id="name" @submit.prevent="editUser('n')">
+            <input
+              pattern="[a-zA-Z'-'\s]*"
+              onkeydown="return /[a-z ]/i.test(event.key)"
+              oninvalid="setCustomValidity('Invalid Name')"
+              title="Only Alphabets"
+              oninput="setCustomValidity('')"
+              required
+              type="text"
+              v-model.trim="uname"
+            />
+          </form>
+          <p v-else>{{ user.name }}</p>
         </div>
         <div class="in-flex">
-          <small>edit?</small>
+          <button v-if="editNClick" form="name" type="submit">Submit</button>
+          <small v-else @click="editNClick = true">edit?</small>
         </div>
       </div>
     </div>
@@ -19,10 +32,26 @@
       <div class="card">
         <div class="in-box">
           <label for="Phone">Phone:</label>
-          {{ user.mobile }}
+          <form v-if="editPClick" id="num" @submit.prevent="editUser('p')">
+            <input
+              type="text"
+              maxlength="10"
+              inputmode="numeric"
+              pattern="[0-9]{10}"
+              onkeypress="return /[0-9]/i.test(event.key) || event.key === 'Backspace'"
+              placeholder="phone"
+              title="Only Numbers and 10 digits"
+              oninvalid="setCustomValidity('Invalid Mobile Number')"
+              oninput="setCustomValidity('')"
+              v-model.trim="uphone"
+              required
+            />
+          </form>
+          <p v-else>{{ user.mobile }}</p>
         </div>
         <div class="in-flex">
-          <small>edit?</small>
+          <button v-if="editPClick" type="submit" form="num">Submit</button>
+          <small v-else @click="editPClick = true">edit?</small>
         </div>
       </div>
     </div>
@@ -40,7 +69,12 @@
     <div class="box address">
       <div class="card">
         <div class="in-box add">
-          <label for="Address">Address:</label>
+          <div class="label">
+            <label for="Address">Address:</label>
+            <div class="in-flex mob" v-if="user.addresses.length < 4">
+              <small @click="showAdd = true">Add?</small>
+            </div>
+          </div>
           <div class="addresses">
             <div class="in-address" v-for="add in user.addresses" :key="add.id">
               <i @click="delAdd(add.id)" class="bx bx-trash-alt" /> <br />
@@ -59,9 +93,6 @@
                   }}</small
                 >
               </div>
-            </div>
-            <div class="in-flex mob" v-if="user.addresses.length < 4">
-              <small @click="showAdd = true">Add?</small>
             </div>
           </div>
         </div>
@@ -83,6 +114,10 @@ export default {
       check: [],
       token: localStorage.getItem("token"),
       showAdd: false,
+      editNClick: false,
+      editPClick: false,
+      uname: null,
+      uphone: null,
     };
   },
   computed: {
@@ -93,13 +128,36 @@ export default {
   created() {
     this.$store.commit("getUser");
   },
-    mounted() {
+
+  mounted() {
+    this.uname = this.$store.state.user.name;
+    this.uphone = this.$store.state.user.mobile;
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   },
   methods: {
+    async editUser(val) {
+      const data = {
+        name: this.uname,
+        mobile: this.uphone,
+      };
+      await fetch(this.$store.getters.host + "/user/edit/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.token,
+        },
+        body: JSON.stringify(data),
+      });
+      await this.$store.commit("getUser");
+      if (val === "n") {
+        this.editNClick = false;
+      } else {
+        this.editPClick = false;
+      }
+    },
     async delAdd(id) {
       if (confirm("Are you sure you want to delete your address?")) {
         await fetch(this.$store.getters.host + "/user/delete/address/" + id, {
@@ -124,7 +182,19 @@ export default {
   flex-direction: column;
   padding: 2% 5%;
 }
-
+.in-box form {
+  width: 22%;
+}
+.in-box input {
+  height: 3rem;
+  width: 100%;
+  outline: 0;
+  border: 0;
+  background-color: rgba(226, 43, 217, 0.171);
+  text-indent: 13px;
+  border-radius: 2rem;
+  font-size: 1rem;
+}
 .box {
   width: 100%;
   height: 20%;
@@ -171,22 +241,19 @@ label {
 }
 
 .addresses {
-  width: 90%;
+  width: 60vw;
   height: 100%;
   display: flex;
 }
 
 .in-address {
-  max-width: 65%;
+  width: 25%;
   height: 100%;
   padding: 2.5%;
   border: 1px solid rgba(204, 204, 204, 0.527);
   margin-right: 5%;
 }
-.in-address input[type="checkbox"] {
-  height: 1rem;
-  width: 1rem;
-}
+
 .in-address i {
   float: right;
 }
@@ -225,7 +292,20 @@ label {
 .mob {
   display: none;
 }
-
+button {
+  background-color: white;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+.add .label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  margin-right: 5%;
+  width: max-content;
+}
 @media screen and (max-width: 768px) {
   .des {
     display: none;
@@ -273,6 +353,37 @@ label {
     justify-content: right;
     width: 47%;
     padding-left: 5%;
+  }
+  label {
+    font-weight: 600;
+    font-size: small;
+  }
+  .card,
+  button {
+    font-size: smaller;
+  }
+  .add .label {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    min-width: 95%;
+    margin-right: 0;
+    width: max-content;
+    height: 4rem;
+  }
+  .in-box form {
+    width: 72%;
+  }
+  .in-box input {
+    height: max-content;
+    width: 100%;
+    outline: 0;
+    border: 0;
+    background-color: rgba(226, 43, 217, 0.171);
+    text-indent: 13px;
+    border-radius: 2rem;
+    font-size: small;
   }
 }
 </style>

@@ -1,18 +1,45 @@
 <template>
   <section class="orderPg">
+    <div class="flex-end">
+      <div class="flex-box">
+        <div class="box">
+          <div class="search" style="text-transform: capitalise; width: 85%">
+            <input
+              type="text"
+              v-model="filter"
+              @keyup="filterProducts"
+              @focusin="changeIcon"
+              @focusout="changeIcon"
+              style="text-transform: capitalise; width: 90%"
+              :placeholder="'Search in comments ...'"
+            />
+            <i v-if="search" class="bx bx-search icon" />
+            <i v-else class="bx bx-x icon" @click="close" />
+          </div>
+        </div>
+        <div class="box">
+          <h2 style="text-transform: capitalize">Manage Comments</h2>
+        </div>
+        <div class="box" />
+      </div>
+    </div>
+
     <div class="cards">
       <div class="card" v-for="review in reviews" :key="review.id">
-        <div class="card-head">
+        <div class="card-head" :class="{delist: review.status != 'approved'}">
           <div class="order-det">
             <div class="order-id">
-              <strong for="Order">{{ review.rating }}</strong> &nbsp;<i
+              <strong for="Order">{{ Number(review.rating).toFixed(1) }}</strong> &nbsp;<i
                 class="bx bxs-star"
               />
             </div>
             <small class="order-time"> Commented on {{ review.createdAt }} </small>
           </div>
-          <div class="btn">
+          <div class="btn" v-if="review.status == 'approved'">
             <button @click="delCom(review.id)"><i class="bx bx-trash" /></button>
+          </div>
+          <div class="btn" v-else style="width: max-content">
+            <strong style="width: max-content">De-listed</strong>
           </div>
         </div>
         <div class="card-bot">
@@ -20,7 +47,7 @@
           <br />
           <div class="name"><strong>Name: </strong> &nbsp; {{ review.name }}</div>
           <br />
-          <div class="review"><strong>Comment: </strong> &nbsp; {{ review.review }}</div>
+          <div class="name"><strong>Comment: </strong> &nbsp; {{ review.review }}</div>
         </div>
       </div>
     </div>
@@ -32,6 +59,9 @@ export default {
   data() {
     return {
       reviews: [],
+      rReviews: [],
+      filter: "",
+      search: true,
     };
   },
   mounted() {
@@ -57,7 +87,7 @@ export default {
     },
     async getReviews() {
       const response = await fetch(
-        this.$store.getters.host + "get/reviews?page=1&limit=10",
+        this.$store.getters.host + "get/reviews?page=1&limit=10000",
         {
           method: "GET",
           headers: {
@@ -75,6 +105,28 @@ export default {
         return review.review != "";
       });
       this.reviews = data;
+      this.rReviews = data;
+    },
+    changeIcon() {
+      if (this.filter.length > 0) {
+        this.search = false;
+      } else {
+        this.search = true;
+      }
+    },
+    filterProducts() {
+      this.changeIcon();
+      if (this.filter.length > 0) {
+        this.reviews = this.rReviews.filter((review) => {
+          return review.review.toLowerCase().includes(this.filter.toLowerCase());
+        });
+      } else {
+        this.reviews = this.rReviews;
+      }
+    },
+    close() {
+      this.search = true;
+      this.filter = "";
     },
   },
   async created() {
@@ -84,12 +136,25 @@ export default {
 </script>
 
 <style scoped>
+body.dark label,
+body.dark small,
+body.dark strong,
+body.dark .name,
+body.dark i {
+  color: rgba(245, 245, 245, 0.692);
+}
+body.dark .card-bot,
+body.dark .card-head {
+  background-color: #242526;
+}
 .orderPg {
   width: 100%;
   padding: 3% 10%;
   display: flex;
   flex-direction: column;
   min-height: 86vh;
+  background-color: var(--body-color);
+  overflow-x: hidden;
 }
 
 .head h1 {
@@ -117,6 +182,7 @@ export default {
 }
 .card-head {
   background-color: #ffffff;
+
   height: 12vh;
   display: flex;
   align-items: center;
@@ -189,6 +255,61 @@ export default {
   flex-direction: column;
   width: 100%;
   padding: 2%;
+}
+input {
+  background-color: var(--sidebar-color);
+  border: none;
+  outline: 0;
+  width: 85%;
+  /* padding-top: 3rem; */
+}
+
+.flex-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 90vw;
+  margin-left: -10%;
+  height: 18vh;
+  position: sticky;
+  top: -2vh;
+  margin-bottom: 5vh;
+  background-color: var(--body-color);
+}
+
+.search {
+  background-color: var(--sidebar-color);
+  width: 90%;
+  padding: 1rem;
+}
+
+.search i {
+  font-size: 1.1rem;
+  height: 100%;
+}
+
+.flex-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 7%;
+  height: 100%;
+}
+
+.box {
+  width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addProd {
+  display: flex;
+  width: 60%;
+}
+.delist {
+  background-color: rgba(218, 218, 218, 0.527);
 }
 
 @media (max-width: 768px) {

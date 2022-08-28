@@ -8,8 +8,8 @@
         <label>{{ name }}</label>
         <strong> ₹{{ price }}</strong>
         <small>
-          <label for="">Size: </label>{{ size }} <label for="">Color: </label>{{ color }}
-          <label for=""> Qty: </label>{{ qty }}
+          <label for="">Size: </label>{{ size }} &nbsp; <label for="">Color: </label
+          >{{ color }} &nbsp; <label for=""> Qty: </label>{{ qty }}
         </small>
       </div>
     </div>
@@ -55,6 +55,14 @@ export default {
 </script>
 
 <style scoped>
+body.dark label,
+body.dark small,
+body.dark strong,
+body.dark .name,
+body.dark i {
+  color: rgba(245, 245, 245, 0.692);
+}
+
 .product {
   height: 22vh;
   width: 100%;
@@ -74,8 +82,8 @@ export default {
 }
 
 .img {
-  max-width: 8vw;
-  min-width: 8vw;
+  min-width: 8.2rem;
+  max-width: 8.2rem;
   height: 100%;
   margin: 0 1rem;
 }
@@ -85,7 +93,7 @@ export default {
 }
 
 .prod-info {
-  /* width: 75%; */
+  max-width: 75%;
   height: 100%;
   padding: 2% 0;
   display: flex;

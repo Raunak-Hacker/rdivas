@@ -24,7 +24,7 @@
         :class="{ red: sale }"
         v-if="!($route.path == '/wish-list' || $route.path == '/wish-list/')"
       >
-        &#8377; {{ price }} <s v-if="sale">₹{{ discount }}</s>
+        &#8377; {{  Number(price).toFixed(2) }} <s v-if="sale">₹{{ discount }}</s>
       </h5>
     </div>
 

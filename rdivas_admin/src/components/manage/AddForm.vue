@@ -4,9 +4,19 @@
       <div class="field">
         <div class="label">Category</div>
         <div class="input">
-          <select name="category" id="category" v-model="category" @change="categoryChange" required>
+          <select
+            name="category"
+            id="category"
+            v-model="category"
+            @change="categoryChange"
+            required
+          >
             <option value="">Select a category</option>
-            <option v-for="category in categories" :key="category.id" :value="category.id">
+            <option
+              v-for="category in categories"
+              :key="category.id"
+              :value="category.id"
+            >
               {{ category.name }}
             </option>
           </select>
@@ -18,7 +28,11 @@
         <div class="input">
           <select name="subcategory" id="subcategory" v-model="subCategory" required>
             <option value="">Select a sub category</option>
-            <option v-for="subCategory in subCategories" :key="subCategory.id" :value="subCategory.name">
+            <option
+              v-for="subCategory in subCategories"
+              :key="subCategory.id"
+              :value="subCategory.name"
+            >
               {{ subCategory.name }}
             </option>
           </select>
@@ -47,21 +61,23 @@
       <div class="field">
         <div class="label">Price</div>
         <div class="input">
-          <input type="number" placeholder="Product Price" v-model="productPrice" required />
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="label">Quantity</div>
-        <div class="input">
-          <input type="number" placeholder="Product Quantity" v-model="productQuantity" required />
+          <input
+            type="number"
+            placeholder="Product Price"
+            v-model="productPrice"
+            required
+          />
         </div>
       </div>
 
       <div class="field">
         <div class="label">Description</div>
         <div class="input">
-          <textarea placeholder="Product Description" v-model="productDescription" required />
+          <textarea
+            placeholder="Product Description"
+            v-model="productDescription"
+            required
+          />
         </div>
       </div>
 
@@ -94,81 +110,141 @@
       <div class="cfield">
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" value="S" v-model="s" />
+            <input
+              type="number"
+              name="size"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s"
+            />
           </div>
-          <div>Small (S)</div>
+          <div>(S)</div>
+        </div>
+        <div class="cbox">
+          <input type="number" style="max-width: 3rem; margin-right: 1rem" v-model="xl" />
+          <div>(XL)</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="L" v-model="l" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s28"
+            />
           </div>
-          <div>Large (L)</div>
+          <div>28</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="26/28" v-model="s28" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s30"
+            />
           </div>
-          <div>26/28</div>
+          <div>30</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="checkbox" name="size" id="" value="30/32" v-model="s30" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s32"
+            />
           </div>
-          <div>30/32</div>
-        </div>
-      </div>
-      <div class="cfield">
-        <div class="cbox">
-          <div>
-            <input type="checkbox" name="size" id="" value="M" v-model="m" />
-          </div>
-          <div>Medium (M)</div>
-        </div>
-        <div class="cbox">
-          <div>
-            <input type="checkbox" name="size" id="" value="XL" v-model="xl" />
-          </div>
-          <div>Extra Large (XL)</div>
-        </div>
-        <div class="cbox">
-          <div>
-            <input type="checkbox" name="size" id="" value="28/30" v-model="s29" />
-          </div>
-          <div>28/30</div>
-        </div>
-        <div class="cbox">
-          <div>
-            <input type="checkbox" name="size" id="" value="32/34" v-model="xxl" />
-          </div>
-          <div>XXL</div>
+          <div>32</div>
         </div>
       </div>
       <div class="cfield">
         <div class="cbox">
           <div>
-            <input type="radio" @click="unCheck" name="tag" id="" value="bestSeller" v-model="tag" />
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="m"
+            />
+          </div>
+          <div>(M)</div>
+        </div>
+        <div class="cbox">
+          <div>
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="xxl"
+            />
+          </div>
+          <div>(XXL)</div>
+        </div>
+        <div class="cbox">
+          <div>
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s34"
+            />
+          </div>
+          <div>34</div>
+        </div>
+        <div class="cbox">
+          <div>
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s36"
+            />
+          </div>
+          <div>36</div>
+        </div>
+        <div class="cbox">
+          <div>
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="s38"
+            />
+          </div>
+          <div>38</div>
+        </div>
+      </div>
+      <div class="cfield">
+        <div class="cbox">
+          <div>
+            <input
+              type="number"
+              style="max-width: 3rem; margin-right: 1rem"
+              v-model="l"
+            />
+          </div>
+          <div>(L)</div>
+        </div>
+        <div class="cbox">
+          <div>
+            <input
+              type="radio"
+              @click="unCheck"
+              name="tag"
+              id=""
+              value="bestSeller"
+              v-model="tag"
+            />
           </div>
           <div>Best Selling</div>
         </div>
         <div class="cbox">
           <div>
-            <input type="radio" @click="unCheck" name="tag" id="" value="Sale" v-model="tag" />
+            <input
+              type="radio"
+              @click="unCheck"
+              name="tag"
+              id=""
+              value="Sale"
+              v-model="tag"
+            />
           </div>
           <div>Sale</div>
         </div>
-        <div class="cbox">
-          <div>
-            <input type="radio" @click="unCheck" name="tag" id="" value="new" v-model="tag" />
-          </div>
-          <div>New</div>
-        </div>
-        <div class="cbox">
-          <div>
-            <input type="radio" @click="unCheck" name="tag" id="" value="out" v-model="tag" />
-          </div>
-          <div>Out of stock</div>
-        </div>
       </div>
+
       <div class="imggs">
         <div class="imgs">
           <div class="files">
@@ -251,18 +327,38 @@
     <div class="manage" v-if="selManage != 'products'">
       <div class="add">
         <form action="" @submit.prevent="submitSubCat">
-          <div class="addCat" v-if="selManage === 'sub categories'">
-            <input type="text" v-model="newSubCat" placeholder="New sub category" />
+          <div
+            class="addCat"
+            v-if="selManage === 'sub categories' || selManage === 'offers'"
+          >
+            <input
+              type="text"
+              v-model="newSubCat"
+              :placeholder="
+                selManage === 'sub categories' ? 'New sub category' : 'New Offer'
+              "
+              required
+            />
             <button @click="addSubCat" class="button-42" type="submit">ADD</button>
           </div>
 
-          <div class="addCat" v-if="selManage === 'sub categories'">
+          <div
+            class="addCat"
+            style="width: 24rem"
+            v-if="selManage === 'sub categories' || selManage === 'offers'"
+          >
+            <p>1 : 1 image &nbsp;</p>
             <input type="file" name="file" @change="handleFileUpload($event)" required />
           </div>
+
           <div class="addCat" v-if="selManage === 'sub categories'">
             <select v-model="subCategory" required>
               <option value="" disabled>Select a category</option>
-              <option v-for="category in categories" :key="category.id" :value="category.name">
+              <option
+                v-for="category in categories"
+                :key="category.id"
+                :value="category.name"
+              >
                 {{ category.name }}
               </option>
             </select>
@@ -289,7 +385,6 @@ export default {
       group: "",
       productName: null,
       productPrice: null,
-      productQuantity: null,
       productDescription: null,
       productColour: "",
       colorCode: "#000000",
@@ -305,14 +400,17 @@ export default {
       img4: "",
       img5: "",
       img6: "",
-      s: false,
-      m: false,
-      l: false,
-      xl: false,
-      xxl: false,
-      s28: false,
-      s29: false,
-      s30: false,
+      s: 0,
+      m: 0,
+      l: 0,
+      xl: 0,
+      xxl: 0,
+      s28: 0,
+      s30: 0,
+      s32: 0,
+      s34: 0,
+      s36: 0,
+      s38: 0,
       fileName: null,
       src: "https://files.rdivas.in/",
     };
@@ -416,23 +514,32 @@ export default {
         .then((data) => {
           this.fileName = data.fileName;
         });
-      await fetch(this.host + "add/category", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + this.token,
-        },
-        body: JSON.stringify({
-          name: this.newSubCat,
-          type: this.subCategory,
-          image: this.fileName,
-        }),
-      });
-      // await this.$store.dispatch("fetchStuff", this.$store.state.url);
-      // this.$store.commit("setFilterProducts");
-      // this.$emit("edited");
+      let addVal = {
+        name: this.newSubCat,
+        image: this.fileName,
+      };
+      if (this.selManage === "offers") {
+        await fetch(this.host + "add/offer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          },
+          body: JSON.stringify(addVal),
+        });
+      } else {
+        addVal.type = this.subCategory;
+        await fetch(this.host + "add/category", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.token,
+          },
+          body: JSON.stringify(addVal),
+        });
+      }
       await this.$store.dispatch("fetchStuff", this.$store.state.url);
-      this.$emit("edited");
+      return this.$emit("edited");
     },
     backClick() {
       this.$emit("back");
@@ -456,16 +563,10 @@ export default {
     },
     async submitForm() {
       let product = {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + this.token,
-          ContentType: "multipart/form-data",
-        },
         name: this.productName,
         category: this.subCategory,
         description: this.productDescription,
         price: this.productPrice,
-        quantity: this.productQuantity,
         group: this.group,
         color: this.productColour,
         fabric: this.productFabric,
@@ -482,23 +583,29 @@ export default {
         L: this.l,
         XL: this.xl,
         XXL: this.xxl,
-        28: this.s28,
-        29: this.s29,
-        30: this.s30,
+        L28: this.s28,
+        L30: this.s30,
+        L32: this.s32,
+        L34: this.s34,
+        L36: this.s36,
+        L38: this.s38,
       };
       if (this.tag === "bestSeller") {
         product.bestSeller = true;
       } else if (this.tag === "Sale") {
         product.sale = true;
       }
-      await fetch(this.host + "add/product", {
+      console.log(JSON.stringify(product));
+      const resp = await fetch(this.host + "add/product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + this.token,
         },
         body: JSON.stringify(product),
-      })
+      });
+      const data = await resp.json();
+      console.log(data);
       await this.$store.dispatch("fetchStuff", this.$store.state.url);
       this.$emit("edited");
     },
@@ -515,6 +622,7 @@ export default {
 .flex-box {
   display: flex;
   justify-content: space-between;
+  background-color: var(--body-color);
 }
 
 .checkboxes {
@@ -539,12 +647,12 @@ body.dark .input,
 body.dark .cbox,
 body.dark input::placeholder,
 body.dark textarea::placeholder {
-  color: whitesmoke;
+  color: rgba(245, 245, 245, 0.705);
 }
 
 body.dark input::placeholder,
 body.dark textarea::placeholder {
-  color: rgb(195, 195, 195);
+  color: rgba(245, 245, 245, 0.705);
 }
 
 body.dark input,
@@ -553,16 +661,17 @@ body.dark select,
 body.dark .optCol option,
 body.dark textarea {
   background: rgba(255, 255, 255, 0.185);
-  color: whitesmoke;
+  color: rgba(245, 245, 245, 0.705);
 }
 
 body.dark select option {
   background: rgba(0, 0, 0, 0.7);
-  color: whitesmoke;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+  color: rgba(245, 245, 245, 0.705);
 }
 
-body.dark input[type="file"] {
+body.dark input[type="file"],
+body.dark input[type="checkbox"] {
   background-color: var(--body-color);
 }
 
@@ -700,6 +809,7 @@ body.dark .form {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  margin-right: 1rem;
 }
 
 .sub-btn:hover {

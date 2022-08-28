@@ -76,8 +76,8 @@ export default {
 }
 
 .img {
-  min-width: 8vw;
-  max-width: 8vw;
+  min-width: 8.2rem;
+  max-width: 8.2rem;
   height: 100%;
   margin: 0 1rem;
 }
@@ -106,6 +106,7 @@ export default {
   font-weight: 600;
   margin: 5%;
   color: #000;
+  font-family: "Montserrat", sans-serif;
 }
 
 .mob {
@@ -126,12 +127,21 @@ export default {
     height: max-content;
   }
 
+
+  .prod-info {
+    max-width: 60%;
+  }
   .img {
+    min-width: 25%;
+    max-width: 22%;
+    height: 6rem;
+    margin: 0 0.5rem;
     margin-right: 1rem;
+    
   }
   .img img {
     width: 100%;
-    height: 12.5vh;
+    height: 100%;
   }
   .dets {
     width: 100%;

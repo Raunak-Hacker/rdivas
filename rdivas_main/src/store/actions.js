@@ -33,7 +33,6 @@ export default {
         message: null,
         error: false,
       };
-      alert("Please verify your mail (check your spam too)");
       context.commit("setAuthError", authTrue);
     } else {
       const authErr = {

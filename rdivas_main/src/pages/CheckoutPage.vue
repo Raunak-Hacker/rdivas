@@ -22,42 +22,61 @@
     <div class="box address">
       <div class="card">
         <div class="in-box add">
-          <label>Select An address</label>
-          <div class="addresses">
-            <div class="in-address" v-for="add in user.addresses" :key="add.id">
-              <input type="radio" name="add" v-model="address" :value="add.id" />
-              <div class="full-add">
-                <small
-                  >{{ "Mob: " + add.mobile }} <br />{{
-                    add.name +
-                    ", " +
-                    add.address +
-                    ", " +
-                    add.city +
-                    ", " +
-                    add.state +
-                    " - " +
-                    add.pincode
-                  }}</small
-                >
-              </div>
-            </div>
-            <div class="in-flex mob" v-if="user.addresses.length < 4">
-              <small @click="showAdd = true">Add?</small>
+          <div class="label">
+            <label>Select An address</label> <br class="des" />
+            <div v-if="user.addresses.length < 4">
+              <small style="cursor: pointer" class="des" @click="showAdd = true"
+                >Add?</small
+              >
+              <small style="cursor: pointer" class="mobile" @click="showAdd = true"
+                >Add?</small
+              >
               <the-address :show="showAdd" @close="showAdd = false" />
             </div>
           </div>
-        </div>
-        <div class="in-flex des" v-if="user.addresses.length < 4">
-          <small @click="showAdd = true">Add?</small>
-          <the-address :show="showAdd" @close="showAdd = false" />
+          <div class="addresses">
+            <div class="in-address" v-for="(add, index) in user.addresses" :key="add.id">
+              <input
+                type="radio"
+                name="radios"
+                :id="'radio' + (index + 1)"
+                v-model="address"
+                class="invisible-radio"
+                :value="add.id"
+              />
+              <label :for="'radio' + (index + 1)">
+                <div class="full-add styled-radio" :class="{ selAdd: add.id == address }">
+                  <small
+                    >{{ "Mob: " + add.mobile }} <br />{{
+                      add.name +
+                      ", " +
+                      add.address +
+                      ", " +
+                      add.city +
+                      ", " +
+                      add.state +
+                      " - " +
+                      add.pincode
+                    }}</small
+                  >
+                </div>
+              </label>
+            </div>
+
+            <!-- <div class="in-flex mob" v-if="user.addresses.length < 4">
+              <small @click="showAdd = true">Add?</small>
+              <the-address :show="showAdd" @close="showAdd = false" />
+            </div> -->
+          </div>
         </div>
       </div>
     </div>
     <div class="checkout">
-      <div class="checkout-price">
+      <div class="checkout-price label">
         <label for="items">Total Cost</label>
-        <label for="rate">₹{{ cart ? cart.total : 0 }}</label>
+        <label for="rate" style="font-family: 'Montserrat', sans-serif"
+          >₹{{ cart ? cart.total : 0 }}</label
+        >
       </div>
       <p v-if="addressSel" style="color: red">{{ error }}</p>
       <button class="pay-btn" @click="pay">PAY NOW</button>
@@ -111,13 +130,18 @@ export default {
     },
   },
   methods: {
+    selAdd(addressSel) {
+      return addressSel == this.addressSel ? true : false;
+    },
+    sAdd(addressSel) {
+      this.addressSel = addressSel;
+    },
     async pay() {
       if (!this.address) {
         this.addressSel = true;
         this.error = "Please select an address";
         return;
       }
-
       const response = await fetch(
         this.$store.getters.host + "/user/placeorder/" + this.address,
         {
@@ -142,7 +166,6 @@ export default {
         image: "https://rdivas.in/img/logo.8f501d4a.png",
         order_id: order.rzporderid, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         handler: function (response) {
-          console.log(localStorage.getItem("token"));
           const payment = {
             orderid: response.razorpay_order_id,
             paymentid: response.razorpay_payment_id,
@@ -155,12 +178,7 @@ export default {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
             body: JSON.stringify(payment),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
-              window.location.replace("orders");
-            });
+          }).then(window.location.replace("orders"));
         },
         prefill: {
           name: this.user.name,
@@ -265,13 +283,12 @@ export default {
   align-items: center;
 }
 
-label {
+.label label {
   font-size: larger;
   font-weight: bold;
 }
 
 .in-box {
-  width: 90%;
   display: flex;
   padding: 0 2%;
 }
@@ -279,40 +296,44 @@ label {
 .add {
   width: max-content;
   height: 100%;
+  overflow-x: hidden;
 }
 
-.add label {
+.add .label {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   height: 100%;
-  align-items: center;
   margin-right: 2%;
   width: max-content;
 }
 
 .addresses {
-  width: 90%;
+  width: 78%;
   height: 100%;
   display: flex;
 }
 
 .in-address {
-  max-width: 65%;
+  width: 25%;
+  margin-right: 2.2%;
   height: 100%;
-  padding: 2.5%;
-  border: 1px solid rgba(204, 204, 204, 0.527);
-  margin-right: 5%;
+  cursor: pointer;
+  position: relative;
 }
-.in-address input[type="checkbox"] {
-  height: 1rem;
-  width: 1rem;
-}
+
 .in-address i {
   float: right;
 }
 .full-add {
   min-width: 10vw;
+  height: 100%;
+  width: 100%;
+  padding: 6.5%;
+  padding-top: 8%;
+  border: 1px solid rgba(204, 204, 204, 0.527);
 }
+
 .full-add small {
   display: -webkit-box;
   max-width: 100%;
@@ -340,6 +361,42 @@ button {
 .mob {
   display: none;
 }
+.mobile {
+  display: none;
+}
+
+.invisible-radio {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.invisible-radio:not(:checked) + label {
+  cursor: pointer;
+}
+
+/* .invisible-radio:not(:checked) + label:hover .styled-radio {
+  opacity: 0.7;
+} */
+
+.selAdd {
+  background-color: rgba(255, 0, 212, 0.087);
+  border: none;
+}
+/* .invisible-radio:checked + label .styled-radio::after {
+  content: "";
+  font-size: 3em;
+  display: inline-block;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 0, 212, 0.167);
+  text-align: center;
+} */
+
 @media screen and (max-width: 768px) {
   .des {
     display: none;
@@ -377,13 +434,10 @@ button {
     margin-right: 3%;
     margin-bottom: 2vh;
   }
-  .add label {
-    height: 4rem;
-    font-size: medium;
-  }
-   .full-add small {
+
+  .full-add small {
     font-size: x-small;
-   } 
+  }
   .mob {
     display: flex;
     height: 3rem;
@@ -392,6 +446,7 @@ button {
     width: 47%;
     padding-left: 5%;
   }
+
   .checkout {
     width: 80%;
     height: 20%;
@@ -399,7 +454,7 @@ button {
   }
   .checkout-price {
     padding: 0 8%;
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   button {
@@ -409,7 +464,25 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: .9rem;
+    font-size: 0.9rem;
+  }
+  .label label {
+    font-weight: 600;
+  }
+  .add .label {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    min-width: 95%;
+    padding-left: .5rem;
+    margin-right: 0;
+    width: max-content;
+    height: 4rem;
+    font-size: small;
+  }
+  .mobile {
+    display: block;
   }
 }
 </style>

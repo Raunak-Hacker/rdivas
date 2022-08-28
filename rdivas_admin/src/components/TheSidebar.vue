@@ -125,9 +125,9 @@ export default {
     return {
       close: true,
       dark: false,
-      dashActive: false,
+      dashActive: true,
       anaActive: false,
-      manActive: true,
+      manActive: false,
       comActive: false,
       orderActive: false
     }
@@ -190,15 +190,12 @@ export default {
 }
 
 :root {
-  /* ===== Colors ===== */
   --body-color: #E4E9F7;
   --sidebar-color: #FFF;
   --primary-color: #695CFE;
   --primary-color-light: #F6F5FF;
   --toggle-color: #DDD;
   --text-color: #707070;
-
-  /* ====== Transition ====== */
   --tran-03: all 0.2s ease;
   --tran-03: all 0.3s ease;
   --tran-04: all 0.3s ease;
@@ -225,7 +222,6 @@ body.dark {
   --text-color: #ccc;
 }
 
-/* ===== Sidebar ===== */
 .sidebar {
   position: fixed;
   top: 0;
@@ -244,7 +240,6 @@ body.dark {
 
 }
 
-/* ===== Reusable code - Here ===== */
 .sidebar li {
   height: 3.1rem;
   list-style: none;
@@ -492,6 +487,7 @@ body.dark .switch::before {
 
 .home {
   position: absolute;
+  
   top: 0;
   top: 0;
   left: 15rem;

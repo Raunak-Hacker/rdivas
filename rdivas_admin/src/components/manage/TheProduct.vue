@@ -12,7 +12,7 @@
     </div>
     &nbsp;
     <div class="man">
-      <div class="btn" v-if="!edit">
+      <div class="btn" v-if="!edit && selManage != 'offers'">
         <button class="button-42" @click="editClicked">Edit</button>
       </div>
       <div class="btn">
@@ -68,6 +68,8 @@ export default {
           url = "color/";
         } else if (this.selManage == "listings") {
           url = "listing/";
+        } else if (this.selManage == "offers") {
+          url = "offer/";
         }
         await fetch(this.host + "delete/" + url + this.id, details);
         await this.$store.dispatch("fetchStuff", this.$store.state.url);
@@ -83,6 +85,9 @@ export default {
 </script>
 
 <style scoped>
+body.dark * {
+  color: rgba(245, 245, 245, 0.705);
+}
 .product {
   display: flex;
   justify-content: space-between;

@@ -9,7 +9,6 @@ export default {
     });
     const res = await response.json();
     context.commit("setProducts", res);
-    console.log(res);
   },
   async addCat(context, data) {
     let add = {
@@ -26,7 +25,6 @@ export default {
         productId: data.cat.prodId,
       };
     }
-    console.log(data.cat);
     await fetch(context.getters.host + "add/" + data.cat.sel, {
       method: "POST",
       headers: {

@@ -22,7 +22,8 @@
         <div class="box button-42" @click="selMan('products')">Products</div>
         <div class="box button-42" @click="selMan('colors')">Colors</div>
         <div class="box button-42" @click="selMan('fabrics')">Fabrics</div>
-        <div class="box button-42" @click="home">Home Page</div>
+        <div class="box button-42" @click="selMan('offers')">Offers</div>
+        <div class="box button-42" @click="disc">Discount</div>
       </div>
     </section>
   </transition>
@@ -33,12 +34,14 @@
 import AddForm from "@/components/manage/AddForm.vue";
 import MainPage from "@/components/manage/MainPage.vue";
 import EditForm from "@/components/manage/EditForm.vue";
+import DiscPage from "@/components/DiscPage.vue";
 
 export default {
   components: {
     AddForm,
     EditForm,
     MainPage,
+    DiscPage,
   },
   data() {
     return {
@@ -109,9 +112,9 @@ export default {
     setSelectedComponent(cmp) {
       this.selectedComponent = cmp;
     },
-    home() {
+    disc() {
       this.sel = true;
-      this.selectedComponent = "home-page";
+      this.selectedComponent = "disc-page";
     },
   },
 };

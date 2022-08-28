@@ -1,6 +1,6 @@
 <template>
   <div class="best-cat">
-    <header>
+    <header v-if="xyz.length != 0">
       <div class="icons">
         <div class="icon" @click="leftClick"><i class="bx bx-chevron-left"></i></div>
         <div class="icon" @click="rightClick"><i class="bx bx-chevron-right"></i></div>
@@ -10,7 +10,7 @@
         <span>{{ title }}</span>
       </div>
     </header>
-    <div class="scroll-images" id="container">
+    <div class="scroll-images" id="container" v-if="xyz.length != 0">
       <div class="card" v-for="product in xyz" :key="product.id">
         <cloth-card
           :id="product.id"

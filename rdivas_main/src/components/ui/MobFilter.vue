@@ -1,14 +1,16 @@
 <template>
   <div class="main">
-    <div class="filterbtn">
+    <div v-if="show" class="sort" style="width: 100%">Out Of Stock</div>
+    <div class="filterbtn" v-else>
       <div class="sort pink" @click="buy">Buy Now</div>
-      <div class="sort " @click="add">Add To Cart</div>
+      <div class="sort" @click="add">Add To Cart</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ["show"],
   methods: {
     add() {
       this.$emit("add");
@@ -22,10 +24,9 @@ export default {
 
 <style scoped>
 .main {
-  display: float;
   z-index: 10;
   position: fixed;
-  bottom: 0;
+  bottom: -0.1rem;
   left: 0;
   width: 100%;
   background-color: rgb(255, 255, 255);
@@ -41,7 +42,7 @@ export default {
 
 .sort {
   width: 50%;
-  font-size: .9rem;
+  font-size: 0.9rem;
   background-color: rgb(255, 255, 255);
   padding: 3% 0;
   display: flex;
@@ -51,7 +52,7 @@ export default {
   text-transform: uppercase;
   font-weight: 600;
 }
-.pink{
+.pink {
   background-color: var(--left-login);
   color: whitesmoke;
 }

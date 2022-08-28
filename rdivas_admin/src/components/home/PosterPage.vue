@@ -93,6 +93,9 @@ export default {
   /* background-color: #f5f5f5; */
   height: 79%;
   padding: 0 10%;
+
+  background-color: var(--body-color);
+
 }
 header {
   display: flex;

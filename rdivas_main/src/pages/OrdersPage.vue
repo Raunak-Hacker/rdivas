@@ -22,21 +22,15 @@
         <div class="card-orders">
           <div class="orders">
             <order-item
-              :id="1"
-              :name="'Casual Butterfly Sleeves'"
-              :img="'https://files.rdivas.in/a48042fe7eb8517feb9102dc912c30191.png'"
-              :size="'xl'"
-              :color="'blue'"
-              :price="36"
-              :qty="6"
-            />
-            <order-item
-              :id="2"
-              :name="'Casual Butterfly Sleeves Solid Women Dark Green Top'"
-              :img="'https://files.rdivas.in/a48042fe7eb8517feb9102dc912c30191.png'"
-              :size="'xl'"
-              :color="'blue'"
-              :price="11000"
+              v-for="orderItem in order.orderItems"
+              :key="orderItem.id"
+              :id="orderItem.id"
+              :name="orderItem.productName"
+              :img="imgHost + orderItem.productImage"
+              :size="orderItem.productSize"
+              :color="orderItem.productColor"
+              :price="orderItem.totalPrice"
+              :qty="orderItem.quantity"
             />
           </div>
           <div class="flex-prod">
@@ -74,6 +68,11 @@ export default {
       top: 0,
       behavior: "smooth",
     });
+  },
+  computed: {
+    imgHost() {
+      return this.$store.state.imgHost;
+    },
   },
   async created() {
     const response = await fetch(this.$store.getters.host + "/user/get/orders", {
@@ -255,6 +254,10 @@ export default {
   font-size: 1.1rem;
 }
 @media (max-width: 768px) {
+  .orderPg {
+    width: 100%;
+    padding: 3% 4%;
+  }
   .head h1 {
     font-size: 1.7rem;
   }
@@ -292,6 +295,7 @@ export default {
     font-size: small;
   }
   .card-orders {
+    padding: 0 5%;
     flex-direction: column;
     width: 100%;
   }

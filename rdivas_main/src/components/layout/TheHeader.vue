@@ -2,7 +2,7 @@
   <header :class="{ fix: scrolled }">
     <div class="desktop">
       <div class="offer">
-        <marquee>Buy 2 Get ₹500 Off* | CLEARANCE SALE</marquee>
+        <marquee>{{ blText }}</marquee>
       </div>
       <div class="flex-box">
         <div class="logo">
@@ -15,10 +15,10 @@
                 <router-link to="/home">HOME</router-link>
               </li>
               <li v-for="category in categories" :key="category.name">
-                <a >
+                <a>
                   {{ category.name }}
                 </a>
-                <div class="dropdown-content">
+                <div class="dropdown-content" v-if="category.subcategories.length != 0">
                   <router-link
                     v-for="subcategory in category.subcategories"
                     :key="subcategory"
@@ -131,6 +131,7 @@ export default {
       categories: [],
       auth: false,
       showmenu: false,
+      blText: "",
     };
   },
   computed: {
@@ -139,6 +140,9 @@ export default {
     },
   },
   async created() {
+    const bl = await fetch(`${this.host}/get/home/blacktext`);
+    const blTxt = await bl.json();
+    this.blText = blTxt.text;
     const response = await fetch(`${this.host}/get/header`);
     let data = await response.json();
     data = data.categories;

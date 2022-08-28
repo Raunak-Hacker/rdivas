@@ -105,7 +105,7 @@ export default {
 
 <style scoped>
 .banPage {
-  /* background-color: #f5f5f5; */
+  background-color: var(--body-color);
   height: 79%;
   padding: 0 10%;
 }

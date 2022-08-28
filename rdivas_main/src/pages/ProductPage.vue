@@ -34,21 +34,32 @@
             <p>Wishlist</p>
           </div>
         </div>
-        <div class="flex-box">
+        <div class="flex-box" style="margin-bottom: 1.2rem">
           <div class="tags" style="background: green; color: white">
-            {{data.rating}} <i style="color: white" class="bx bxs-star" />
+            {{ data.rating }} <i style="color: white" class="bx bxs-star" />
           </div>
           <div class="tags">{{ data.color }}</div>
           <div class="tags">{{ data.fabric }}</div>
           <div class="tags" v-if="data.Sale">Sale</div>
           <div class="tags" v-if="data.BestSeller">Best Seller</div>
         </div>
+        <label style="color: grey; cursor: pointer"
+          ><span style="text-decoration: underline" @click="showReview = true"
+            >Reviews</span
+          >
+          >>
+          <all-reviews
+            :reviews="data.reviews"
+            :show="showReview"
+            @close="showReview = false"
+          />
+        </label>
         <div class="description">
           <p>{{ data.description }}</p>
         </div>
         <div class="fl-box" style="display: flex">
           <div class="specs">
-            <label>Specifications</label>
+            <label>Specifications </label>
             <div class="flex-box">
               <div class="boxes">
                 <div class="box">
@@ -62,44 +73,12 @@
                   <div class="in-boxes">
                     <div
                       class="in-box size"
-                      v-if="data.S"
-                      :class="{ selSize: s }"
-                      @click="sClick"
+                      v-for="size in data.sizes"
+                      :key="size"
+                      :class="{ selSize: selSize(size.size) }"
+                      @click="sClick(size.size)"
                     >
-                      S
-                    </div>
-
-                    <div
-                      class="in-box size"
-                      v-if="data.M"
-                      :class="{ selSize: m }"
-                      @click="mClick"
-                    >
-                      M
-                    </div>
-                    <div
-                      class="in-box size"
-                      v-if="data.L"
-                      :class="{ selSize: l }"
-                      @click="lClick"
-                    >
-                      L
-                    </div>
-                    <div
-                      class="in-box size"
-                      v-if="data.XL"
-                      :class="{ selSize: xl }"
-                      @click="xlClick"
-                    >
-                      XL
-                    </div>
-                    <div
-                      class="in-box size"
-                      v-if="data.XXL"
-                      :class="{ selSize: xxl }"
-                      @click="xxlClick"
-                    >
-                      XXL
+                      {{ size.size }}
                     </div>
                   </div>
                 </div>
@@ -150,41 +129,32 @@
               ₹{{ data.price }}
             </p>
           </div>
-          <div class="btns">
+          <div class="btns" v-if="data.sizes.length != 0">
             <button @click="addToCart" style="">Add To Cart</button>
             <button @click="buyNow">Buy Now</button>
           </div>
+          <div class="ob" v-else>Out of stock</div>
         </div>
         <br />
       </div>
     </section>
-    <the-review :id="$route.params.id">
-      <div class="benefits">
+    <the-review
+      @get-reviews="getReviews"
+      :id="$route.params.id"
+      :showHr="data.offers.length != 0"
+      v-if="showRev"
+    >
+      <div class="benefits" v-for="offer in data.offers" :key="offer.Name">
         <div class="benefit">
-          <img src="@/assets/discount.png" />
-          <small>Special offer: Pay online and get 5% OFF</small>
-        </div>
-        <div class="benefit">
-          <img src="@/assets/discount.png" />
-          <small>Buy 2 Get ₹100 off in Clearance sale</small>
-        </div>
-        <div class="benefit">
-          <img src="@/assets/refresh.png" />
-          <small>7 Days Easy Return With Free Pickup</small>
-        </div>
-        <div class="benefit">
-          <img src="@/assets/rupees.png" />
-          <small>Cash on Delivery Available | Free shipping</small>
-        </div>
-        <div class="benefit">
-          <img src="@/assets/cargo-truck.png" />
-          <small>Delivery within 5 – 6 working days</small>
+          <img :src="imgHost + offer.Image" />
+          <small>{{ offer.Name }}</small>
         </div>
       </div>
     </the-review>
     <div class="rel">
       <best-sell-cat
-        :products="list[(Math.random() * (this.list.length - 1)) | 0].products"
+        v-if="randomList.length != 0"
+        :products="randomList"
         title="Other Products You May Like"
       />
     </div>
@@ -245,7 +215,12 @@
           </svg>
           <p>4.5</p>
         </div>
-        <div class="reviewsp">Reviews >></div>
+        <div class="reviewsp" @click="showReview = true">Reviews >></div>
+        <all-reviews
+          :reviews="data.reviews"
+          :show="showReview"
+          @close="showReview = false"
+        />
         <div class="wish wishm" :class="{ wished: wish }" @click="toggleWish">
           <i class="bx bxs-heart" v-if="wish" />
           <i class="bx bx-heart" v-else />
@@ -264,33 +239,17 @@
           ₹{{ data.price }}
         </h3>
       </div>
-      <div class="benifits">
+      <div class="benifits" v-for="offer in data.offers" :key="offer.Name">
         <div class="benefit">
-          <img src="@/assets/discount.png" alt="" />
-          <small>Special offer: Pay online and get 5% OFF</small>
-        </div>
-        <div class="benefit">
-          <img src="@/assets/discount.png" />
-          <small>Buy 2 Get ₹100 off in Clearance sale</small>
-        </div>
-        <div class="benefit">
-          <img src="@/assets/refresh.png" />
-          <small>7 Days Easy Return With Free Pickup</small>
-        </div>
-        <div class="benefit">
-          <img src="@/assets/rupees.png" />
-          <small>Cash on Delivery Available | Free shipping</small>
-        </div>
-        <div class="benefit">
-          <img src="@/assets/cargo-truck.png" />
-          <small>Delivery within 5 – 6 working days</small>
+          <img :src="imgHost + offer.Image" />
+          <small>{{ offer.Name }}</small>
         </div>
       </div>
 
       <div class="specs">
-        <!-- <label @click="togglechart">Size Chart</label> -->
-
-        <a style="text-decoration: underline" @click="showChart = true">(Size Chart)</a>
+        <a style="text-decoration: underline; font-size: small" @click="showChart = true"
+          >Size Chart</a
+        >
         <size-chart :show="showChart" @close="showChart = false" />
         <div class="flex-box">
           <div class="boxes">
@@ -313,43 +272,12 @@
               <div class="in-boxes">
                 <div
                   class="in-box size"
-                  v-if="data.S"
-                  :class="{ selSize: s }"
-                  @click="sClick"
+                  v-for="size in data.sizes"
+                  :key="size"
+                  :class="{ selSize: selSize(size) }"
+                  @click="sClick(size)"
                 >
-                  S
-                </div>
-                <div
-                  class="in-box size"
-                  v-if="data.M"
-                  :class="{ selSize: m }"
-                  @click="mClick"
-                >
-                  M
-                </div>
-                <div
-                  class="in-box size"
-                  v-if="data.L"
-                  :class="{ selSize: l }"
-                  @click="lClick"
-                >
-                  L
-                </div>
-                <div
-                  class="in-box size"
-                  v-if="data.XL"
-                  :class="{ selSize: xl }"
-                  @click="xlClick"
-                >
-                  XL
-                </div>
-                <div
-                  class="in-box size"
-                  v-if="data.XXL"
-                  :class="{ selSize: xxl }"
-                  @click="xxlClick"
-                >
-                  XXL
+                  {{ size }}
                 </div>
               </div>
             </div>
@@ -371,28 +299,30 @@
           </div>
         </div>
       </div>
-      <the-review />
+      <the-review @get-reviews="getReviews" :id="$route.params.id" v-if="!showRev" />
 
       <div class="mbtns">
-        <mob-filter @add="addToCart" @buy="buyNow" />
+        <mob-filter @add="addToCart" @buy="buyNow" :show="data.sizes.length == 0" />
       </div>
     </div>
   </div>
   <div class="mobile" style="margin-top: 4%">
     <best-sell-cat
-      :products="list[(Math.random() * (this.list.length - 1)) | 0].products"
+      :products="randomList"
       title="You May Like"
+      v-if="randomList.length != 0"
     />
   </div>
 </template>
 
 <script>
 import TheReview from "@/components/ui/TheReview.vue";
+import AllReviews from "@/components/ui/AllReviews.vue";
 import SizeChart from "@/components/ui/SizeChart.vue";
 import BestSellCat from "@/components/home/BestSellCat.vue";
 import MobFilter from "@/components/ui/MobFilter.vue";
 export default {
-  components: { TheReview, SizeChart, BestSellCat, MobFilter },
+  components: { TheReview, SizeChart, BestSellCat, MobFilter, AllReviews },
   data() {
     return {
       data: null,
@@ -403,16 +333,13 @@ export default {
       wish: false,
       quantity: 1,
       showChart: false,
-      s: false,
-      m: false,
-      l: false,
-      xl: false,
-      xxl: false,
+      showReview: false,
       size: null,
       added: false,
       chart: false,
       list: null,
       prod: [],
+      maxCount: 10,
     };
   },
   mounted() {
@@ -434,7 +361,11 @@ export default {
     const response = await fetch(
       `${this.$store.getters.host}/get/product/${this.$route.params.id}`
     );
-    const data = await response.json();
+    let data = await response.json();
+    for (let i = 0; i < data.reviews.length; i++) {
+      var date = new Date(data.reviews[i].createdAt);
+      data.reviews[i].createdAt = date.toDateString();
+    }
     this.data = data;
     this.images = data.images;
     this.imgId = 0;
@@ -455,8 +386,32 @@ export default {
     imgHost() {
       return this.$store.getters.imgHost;
     },
+    showRev() {
+      return window.innerWidth > 768 ? true : false;
+    },
+    randomList() {
+      return this.list[(Math.random() * (this.list.length - 1)) | 0].products;
+    },
+    cmaxCount(){
+      let sizeobj = this.data.sizes;
+      let quantity=1;
+
+      for(let i = 0; i < sizeobj.length; i++){
+        if(sizeobj[i].size == this.size){
+          return sizeobj[i].quantity;
+        }
+      }
+      
+      return quantity;
+    }
   },
   methods: {
+    selSize(size) {
+      return size == this.size ? true : false;
+    },
+    sClick(size) {
+      this.size = size;
+    },
     togglechart() {
       this.chart = !this.chart;
     },
@@ -530,7 +485,7 @@ export default {
         this.added = false;
       }, 2000);
     },
-    buyNow(){
+    buyNow() {
       if (!this.auth) {
         this.$router.push("/login");
         return;
@@ -581,42 +536,16 @@ export default {
     img(image) {
       this.mimg = image;
     },
-    selSize() {
-      this.s = false;
-      this.m = false;
-      this.l = false;
-      this.xl = false;
-      this.xxl = false;
-    },
-    sClick() {
-      this.selSize();
-      this.s = true;
-      this.size = "S";
-      this.$store.commit("setSize", "s");
-    },
-    mClick() {
-      this.selSize();
-      this.m = true;
-      this.size = "M";
-      this.$store.commit("setSize", "m");
-    },
-    lClick() {
-      this.selSize();
-      this.l = true;
-      this.size = "L";
-      this.$store.commit("setSize", "l");
-    },
-    xlClick() {
-      this.selSize();
-      this.xl = true;
-      this.size = "XL";
-      this.$store.commit("setSize", "xl");
-    },
-    xxlClick() {
-      this.selSize();
-      this.xxl = true;
-      this.size = "XXL";
-      this.$store.commit("setSize", "xxl");
+    async getReviews() {
+      const response = await fetch(
+        `${this.$store.getters.host}/get/product/${this.$route.params.id}`
+      );
+      let data = await response.json();
+      for (let i = 0; i < data.reviews.length; i++) {
+        var date = new Date(data.reviews[i].createdAt);
+        data.reviews[i].createdAt = date.toDateString();
+      }
+      this.data = data;
     },
   },
   watch: {
@@ -636,6 +565,19 @@ export default {
     quantity(newVal) {
       if (newVal < 1) {
         this.quantity = 1;
+      } else if (newVal >= this.maxCount) {
+        this.quantity = this.maxCount;
+      }
+    },
+    size(newVal) {
+      let sizeobj = this.data.sizes;
+      for(let i = 0; i < sizeobj.length; i++){
+        if(sizeobj[i].size == newVal){
+          this.maxCount =  sizeobj[i].quantity;
+        }
+      }
+      if(this.quantity>this.maxCount){
+        this.quantity = this.maxCount;
       }
     },
   },
@@ -935,20 +877,22 @@ body {
 
 .price h3 {
   font-size: 1.8rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 .price p {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .btns {
   width: 68%;
 }
 
-button {
+button,
+.ob {
   padding: 0.7rem 1rem;
   margin-right: 2%;
   border: 1px solid #e5e5e5;
+  width: fit-content;
   border-radius: 0.5rem;
   background-color: rgb(44, 43, 43);
   font-weight: 500;

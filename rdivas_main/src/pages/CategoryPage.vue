@@ -8,7 +8,7 @@
       </header>
       <div class="flex-box">
         <div class="filter">
-          <the-filter />
+          <the-filter :lPrice="lPrice" :hPrice="hPrice" />
         </div>
         <div class="product">
           <product-list />
@@ -31,6 +31,8 @@ export default {
   data() {
     return {
       data: null,
+      hPrice: null,
+      lPrice: null,
     };
   },
   mounted() {
@@ -39,18 +41,8 @@ export default {
       behavior: "smooth",
     });
   },
-  async created() {
-    const response = await fetch(
-      `${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`
-    );
-    const data = await response.json();
-    if (data.status == "error" || data.category != this.$route.params.category) {
-      console.log("data");
-      this.$router.replace({ name: "NotFound" });
-      return;
-    }
-    await this.$store.dispatch("getProdList", data);
-    this.data = data;
+  created() {
+    this.getProds();
   },
   watch: {
     async $route() {
@@ -59,7 +51,41 @@ export default {
       );
       const data = await response.json();
       this.data = data;
+
       this.$store.dispatch("getProdList", data);
+    },
+  },
+  methods: {
+    async getProds() {
+      const response = await fetch(
+        `${this.$store.getters.host}/get/product/bycategory/${this.$route.params.id}`
+      );
+      const data = await response.json();
+      let highestPrice = null;
+      let lowestPrice = null;
+      data.products.forEach((product) => {
+        if (highestPrice == null) {
+          highestPrice = product.sellingPrice;
+        } else if (product.sellingPrice > highestPrice) {
+          highestPrice = product.sellingPrice;
+        }
+        if (lowestPrice == null) {
+          lowestPrice = product.sellingPrice;
+        } else if (product.sellingPrice < lowestPrice) {
+          lowestPrice = product.sellingPrice;
+        }
+      });
+      lowestPrice = Math.floor(lowestPrice / 150) * 150;
+      highestPrice = Math.ceil(highestPrice / 200) * 200;
+      this.hPrice = highestPrice;
+      this.lPrice = lowestPrice;
+
+      if (data.status == "error" || data.category != this.$route.params.category) {
+        this.$router.replace({ name: "NotFound" });
+        return;
+      }
+      await this.$store.dispatch("getProdList", data);
+      this.data = data;
     },
   },
 };

@@ -50,16 +50,16 @@
       </div>
       <transition duration="400" name="nested">
         <div class="content outer ran" v-if="priceCon">
-            <span id="rangeValue">Price &lt; {{ price }}</span>
-            <input
-              class="range"
-              type="range"
-              min="100"
-              max="2000"
-              v-model="price"
-              @change="priceChange"
-            />
-          </div>
+          <span id="rangeValue">Price &lt; {{ price }}</span>
+          <input
+            class="range"
+            type="range"
+            :min="lPrice"
+            :max="hPrice"
+            v-model="price"
+            @change="priceChange"
+          />
+        </div>
       </transition>
     </div>
     <div class="box">
@@ -87,6 +87,7 @@
 
 <script>
 export default {
+  props: ["hPrice", "lPrice"],
   computed: {
     productList() {
       return this.$store.getters.productList;
@@ -98,9 +99,9 @@ export default {
       priceCon: false,
       fabricCon: false,
       designCon: false,
+      price: this.hPrice,
       color: null,
       fabric: null,
-      price: 2000,
     };
   },
   methods: {
@@ -246,12 +247,11 @@ a,
   /* box-shadow: -407px 0 0 400px var(--left-login); */
 }
 
-.ran{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-
+.ran {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

@@ -60,7 +60,8 @@ export default {
 .main {
   z-index: 10;
   position: fixed;
-  bottom: 0px;
+  bottom: -0.3rem;
+
   left: 0;
   width: 100vw;
   background-color: rgb(255, 255, 255);

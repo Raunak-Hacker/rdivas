@@ -1,5 +1,29 @@
 <template>
   <section class="orderPg">
+    <div class="flex-end">
+      <div class="flex-box">
+        <div class="box">
+          <div class="search" style="text-transform: capitalise; width: 85%">
+            <input
+              type="text"
+              v-model="filter"
+              @keyup="filterProducts"
+              @focusin="changeIcon"
+              @focusout="changeIcon"
+              style="text-transform: capitalise; width: 90%"
+              :placeholder="'Search order by id  ...'"
+            />
+            <i v-if="search" class="bx bx-search icon" />
+            <i v-else class="bx bx-x icon" @click="close" />
+          </div>
+        </div>
+        <div class="box">
+          <h2 style="text-transform: capitalize">Manage Orders</h2>
+        </div>
+        <div class="box" />
+      </div>
+    </div>
+
     <div class="cards">
       <div class="card" v-for="order in orders" :key="order.id">
         <div class="card-head">
@@ -10,7 +34,7 @@
             <small class="order-time"> Order Placed on {{ order.createdAt }} </small>
           </div>
           <div class="btn">
-            <button><i class="bx bx-user" /> XXXX XXXX</button>
+            <button>XXXX XXXX</button>
           </div>
         </div>
         <div class="card-orders">
@@ -72,6 +96,9 @@ export default {
   data() {
     return {
       orders: [],
+      rOrders: [],
+      filter: "",
+      search: true,
     };
   },
   mounted() {
@@ -85,9 +112,32 @@ export default {
       return this.$store.state.imgHost;
     },
   },
+  methods: {
+    changeIcon() {
+      if (this.filter.length > 0) {
+        this.search = false;
+      } else {
+        this.search = true;
+      }
+    },
+    filterProducts() {
+      this.changeIcon();
+      if (this.filter.length > 0) {
+        this.orders = this.rOrders.filter((order) => {
+          return order.orderId.toLowerCase().includes(this.filter.toLowerCase());
+        });
+      } else {
+        this.orders = this.rOrders;
+      }
+    },
+    close() {
+      this.search = true;
+      this.filter = "";
+    },
+  },
   async created() {
     const response = await fetch(
-      this.$store.getters.host + "get/orders?page=1&limit=10",
+      this.$store.getters.host + "get/orders?page=1&limit=1000000",
       {
         method: "GET",
         headers: {
@@ -106,17 +156,35 @@ export default {
       return order.status == "paid";
     });
     this.orders = data;
+    this.rOrders = data;
   },
 };
 </script>
 
 <style scoped>
+body.dark label,
+body.dark small,
+body.dark strong,
+body.dark .name, body.dark i,
+body.dark .order-id
+
+{
+  color: rgba(245, 245, 245, 0.705);
+}
+body.dark .card-bot,
+body.dark .card-head,
+body.dark .card-orders
+{
+  background-color: #242526;
+}
 .orderPg {
   width: 100%;
   padding: 3% 10%;
   display: flex;
   flex-direction: column;
   min-height: 86vh;
+  background-color: var(--body-color);
+  overflow-x: hidden;
 }
 
 .head h1 {
@@ -164,8 +232,8 @@ export default {
   border-radius: 2rem;
   display: flex;
   align-items: center;
-  padding-right: 3.5%;
-  padding-left: 2%;
+  padding-right: 5%;
+  padding-left: 3%;
   color: var(--left-login);
   margin-right: 2%;
 }
@@ -214,7 +282,6 @@ export default {
 .orders {
   width: 65%;
   border-left: 1px solid rgba(128, 128, 128, 0.26);
-
 }
 .flex-prod {
   display: flex;
@@ -247,7 +314,7 @@ export default {
   font-size: 1.2rem;
 }
 .card-bot {
-  border-top: 1px solid #e6e6e6;
+  border-top: 1px solid rgba(128, 128, 128, 0.26);
   background-color: white;
   height: 8vh;
   display: flex;
@@ -265,6 +332,62 @@ export default {
 }
 .total strong {
   font-size: 1.1rem;
+}
+
+input {
+  background-color: var(--sidebar-color);
+  border: none;
+  outline: 0;
+  width: 85%;
+  /* padding-top: 3rem; */
+}
+
+.flex-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 90vw;
+  margin-left: -10%;
+  height: 18vh;
+  position: sticky;
+  top: -2vh;
+  margin-bottom: 5vh;
+  background-color: var(--body-color);
+}
+
+.search {
+  background-color: var(--sidebar-color);
+  width: 90%;
+  padding: 1rem;
+}
+
+i {
+  font-size: 1.1rem;
+  height: 100%;
+}
+
+.flex-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 7%;
+  height: 100%;
+}
+
+.box {
+  width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addProd {
+  display: flex;
+  width: 60%;
+}
+button {
+  padding: 0.5rem 5%;
 }
 @media (max-width: 768px) {
   .head h1 {
